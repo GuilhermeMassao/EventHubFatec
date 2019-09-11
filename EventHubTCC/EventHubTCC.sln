@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventHubTCC", "EventHubTCC\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventHubApi", "EventHubApi\EventHubApi.csproj", "{43553377-BF59-4C28-B9D8-3E8DF05B85BA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocialConnection", "SocialConnection\SocialConnection.csproj", "{56F3EE1E-C6A1-445D-8D49-C2FF2FB1A268}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{43553377-BF59-4C28-B9D8-3E8DF05B85BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{43553377-BF59-4C28-B9D8-3E8DF05B85BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{43553377-BF59-4C28-B9D8-3E8DF05B85BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56F3EE1E-C6A1-445D-8D49-C2FF2FB1A268}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56F3EE1E-C6A1-445D-8D49-C2FF2FB1A268}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56F3EE1E-C6A1-445D-8D49-C2FF2FB1A268}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56F3EE1E-C6A1-445D-8D49-C2FF2FB1A268}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
