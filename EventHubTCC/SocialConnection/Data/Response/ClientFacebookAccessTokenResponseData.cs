@@ -1,11 +1,11 @@
-namespace SocialConnection.Data
+namespace SocialConnection.Data.Response
 {
-    public class ClientFacebookAccessTokenData
+    public class ClientFacebookAccessTokenResponseData
     {
         public string AccessToken { get; set; }
         public string TokenType { get; set; }
 
-        public ClientFacebookAccessTokenData(string accessToken, string tokenType)
+        public ClientFacebookAccessTokenResponseData(string accessToken, string tokenType)
         {
             AccessToken = accessToken;
             TokenType = tokenType;

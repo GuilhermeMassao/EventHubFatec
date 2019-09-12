@@ -14,6 +14,7 @@ using Microsoft.OpenApi.Models;
 using SocialConnection.Connections;
 using SocialConnection.Connections.Interfaces;
 using SocialConnection.Data;
+using SocialConnection.Data.Response;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace EventHubApi
@@ -40,7 +41,7 @@ namespace EventHubApi
                 })
             );
             //IoC configuration
-            services.AddTransient<ITwitterConnection<ClientTwitterAccessTokenData>, TwitterConnection>();
+            services.AddTransient<ITwitterConnection<ClientTwitterAccessTokenResponseData>, TwitterConnection>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

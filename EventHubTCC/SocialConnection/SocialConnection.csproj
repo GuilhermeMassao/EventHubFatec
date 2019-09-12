@@ -37,8 +37,10 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
   </ItemGroup>
@@ -48,13 +50,14 @@
     <Compile Include="Connections\Interfaces\ISocialConnection.cs" />
     <Compile Include="Connections\Interfaces\ITwitterConnection.cs" />
     <Compile Include="Connections\TwitterConnection.cs" />
-    <Compile Include="Data\ClientFacebookAccessTokenData.cs" />
-    <Compile Include="Data\ClientTwitterAccessTokenData.cs" />
-    <Compile Include="Data\OAuth1TokenData.cs" />
-    <Compile Include="Data\TweetData.cs" />
-    <Compile Include="Data\PostResponseData.cs" />
+    <Compile Include="Data\Request\PostContentRequestData.cs" />
+    <Compile Include="Data\Request\TweetRequestData.cs" />
+    <Compile Include="Data\Response\ClientFacebookAccessTokenResponseData.cs" />
+    <Compile Include="Data\Response\ClientTwitterAccessTokenResponseData.cs" />
+    <Compile Include="Data\Response\OAuth1TokenResponseData.cs" />
+    <Compile Include="Data\Response\PostResponseData.cs" />
+    <Compile Include="Data\Response\RequestTokenResponseData.cs" />
     <Compile Include="Exceptions\CouldNotConnectException.cs" />
-    <Compile Include="Models\PostContent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

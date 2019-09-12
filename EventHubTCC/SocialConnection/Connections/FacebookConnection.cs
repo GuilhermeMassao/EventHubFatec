@@ -1,50 +1,47 @@
 using RestSharp;
 using SocialConnection.Connections.Interfaces;
 using SocialConnection.Data;
-using SocialConnection.Models;
+using SocialConnection.Data.Request;
+using SocialConnection.Data.Response;
 
 namespace SocialConnection.Connections
 {
-    public class FacebookConnection : IFacebookConnection<ClientFacebookAccessTokenData>
+    public class FacebookConnection : IFacebookConnection<ClientFacebookAccessTokenResponseData>
     {
-        // Todos os endpoints e URL salvar em config files
-        // TODO Verificar a possibilidade de transportar essas variáveis para a nossa API
         private const string ApiUrl = "https://graph.facebook.com";
         private const string FacebookUrl = "https://www.facebook.com/v4.0";
-        
-        private const string AppId = "412268042729337";
-        private const string AppSecret = "ba75ac7497a95f93aef3a629be09f764";
-        
-        public string GetAuthenticationUri(string redirectUri)
+
+        public string GetAuthenticationUri(string appId, string redirectUri)
         {
             var client = new RestClient(FacebookUrl);
-            var request = new RestRequest(GetAuthenticationEndPoint(redirectUri));
+            var request = new RestRequest(GetAuthenticationEndPoint(appId, redirectUri));
 
             return client.BuildUri(request).ToString();
         }
 
-        public ClientFacebookAccessTokenData GetAccessToken(string code, string redirectUri)
+        public ClientFacebookAccessTokenResponseData GetAccessToken(string appId, string appSecret, string code, string redirectUri)
         {
             var client = new RestClient(ApiUrl);
-            var request = new RestRequest(GetAccessEndPoint(code, redirectUri));
+            var request = new RestRequest(GetAccessEndPoint(appId, appSecret, code, redirectUri));
 
+            // TODO implementar
             return null;
         }
         
-        public PostResponseData Post(PostContent content, ClientFacebookAccessTokenData clientFacebookAccessTokenData)
+        public PostResponseData Post(PostContentRequestData contentRequestData)
         {
             // TODO implementar
             throw new System.NotImplementedException();
         }
 
-        private string GetAuthenticationEndPoint(string redirectUri)
+        private string GetAuthenticationEndPoint(string appId, string redirectUri)
         {
-            return $"/dialog/oauth?client_id={AppId}&redirect_uri={redirectUri}&state=123";
+            return $"/dialog/oauth?client_id={appId}&redirect_uri={redirectUri}&state=123";
         }
         
-        private string GetAccessEndPoint(string code, string redirectUri)
+        private string GetAccessEndPoint(string appId, string appSecret, string code, string redirectUri)
         {
-            return $"/dialog/oauth?client_id={AppId}&redirect_uri={redirectUri}&client_secret={AppSecret}&code={code}";
+            return $"/dialog/oauth?client_id={appId}&redirect_uri={redirectUri}&client_secret={appSecret}&code={code}";
         }
     }
 }

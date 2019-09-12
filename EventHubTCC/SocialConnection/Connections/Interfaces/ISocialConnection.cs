@@ -1,10 +1,11 @@
 using SocialConnection.Data;
-using SocialConnection.Models;
+using SocialConnection.Data.Request;
+using SocialConnection.Data.Response;
 
 namespace SocialConnection.Connections.Interfaces
 {
     public interface ISocialConnection<T>
     {
-        PostResponseData Post(PostContent content, T clientAccessTokenData);
+        PostResponseData Post(PostContentRequestData contentRequestData);
     }
 }

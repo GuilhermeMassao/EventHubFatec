@@ -1,4 +1,4 @@
-namespace SocialConnection.Data
+namespace SocialConnection.Data.Response
 {
     public class PostResponseData
     {

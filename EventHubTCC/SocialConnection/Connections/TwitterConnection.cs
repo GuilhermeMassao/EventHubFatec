@@ -1,33 +1,34 @@
 using System;
+using System.Collections.Generic;
+using System.Security.Cryptography;
+using System.Text;
 using System.Web;
 using RestSharp;
 using RestSharp.Authenticators;
 using SocialConnection.Connections.Interfaces;
-using SocialConnection.Data;
+using SocialConnection.Data.Request;
+using SocialConnection.Data.Response;
 using SocialConnection.Exceptions;
-using SocialConnection.Models;
 
 namespace SocialConnection.Connections
 {
-    public class TwitterConnection : ITwitterConnection<ClientTwitterAccessTokenData>
+    public class TwitterConnection : ITwitterConnection<ClientTwitterAccessTokenResponseData>
     {
-        // Todos os endpoints e URL salvar em config files
-        // TODO Verificar a possibilidade de transportar essas variáveis para a nossa API 
-        private const string BaseUrl = "https://api.twitter.com";
-        private const string AppKey = "py2O8NqmRQzaJCWzTigwvUolY";
-        private const string AppSecretKey = "3lMsLhtFYnrsGPgqjVj7DTYW5mNJZGUauT8GhRDblvbLmCfhEd";
+        private const string BaseUrl = "https://api.twitter.com/";
 
         /// <summary>
         /// Get temporary oauth_token and oauth_secret from twitter API.
         /// Doc: https://developer.twitter.com/en/docs/basics/authentication/api-reference/request_token
         /// </summary>
+        /// <param name="appKey">App customer key</param>
+        /// <param name="appSecretKey">App customer secret key</param>
         /// <param name="callBackUrl">URL to redirect after get authentication token and token secret</param>
         /// <returns>OAuthTokenData object with authentication tokens information</returns>
-        public OAuth1TokenData GetRequestToken(string callBackUrl)
+        public RequestTokenResponseData GetRequestToken(string appKey, string appSecretKey, string callBackUrl) 
         {
             var client = new RestClient(BaseUrl)
             {
-                Authenticator = OAuth1Authenticator.ForRequestToken(AppKey, AppSecretKey, callBackUrl)
+                Authenticator = OAuth1Authenticator.ForRequestToken(appKey, appSecretKey, callBackUrl)
             };
 
             var request = new RestRequest("/oauth/request_token", Method.POST);
@@ -37,12 +38,13 @@ namespace SocialConnection.Connections
 
             if (response.IsSuccessful)
             {
-                return new OAuth1TokenData(queryString["oauth_token"],
+                return new RequestTokenResponseData(queryString["oauth_token"],
                     queryString["oauth_token_secret"],
-                    bool.TryParse(queryString["oauth_token_secret"], out _));
+                    bool.TryParse(queryString["oauth_callback_confirmed"], out _));
             }
 
-            throw new CouldNotConnectException("Error while connecting to Twitter Api.");
+            throw new CouldNotConnectException(
+                "Error while connecting to Twitter Api when requesting token. Twitter EndPoint:{/oauth/request_token}.", response.StatusCode);
         }
 
         /// <summary>
@@ -63,38 +65,44 @@ namespace SocialConnection.Connections
         /// Get the access information for user operations (access token, access token secret, id and screen name).
         /// Doc: https://developer.twitter.com/en/docs/basics/authentication/api-reference/access_token
         /// </summary>
-        /// <param name="tokenData">OAuthTokenData with oauth_token, oauth_token_secret, oatuh</param>
+        /// <param name="tokenResponseData">OAuthTokenData with oauth_token, oauth_token_secret, oatuh</param>
         /// <returns>ClientAccessTokenData with the access token, token secret, user id, screen name</returns>
-        public ClientTwitterAccessTokenData GetAccessToken(OAuth1TokenData tokenData)
+        public ClientTwitterAccessTokenResponseData GetAccessToken(OAuth1TokenResponseData tokenResponseData)
         {
             var client = new RestClient(BaseUrl);
-            var request = new RestRequest(GetAccessTokenEndPoint(tokenData), Method.POST);
+            var request = new RestRequest(GetAccessTokenEndPoint(tokenResponseData), Method.POST);
             var response = client.Execute(request);
 
             var queryString = HttpUtility.ParseQueryString(response.Content);
 
-            return new ClientTwitterAccessTokenData(queryString["oauth_token"],
-                queryString["oauth_token_secret"],
-                queryString["user_id"],
-                queryString["screen_name"]);
+            if (response.IsSuccessful)
+            {
+                return new ClientTwitterAccessTokenResponseData(queryString["oauth_token"],
+                    queryString["oauth_token_secret"],
+                    queryString["user_id"],
+                    queryString["screen_name"]);
+            }
+
+            throw new CouldNotConnectException(
+                $"Error while connecting to Twitter Api when requesting Access Token. Twitter EndPoint:{GetAccessTokenEndPoint(tokenResponseData)}.", response.StatusCode);
         }
 
         /// <summary>
         /// Post a new tweet based on given Tweet data object with tweet information
         /// Doc: https://developer.twitter.com/en/docs/tweets/post-and-engage/api-reference/post-statuses-update
         /// </summary>
-        /// <param name="content">PostContent with tweet information</param>
-        /// <param name="clientTwitterAccessTokenData">ClientAccessTokenData with the access token, token secret, user id, screen name</param>
+        /// <param name="contentRequestData">PostContent with tweet information</param>
         /// <returns>TweetResponseData response object</returns>
-        public PostResponseData Post(PostContent content, ClientTwitterAccessTokenData clientTwitterAccessTokenData)
+        public PostResponseData Post(PostContentRequestData contentRequestData)
         {
             var client = new RestClient(BaseUrl)
             {
-                Authenticator = OAuth1Authenticator.ForClientAuthentication(AppKey, AppSecretKey,
-                    clientTwitterAccessTokenData.AccessToken,
-                    clientTwitterAccessTokenData.AccessTokenSecret)
+                DefaultParameters =
+                {
+                    CreateAuthorizationParameter(contentRequestData)
+                }
             };
-            var request = new RestRequest(GetPostTweetEndPoint(content), Method.POST);
+            var request = new RestRequest(GetPostTweetEndPoint(contentRequestData), Method.POST);
             var response = client.Execute(request);
 
             var queryString = HttpUtility.ParseQueryString(response.Content);
@@ -103,19 +111,73 @@ namespace SocialConnection.Connections
             return new PostResponseData();
         }
 
-        private static string GetPostTweetEndPoint(PostContent content)
+        private static string GetPostTweetEndPoint(PostContentRequestData contentRequestData)
         {
-            return $"/statuses/update.json?status={content.Text}";
+            return $"/1.1/statuses/update.json?status={contentRequestData.Text}";
         }
 
-        private static string GetAccessTokenEndPoint(OAuth1TokenData tokenData)
+        private static string GetAccessTokenEndPoint(OAuth1TokenResponseData tokenResponseData)
         {
-            return $"/oauth/access_token?oauth_verifier={tokenData.TokenVerifier}&oauth_token={tokenData.Token}";
+            return $"/oauth/access_token?oauth_verifier={tokenResponseData.TokenVerifier}&oauth_token={tokenResponseData.Token}";
+        }
+        
+        // TODO Extrair esse método para uma nova classe própria para a criaçaõ do header
+        private Parameter CreateAuthorizationParameter(PostContentRequestData contentRequestData)
+        {
+            return new Parameter("Authorization", $"OAuth oauth_consumer_key=\"{contentRequestData.AppId}\","+
+                                                  $"oauth_token=\"{contentRequestData.AccessToken}\","+
+                                                  "oauth_signature_method=\"HMAC-SHA1\","+
+                                                  $"oauth_timestamp=\"{((DateTime.UtcNow - (new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc))).TotalSeconds)}\","+
+                                                  "oauth_nonce=\"XalVggftEJC\","+
+                                                  "oauth_version=\"1.0\","+
+                                                  "oauth_signature=\"hRqmYDmql7jwGxDp3CG1SHfUN14%3D\"", ParameterType.HttpHeader);
+        }
+        
+        public string CreateSignature(string url)
+        {
+            //string builder will be used to append all the key value pairs
+            var stringBuilder = new StringBuilder();
+            stringBuilder.Append("POST&");
+            stringBuilder.Append(Uri.EscapeDataString(url));
+            stringBuilder.Append("&");
+ 
+            //the key value pairs have to be sorted by encoded key
+            var dictionary = new SortedDictionary<string, string>
+            {
+                {"oauth_version", "1.0"},
+                {"oauth_consumer_key", OauthConsumerKey},
+                {"oauth_nonce", _oauthNonce},
+                {"oauth_signature_method", OauthSignatureMethod},
+                {"oauth_timestamp", _oathTimestamp},
+                {"oauth_token", OauthToken}
+            };
+            
+            foreach (var keyValuePair in dictionary)
+            {
+                //append a = between the key and the value and a & after the value
+                stringBuilder.Append(Uri.EscapeDataString(string.Format("{0}={1}&", keyValuePair.Key, keyValuePair.Value)));
+            }
+            string signatureBaseString = stringBuilder.ToString().Substring(0, stringBuilder.Length - 3);
+ 
+            //generation the signature key the hash will use
+            string signatureKey =
+                Uri.EscapeDataString(OauthConsumerKey) + "&" +
+                Uri.EscapeDataString(OauthToken);
+ 
+            var hmacsha1 = new HMACSHA1(
+                new ASCIIEncoding().GetBytes(signatureKey));
+ 
+            //hash the values
+            string signatureString = Convert.ToBase64String(
+                hmacsha1.ComputeHash(
+                    new ASCIIEncoding().GetBytes(signatureBaseString)));
+            
+            return signatureString;
         }
     }
 /*
  * Base Flow:
- *     Ao usuário solicitar acessso ao titter, o nosso front manda para a nossa api (/oauth/) que chama o método
+ *     Ao usuário solicitar acessso ao twitter, o nosso front manda para a nossa api (/oauth/) que chama o método
  *     GetRequestToken(), esse método acessa a api do twitter e retorna o token de acesso requisitado e o token secret,
  *     que são armazenados em um objeto OAuthTokenData. Após obter esse token o Controller redireciona para o end point de
  *     autorização da nossa api (/oauth/authorize/) que redireciona o usuário para a api do twitter para o usuário logar

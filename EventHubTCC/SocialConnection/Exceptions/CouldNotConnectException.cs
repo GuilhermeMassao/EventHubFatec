@@ -1,15 +1,14 @@
 using System;
+using System.Net;
 
 namespace SocialConnection.Exceptions
 {
     public class CouldNotConnectException : Exception
     {
-        public CouldNotConnectException(string message) : base(message)
+        public HttpStatusCode ErrorCode { get; set; }
+        public CouldNotConnectException(string message, HttpStatusCode errorCode) : base(message)
         {
-        }
-
-        public CouldNotConnectException(string message, Exception innerException) : base(message, innerException)
-        {
+            ErrorCode = errorCode;
         }
     }
 }
