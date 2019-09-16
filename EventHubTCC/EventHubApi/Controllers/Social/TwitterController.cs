@@ -61,7 +61,12 @@ namespace EventHubApi.Controllers.Social
 
         private static PostContentRequestData CreatePostContent(TwitterPostContentData content)
         {
-            return new PostContentRequestData(AppId, AppSecret, content.AccessToken, content.AccessTokenSecret, content.Text);
+            return new PostContentRequestData(AppId,
+                AppSecret,
+                content.AccessToken,
+                content.AccessTokenSecret,
+                content.Text,
+                content.Medias);
         }
     }
 }

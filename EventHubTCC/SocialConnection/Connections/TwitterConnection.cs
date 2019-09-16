@@ -1,7 +1,5 @@
-using System;
 using System.Collections.Generic;
-using System.Security.Cryptography;
-using System.Text;
+using System.Net;
 using System.Web;
 using RestSharp;
 using RestSharp.Authenticators;
@@ -9,6 +7,10 @@ using SocialConnection.Connections.Interfaces;
 using SocialConnection.Data.Request;
 using SocialConnection.Data.Response;
 using SocialConnection.Exceptions;
+using Tweetinvi;
+using Tweetinvi.Core.Extensions;
+using Tweetinvi.Models;
+using Tweetinvi.Parameters;
 
 namespace SocialConnection.Connections
 {
@@ -48,17 +50,14 @@ namespace SocialConnection.Connections
         }
 
         /// <summary>
-        /// Get the authorize token uri to redirect to authorize the authentication token. 
+        /// Get the authorize token uri to redirect, to authorize the authentication token. 
         /// Doc: https://developer.twitter.com/en/docs/basics/authentication/api-reference/authorize
         /// </summary>
         /// <param name="oauthToken">String with the authentication token</param>
-        /// <returns>Full authotization token uri</returns>
+        /// <returns>Full authorization token uri</returns>
         public string GetAuthorizeTokenUri(string oauthToken)
         {
-            var client = new RestClient(BaseUrl);
-            // Ver se isso da certo client.DefaultParameters.Add(new Parameter("oauth_token", oauthToken, ParameterType.UrlSegment));
-            var request = new RestRequest("/oauth/authorize?oauth_token=" + oauthToken);
-            return client.BuildUri(request).ToString();
+            return $"{BaseUrl}/oauth/authorize?oauth_token={oauthToken}";
         }
         
         /// <summary>
@@ -90,25 +89,58 @@ namespace SocialConnection.Connections
         /// <summary>
         /// Post a new tweet based on given Tweet data object with tweet information
         /// Doc: https://developer.twitter.com/en/docs/tweets/post-and-engage/api-reference/post-statuses-update
+        /// TweetInvi publish tweet doc: https://github.com/linvi/tweetinvi/wiki/Upload
         /// </summary>
         /// <param name="contentRequestData">PostContent with tweet information</param>
         /// <returns>TweetResponseData response object</returns>
         public PostResponseData Post(PostContentRequestData contentRequestData)
         {
-            var client = new RestClient(BaseUrl)
+            Auth.SetUserCredentials(contentRequestData.AppId,
+                contentRequestData.AppSecret,
+                contentRequestData.AccessToken,
+                contentRequestData.AccessTokenSecret);
+            var response = PublishTweet(contentRequestData);
+
+            if (response != null)
             {
-                DefaultParameters =
+                // TODO Verificar as informações retornadas e adicioná-las no objeto
+                return PostResponseDataBuilder.AModel().Build();
+            }
+            
+            throw new CouldNotConnectException(
+                $"Error while connecting to Twitter Api when posting a new Tweet. Twitter EndPoint:{GetPostTweetEndPoint(contentRequestData)}.", HttpStatusCode.BadRequest);
+        }
+
+        private ITweet PublishTweet(PostContentRequestData contentRequestData)
+        {
+            /* Descomentar para fazer o teste gambiarra 
+                var file = File.ReadAllBytes("/home/rodrigosoares/Pictures/wallhaven-dgo8jm.jpg");
+                var media = Upload.UploadBinary(file);
+            */
+            if (!contentRequestData.Medias.IsNullOrEmpty())
+            {
+                var medias = getMediasList(contentRequestData);
+
+                return Tweet.PublishTweet(contentRequestData.Text, new PublishTweetOptionalParameters()
                 {
-                    CreateAuthorizationParameter(contentRequestData)
-                }
-            };
-            var request = new RestRequest(GetPostTweetEndPoint(contentRequestData), Method.POST);
-            var response = client.Execute(request);
+                    Medias = medias
+                });
+            }
+            else
+            {
+                return Tweet.PublishTweet(contentRequestData.Text);
+            }
+        }
 
-            var queryString = HttpUtility.ParseQueryString(response.Content);
+        private List<IMedia> getMediasList(PostContentRequestData contentRequestData)
+        {
+            var medias = new List<IMedia>(); 
+            foreach (var media in contentRequestData.Medias)
+            {
+                medias.Add(Upload.UploadBinary(media.Content));
+            }
 
-            // TODO Verificar as informações retornadas e adicioná-las no objeto
-            return new PostResponseData();
+            return medias;
         }
 
         private static string GetPostTweetEndPoint(PostContentRequestData contentRequestData)
@@ -119,60 +151,6 @@ namespace SocialConnection.Connections
         private static string GetAccessTokenEndPoint(OAuth1TokenResponseData tokenResponseData)
         {
             return $"/oauth/access_token?oauth_verifier={tokenResponseData.TokenVerifier}&oauth_token={tokenResponseData.Token}";
-        }
-        
-        // TODO Extrair esse método para uma nova classe própria para a criaçaõ do header
-        private Parameter CreateAuthorizationParameter(PostContentRequestData contentRequestData)
-        {
-            return new Parameter("Authorization", $"OAuth oauth_consumer_key=\"{contentRequestData.AppId}\","+
-                                                  $"oauth_token=\"{contentRequestData.AccessToken}\","+
-                                                  "oauth_signature_method=\"HMAC-SHA1\","+
-                                                  $"oauth_timestamp=\"{((DateTime.UtcNow - (new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc))).TotalSeconds)}\","+
-                                                  "oauth_nonce=\"XalVggftEJC\","+
-                                                  "oauth_version=\"1.0\","+
-                                                  "oauth_signature=\"hRqmYDmql7jwGxDp3CG1SHfUN14%3D\"", ParameterType.HttpHeader);
-        }
-        
-        public string CreateSignature(string url)
-        {
-            //string builder will be used to append all the key value pairs
-            var stringBuilder = new StringBuilder();
-            stringBuilder.Append("POST&");
-            stringBuilder.Append(Uri.EscapeDataString(url));
-            stringBuilder.Append("&");
- 
-            //the key value pairs have to be sorted by encoded key
-            var dictionary = new SortedDictionary<string, string>
-            {
-                {"oauth_version", "1.0"},
-                {"oauth_consumer_key", OauthConsumerKey},
-                {"oauth_nonce", _oauthNonce},
-                {"oauth_signature_method", OauthSignatureMethod},
-                {"oauth_timestamp", _oathTimestamp},
-                {"oauth_token", OauthToken}
-            };
-            
-            foreach (var keyValuePair in dictionary)
-            {
-                //append a = between the key and the value and a & after the value
-                stringBuilder.Append(Uri.EscapeDataString(string.Format("{0}={1}&", keyValuePair.Key, keyValuePair.Value)));
-            }
-            string signatureBaseString = stringBuilder.ToString().Substring(0, stringBuilder.Length - 3);
- 
-            //generation the signature key the hash will use
-            string signatureKey =
-                Uri.EscapeDataString(OauthConsumerKey) + "&" +
-                Uri.EscapeDataString(OauthToken);
- 
-            var hmacsha1 = new HMACSHA1(
-                new ASCIIEncoding().GetBytes(signatureKey));
- 
-            //hash the values
-            string signatureString = Convert.ToBase64String(
-                hmacsha1.ComputeHash(
-                    new ASCIIEncoding().GetBytes(signatureBaseString)));
-            
-            return signatureString;
         }
     }
 /*
