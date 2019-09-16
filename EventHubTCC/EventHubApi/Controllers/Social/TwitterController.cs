@@ -2,14 +2,13 @@ using System.Configuration;
 using EventHubApi.Data;
 using Microsoft.AspNetCore.Mvc;
 using SocialConnection.Connections.Interfaces;
-using SocialConnection.Data;
 using SocialConnection.Data.Request;
 using SocialConnection.Data.Response;
 using ControllerBase = Microsoft.AspNetCore.Mvc.ControllerBase;
 
 namespace EventHubApi.Controllers.Social
 {
-    [Microsoft.AspNetCore.Mvc.Route("social/twitter")]
+    [Route("social/twitter")]
     [ApiController]
     public class TwitterController : ControllerBase
     {

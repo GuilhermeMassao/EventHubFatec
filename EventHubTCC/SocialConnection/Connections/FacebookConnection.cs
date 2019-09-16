@@ -36,7 +36,7 @@ namespace SocialConnection.Connections
 
         private string GetAuthenticationEndPoint(string appId, string redirectUri)
         {
-            return $"/dialog/oauth?client_id={appId}&redirect_uri={redirectUri}&state=123";
+            return $"/dialog/oauth?client_id={appId}&redirect_uri={redirectUri}&state=access_token_state";
         }
         
         private string GetAccessEndPoint(string appId, string appSecret, string code, string redirectUri)

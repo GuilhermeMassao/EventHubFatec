@@ -42,6 +42,7 @@ namespace EventHubApi
             );
             //IoC configuration
             services.AddTransient<ITwitterConnection<ClientTwitterAccessTokenResponseData>, TwitterConnection>();
+            services.AddTransient<IFacebookConnection<ClientFacebookAccessTokenResponseData>, FacebookConnection>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
