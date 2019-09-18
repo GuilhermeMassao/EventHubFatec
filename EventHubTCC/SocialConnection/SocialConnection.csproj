@@ -32,6 +32,34 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Google.Apis, Version=1.41.1.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab">
+      <HintPath>..\packages\Google.Apis.1.41.1\lib\net45\Google.Apis.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Google.Apis.Auth, Version=1.41.1.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab">
+      <HintPath>..\packages\Google.Apis.Auth.1.41.1\lib\net45\Google.Apis.Auth.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Google.Apis.Auth.PlatformServices, Version=1.41.1.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab">
+      <HintPath>..\packages\Google.Apis.Auth.1.41.1\lib\net45\Google.Apis.Auth.PlatformServices.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Google.Apis.Calendar.v3, Version=1.41.1.1713, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab">
+      <HintPath>..\packages\Google.Apis.Calendar.v3.1.41.1.1713\lib\net45\Google.Apis.Calendar.v3.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Google.Apis.Core, Version=1.41.1.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab">
+      <HintPath>..\packages\Google.Apis.Core.1.41.1\lib\net45\Google.Apis.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Google.Apis.PlatformServices, Version=1.41.1.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab">
+      <HintPath>..\packages\Google.Apis.1.41.1\lib\net45\Google.Apis.PlatformServices.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="RestSharp, Version=106.6.10.0, Culture=neutral, PublicKeyToken=598062e77f915f75">
       <HintPath>..\packages\RestSharp.106.6.10\lib\net452\RestSharp.dll</HintPath>
       <Private>True</Private>
@@ -52,14 +80,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Connections\FacebookConnection.cs" />
-    <Compile Include="Connections\Interfaces\IFacebookConnection.cs" />
+    <Compile Include="Connections\GoogleConnection.cs" />
+    <Compile Include="Connections\Interfaces\IOAuth2Connection.cs" />
     <Compile Include="Connections\Interfaces\ISocialConnection.cs" />
-    <Compile Include="Connections\Interfaces\ITwitterConnection.cs" />
+    <Compile Include="Connections\Interfaces\IOAuth1Connection.cs" />
     <Compile Include="Connections\TwitterConnection.cs" />
     <Compile Include="Data\Request\PostContentRequestData.cs" />
     <Compile Include="Data\Request\TweetRequestData.cs" />
-    <Compile Include="Data\Response\ClientFacebookAccessTokenResponseData.cs" />
-    <Compile Include="Data\Response\ClientTwitterAccessTokenResponseData.cs" />
+    <Compile Include="Data\Response\OAuth2AccessTokenResponseData.cs" />
+    <Compile Include="Data\Response\OAuth1AccessTokenResponseData.cs" />
     <Compile Include="Data\Response\OAuth1TokenResponseData.cs" />
     <Compile Include="Data\Response\PostResponseData.cs" />
     <Compile Include="Data\Response\RequestTokenResponseData.cs" />

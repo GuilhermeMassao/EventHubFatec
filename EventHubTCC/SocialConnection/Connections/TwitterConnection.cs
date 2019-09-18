@@ -14,7 +14,7 @@ using Tweetinvi.Parameters;
 
 namespace SocialConnection.Connections
 {
-    public class TwitterConnection : ITwitterConnection<ClientTwitterAccessTokenResponseData>
+    public class TwitterConnection : IOAuth1Connection<OAuth1AccessTokenResponseData>
     {
         private const string BaseUrl = "https://api.twitter.com/";
 
@@ -66,7 +66,7 @@ namespace SocialConnection.Connections
         /// </summary>
         /// <param name="tokenResponseData">OAuthTokenData with oauth_token, oauth_token_secret, oatuh</param>
         /// <returns>ClientAccessTokenData with the access token, token secret, user id, screen name</returns>
-        public ClientTwitterAccessTokenResponseData GetAccessToken(OAuth1TokenResponseData tokenResponseData)
+        public OAuth1AccessTokenResponseData GetAccessToken(OAuth1TokenResponseData tokenResponseData)
         {
             var client = new RestClient(BaseUrl);
             var request = new RestRequest(GetAccessTokenEndPoint(tokenResponseData), Method.POST);
@@ -76,7 +76,7 @@ namespace SocialConnection.Connections
 
             if (response.IsSuccessful)
             {
-                return new ClientTwitterAccessTokenResponseData(queryString["oauth_token"],
+                return new OAuth1AccessTokenResponseData(queryString["oauth_token"],
                     queryString["oauth_token_secret"],
                     queryString["user_id"],
                     queryString["screen_name"]);
@@ -126,10 +126,8 @@ namespace SocialConnection.Connections
                     Medias = medias
                 });
             }
-            else
-            {
-                return Tweet.PublishTweet(contentRequestData.Text);
-            }
+
+            return Tweet.PublishTweet(contentRequestData.Text);
         }
 
         private List<IMedia> getMediasList(PostContentRequestData contentRequestData)
@@ -153,14 +151,4 @@ namespace SocialConnection.Connections
             return $"/oauth/access_token?oauth_verifier={tokenResponseData.TokenVerifier}&oauth_token={tokenResponseData.Token}";
         }
     }
-/*
- * Base Flow:
- *     Ao usuário solicitar acessso ao twitter, o nosso front manda para a nossa api (/oauth/) que chama o método
- *     GetRequestToken(), esse método acessa a api do twitter e retorna o token de acesso requisitado e o token secret,
- *     que são armazenados em um objeto OAuthTokenData. Após obter esse token o Controller redireciona para o end point de
- *     autorização da nossa api (/oauth/authorize/) que redireciona o usuário para a api do twitter para o usuário logar
- *     e autenticar o token de acesso, retornando um token verificador e redirecionando
- *     para a callback_url passada. Após isso essa callback_url deverar acessar a api do twitter para pegar o token e o
- *     token_secret de acesso do usuário e salvá-los em um objeto do tipo ClientAccessTokenData;
- */
 }

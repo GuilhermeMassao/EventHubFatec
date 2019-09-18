@@ -3,7 +3,7 @@ using SocialConnection.Data.Response;
 
 namespace SocialConnection.Connections.Interfaces
 {
-    public interface ITwitterConnection<T> : ISocialConnection<T>
+    public interface IOAuth1Connection<T> : ISocialConnection<T>
     {
         RequestTokenResponseData GetRequestToken(string appKey, string appSecretKey, string callBackUrl);
         string GetAuthorizeTokenUri(string oauthToken);

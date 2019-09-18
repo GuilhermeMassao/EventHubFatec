@@ -1,5 +1,6 @@
 using System.Configuration;
 using Microsoft.AspNetCore.Mvc;
+using SocialConnection.Connections;
 using SocialConnection.Connections.Interfaces;
 using SocialConnection.Data.Response;
 using ControllerBase = Microsoft.AspNetCore.Mvc.ControllerBase;
@@ -12,11 +13,11 @@ namespace EventHubApi.Controllers.Social
     {
         private static readonly string AppId = ConfigurationManager.AppSettings["facebook.appid"];
         private static readonly string AppSecret = ConfigurationManager.AppSettings["facebook.appsecret"];
-        private IFacebookConnection<ClientFacebookAccessTokenResponseData> Facebook;
+        private IOAuth2Connection<OAuth2AccessTokenResponseData> Facebook;
 
-        public FacebookController(IFacebookConnection<ClientFacebookAccessTokenResponseData> facebook)
+        public FacebookController()
         {
-            Facebook = facebook;
+            Facebook = new FacebookConnection();
         }
 
         // GET social/facebook/oauth
@@ -30,7 +31,7 @@ namespace EventHubApi.Controllers.Social
         // GET social/facebook/oauth/access_token
         [HttpGet]
         [Route("oauth/access_token")]
-        public ActionResult<ClientFacebookAccessTokenResponseData> GetAccessToken(string code, string redirectUri)
+        public ActionResult<OAuth2AccessTokenResponseData> GetAccessToken(string code, string redirectUri)
         {
             return Facebook.GetAccessToken(AppId, AppSecret, code, redirectUri);
         }
@@ -38,7 +39,7 @@ namespace EventHubApi.Controllers.Social
         // GET social/facebook/post
         [HttpGet]
         [Route("post")]
-        public ActionResult<ClientFacebookAccessTokenResponseData> Post(string code, string redirectUri)
+        public ActionResult<OAuth2AccessTokenResponseData> Post(string code, string redirectUri)
         {
             return Facebook.GetAccessToken(AppId, AppSecret, code, redirectUri);
         }

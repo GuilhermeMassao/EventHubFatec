@@ -1,6 +1,7 @@
 using System.Configuration;
 using EventHubApi.Data;
 using Microsoft.AspNetCore.Mvc;
+using SocialConnection.Connections;
 using SocialConnection.Connections.Interfaces;
 using SocialConnection.Data.Request;
 using SocialConnection.Data.Response;
@@ -14,11 +15,11 @@ namespace EventHubApi.Controllers.Social
     {
         private static readonly string AppId = ConfigurationManager.AppSettings["twitter.appid"];
         private static readonly string AppSecret = ConfigurationManager.AppSettings["twitter.appsecret"];
-        private ITwitterConnection<ClientTwitterAccessTokenResponseData> Twitter;
+        private IOAuth1Connection<OAuth1AccessTokenResponseData> Twitter;
 
-        public TwitterController(ITwitterConnection<ClientTwitterAccessTokenResponseData> twitter)
+        public TwitterController()
         {
-            Twitter = twitter;
+            Twitter = new TwitterConnection();
         }
 
         // GET social/twitter/oauth
@@ -40,7 +41,7 @@ namespace EventHubApi.Controllers.Social
         // GET social/twitter/oauth/access_token
         [HttpGet]
         [Route("oauth/access_token")]
-        public ActionResult<ClientTwitterAccessTokenResponseData> GetAccessToken(string oatuhToken, string verifierToken)
+        public ActionResult<OAuth1AccessTokenResponseData> GetAccessToken(string oatuhToken, string verifierToken)
         {
             return Twitter.GetAccessToken(CreateOAuth1TokenDataForAccessToken(oatuhToken, verifierToken));
         }

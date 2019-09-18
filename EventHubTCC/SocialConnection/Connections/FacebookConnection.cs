@@ -6,7 +6,7 @@ using SocialConnection.Data.Response;
 
 namespace SocialConnection.Connections
 {
-    public class FacebookConnection : IFacebookConnection<ClientFacebookAccessTokenResponseData>
+    public class FacebookConnection : IOAuth2Connection<OAuth2AccessTokenResponseData>
     {
         private const string ApiUrl = "https://graph.facebook.com";
         private const string FacebookUrl = "https://www.facebook.com/v4.0";
@@ -19,7 +19,7 @@ namespace SocialConnection.Connections
             return client.BuildUri(request).ToString();
         }
 
-        public ClientFacebookAccessTokenResponseData GetAccessToken(string appId, string appSecret, string code, string redirectUri)
+        public OAuth2AccessTokenResponseData GetAccessToken(string appId, string appSecret, string code, string redirectUri)
         {
             var client = new RestClient(ApiUrl);
             var request = new RestRequest(GetAccessEndPoint(appId, appSecret, code, redirectUri));
@@ -27,7 +27,12 @@ namespace SocialConnection.Connections
             // TODO implementar
             return null;
         }
-        
+
+        public OAuth2AccessTokenResponseData RefreshAccessToken(string appId, string appSecret, string refreshToken)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public PostResponseData Post(PostContentRequestData contentRequestData)
         {
             // TODO implementar

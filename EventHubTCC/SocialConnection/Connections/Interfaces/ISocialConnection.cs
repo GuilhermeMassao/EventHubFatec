@@ -1,4 +1,3 @@
-using SocialConnection.Data;
 using SocialConnection.Data.Request;
 using SocialConnection.Data.Response;
 
