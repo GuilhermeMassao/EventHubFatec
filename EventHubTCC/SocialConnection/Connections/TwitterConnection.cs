@@ -14,7 +14,7 @@ using Tweetinvi.Parameters;
 
 namespace SocialConnection.Connections
 {
-    public class TwitterConnection : IOAuth1Connection<OAuth1AccessTokenResponseData>
+    public class TwitterConnection : ITwitterConnection
     {
         private const string BaseUrl = "https://api.twitter.com/";
 
@@ -66,7 +66,7 @@ namespace SocialConnection.Connections
         /// </summary>
         /// <param name="tokenResponseData">OAuthTokenData with oauth_token, oauth_token_secret, oatuh</param>
         /// <returns>ClientAccessTokenData with the access token, token secret, user id, screen name</returns>
-        public OAuth1AccessTokenResponseData GetAccessToken(OAuth1TokenResponseData tokenResponseData)
+        public TwitterAccessTokenResponseData GetAccessToken(OAuth1TokenResponseData tokenResponseData)
         {
             var client = new RestClient(BaseUrl);
             var request = new RestRequest(GetAccessTokenEndPoint(tokenResponseData), Method.POST);
@@ -76,7 +76,7 @@ namespace SocialConnection.Connections
 
             if (response.IsSuccessful)
             {
-                return new OAuth1AccessTokenResponseData(queryString["oauth_token"],
+                return new TwitterAccessTokenResponseData(queryString["oauth_token"],
                     queryString["oauth_token_secret"],
                     queryString["user_id"],
                     queryString["screen_name"]);
@@ -89,11 +89,11 @@ namespace SocialConnection.Connections
         /// <summary>
         /// Post a new tweet based on given Tweet data object with tweet information
         /// Doc: https://developer.twitter.com/en/docs/tweets/post-and-engage/api-reference/post-statuses-update
-        /// TweetInvi publish tweet doc: https://github.com/linvi/tweetinvi/wiki/Upload
+        /// Tweetinvi publish tweet doc: https://github.com/linvi/tweetinvi/wiki/Upload
         /// </summary>
         /// <param name="contentRequestData">PostContent with tweet information</param>
         /// <returns>TweetResponseData response object</returns>
-        public PostResponseData Post(PostContentRequestData contentRequestData)
+        public PostResponseData PostTweet(TwitterPostContentData contentRequestData)
         {
             Auth.SetUserCredentials(contentRequestData.AppId,
                 contentRequestData.AppSecret,
@@ -111,7 +111,7 @@ namespace SocialConnection.Connections
                 $"Error while connecting to Twitter Api when posting a new Tweet. Twitter EndPoint:{GetPostTweetEndPoint(contentRequestData)}.", HttpStatusCode.BadRequest);
         }
 
-        private ITweet PublishTweet(PostContentRequestData contentRequestData)
+        private static ITweet PublishTweet(TwitterPostContentData contentRequestData)
         {
             /* Descomentar para fazer o teste gambiarra 
                 var file = File.ReadAllBytes("/home/rodrigosoares/Pictures/wallhaven-dgo8jm.jpg");
@@ -119,7 +119,7 @@ namespace SocialConnection.Connections
             */
             if (!contentRequestData.Medias.IsNullOrEmpty())
             {
-                var medias = getMediasList(contentRequestData);
+                var medias = GetMediasList(contentRequestData);
 
                 return Tweet.PublishTweet(contentRequestData.Text, new PublishTweetOptionalParameters()
                 {
@@ -130,7 +130,7 @@ namespace SocialConnection.Connections
             return Tweet.PublishTweet(contentRequestData.Text);
         }
 
-        private List<IMedia> getMediasList(PostContentRequestData contentRequestData)
+        private static List<IMedia> GetMediasList(TwitterPostContentData contentRequestData)
         {
             var medias = new List<IMedia>(); 
             foreach (var media in contentRequestData.Medias)
@@ -141,7 +141,7 @@ namespace SocialConnection.Connections
             return medias;
         }
 
-        private static string GetPostTweetEndPoint(PostContentRequestData contentRequestData)
+        private static string GetPostTweetEndPoint(TwitterPostContentData contentRequestData)
         {
             return $"/1.1/statuses/update.json?status={contentRequestData.Text}";
         }

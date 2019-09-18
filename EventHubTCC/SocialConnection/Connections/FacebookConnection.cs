@@ -33,7 +33,7 @@ namespace SocialConnection.Connections
             throw new System.NotImplementedException();
         }
 
-        public PostResponseData Post(PostContentRequestData contentRequestData)
+        public PostResponseData Post(BasePostContentRequestData contentRequestData)
         {
             // TODO implementar
             throw new System.NotImplementedException();

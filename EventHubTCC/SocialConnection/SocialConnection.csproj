@@ -81,17 +81,21 @@
   <ItemGroup>
     <Compile Include="Connections\FacebookConnection.cs" />
     <Compile Include="Connections\GoogleConnection.cs" />
+    <Compile Include="Connections\Interfaces\IGoogleConnection.cs" />
     <Compile Include="Connections\Interfaces\IOAuth2Connection.cs" />
-    <Compile Include="Connections\Interfaces\ISocialConnection.cs" />
     <Compile Include="Connections\Interfaces\IOAuth1Connection.cs" />
+    <Compile Include="Connections\Interfaces\ITwitterConnection.cs" />
     <Compile Include="Connections\TwitterConnection.cs" />
-    <Compile Include="Data\Request\PostContentRequestData.cs" />
+    <Compile Include="Data\Request\BasePostContentRequestData.cs" />
+    <Compile Include="Data\Request\GoogleCalendarPostContentData.cs" />
     <Compile Include="Data\Request\TweetRequestData.cs" />
+    <Compile Include="Data\Request\TwitterPostContentData.cs" />
     <Compile Include="Data\Response\OAuth2AccessTokenResponseData.cs" />
     <Compile Include="Data\Response\OAuth1AccessTokenResponseData.cs" />
     <Compile Include="Data\Response\OAuth1TokenResponseData.cs" />
     <Compile Include="Data\Response\PostResponseData.cs" />
     <Compile Include="Data\Response\RequestTokenResponseData.cs" />
+    <Compile Include="Data\Response\TwitterAccessTokenResponseData.cs" />
     <Compile Include="Exceptions\CouldNotConnectException.cs" />
     <Compile Include="Models\TweetMedia.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

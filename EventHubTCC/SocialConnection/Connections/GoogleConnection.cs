@@ -7,7 +7,7 @@ using SocialConnection.Exceptions;
 
 namespace SocialConnection.Connections
 {
-    public class GoogleConnection : IOAuth2Connection<OAuth2AccessTokenResponseData>
+    public class GoogleConnection : IGoogleConnection
     {
         private const string AuthUrl = "https://accounts.google.com/o";
         private const string CalendarUrl = "https://www.googleapis.com/calendar";
@@ -75,11 +75,11 @@ namespace SocialConnection.Connections
                 $"Error while connecting to Google Api when refreshing Access Token. Google Calendar EndPoint: {AuthUrl}/oauth2/token.", response.StatusCode);
         }
 
-        public PostResponseData Post(PostContentRequestData contentRequestData)
+        public PostResponseData CreateEvent(GoogleCalendarPostContentData contentData)
         {
             throw new System.NotImplementedException();
         }
-        
+
         private string GetAuthenticationEndPoint(string appId, string redirectUri)
         {
             return $"oauth2/auth?scope={CalendarScope}&response_type=code&access_type=offline&redirect_uri={redirectUri}&client_id={appId}";

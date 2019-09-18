@@ -1,5 +1,5 @@
 using System.Configuration;
-using EventHubApi.Data;
+using EventHubApi.Models;
 using Microsoft.AspNetCore.Mvc;
 using SocialConnection.Connections;
 using SocialConnection.Connections.Interfaces;
@@ -15,7 +15,7 @@ namespace EventHubApi.Controllers.Social
     {
         private static readonly string AppId = ConfigurationManager.AppSettings["twitter.appid"];
         private static readonly string AppSecret = ConfigurationManager.AppSettings["twitter.appsecret"];
-        private IOAuth1Connection<OAuth1AccessTokenResponseData> Twitter;
+        private ITwitterConnection Twitter;
 
         public TwitterController()
         {
@@ -49,24 +49,24 @@ namespace EventHubApi.Controllers.Social
         // GET social/twitter/post
         [HttpGet]
         [Route("post")]
-        public ActionResult<PostResponseData> Post([FromBody] TwitterPostContentData content)
+        public ActionResult<PostResponseData> Post([FromBody] TwitterPostRequestBody content)
         {
-            return Twitter.Post(CreatePostContent(content));
+            return Twitter.PostTweet(PopulateContentData(content));
+        }
+
+        private static TwitterPostContentData PopulateContentData(TwitterPostRequestBody content)
+        {
+            return new TwitterPostContentData(content.AccessToken,
+                AppId,
+                AppSecret,
+                content.AccessTokenSecret,
+                content.Text,
+                content.Medias);
         }
 
         private static OAuth1TokenResponseData CreateOAuth1TokenDataForAccessToken(string oatuhToken, string verifierToken)
         {
             return new OAuth1TokenResponseData(oatuhToken, verifierToken);
-        }
-
-        private static PostContentRequestData CreatePostContent(TwitterPostContentData content)
-        {
-            return new PostContentRequestData(AppId,
-                AppSecret,
-                content.AccessToken,
-                content.AccessTokenSecret,
-                content.Text,
-                content.Medias);
         }
     }
 }
