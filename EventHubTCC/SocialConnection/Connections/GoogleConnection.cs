@@ -1,5 +1,6 @@
 using System.Web;
 using RestSharp;
+using RestSharp.Authenticators;
 using SocialConnection.Connections.Interfaces;
 using SocialConnection.Data.Request;
 using SocialConnection.Data.Response;
@@ -77,10 +78,42 @@ namespace SocialConnection.Connections
 
         public PostResponseData CreateEvent(GoogleCalendarPostContentData contentData)
         {
-            throw new System.NotImplementedException();
+            var client = new RestClient(CalendarUrl)
+            {
+                Authenticator = new OAuth2AuthorizationRequestHeaderAuthenticator(contentData.AccessToken)
+            };
+            var request = new RestRequest($"/v3/calendars/{contentData.CalendarId}/events", Method.POST);
+            request.AddHeader("Authorization", $"Bearer {contentData.AccessToken}");
+            request.AddJsonBody(
+                new
+                {
+                    start = new
+                    {
+                        dateTime = contentData.Start
+                    },
+                    end = new
+                    {
+                        dateTime = contentData.End
+                    },
+                    summary = contentData.Summary,
+                    description = contentData.Description,
+                    location = contentData.Location,
+                    organizer = contentData.Organizer
+                });
+            var response = client.Execute(request);
+            var queryString = HttpUtility.ParseQueryString(response.Content);
+
+            if (response.IsSuccessful)
+            {
+                // TODO Popular com as informações para salvar no banco
+                return new PostResponseData();
+            }
+
+            throw new CouldNotConnectException(
+                $"Error while connecting to Google Api when creating new event. Google Calendar EndPoint: {AuthUrl}/v3/calendars/{contentData.CalendarId}/events.\n {response.Content}", response.StatusCode);
         }
 
-        private string GetAuthenticationEndPoint(string appId, string redirectUri)
+        private static string GetAuthenticationEndPoint(string appId, string redirectUri)
         {
             return $"oauth2/auth?scope={CalendarScope}&response_type=code&access_type=offline&redirect_uri={redirectUri}&client_id={appId}";
         }

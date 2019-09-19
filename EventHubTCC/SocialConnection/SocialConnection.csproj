@@ -97,6 +97,7 @@
     <Compile Include="Data\Response\RequestTokenResponseData.cs" />
     <Compile Include="Data\Response\TwitterAccessTokenResponseData.cs" />
     <Compile Include="Exceptions\CouldNotConnectException.cs" />
+    <Compile Include="Models\GoogleCalendarOrganizer.cs" />
     <Compile Include="Models\TweetMedia.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

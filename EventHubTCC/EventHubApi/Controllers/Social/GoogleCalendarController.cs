@@ -1,7 +1,9 @@
 using System.Configuration;
+using EventHubApi.Models;
 using Microsoft.AspNetCore.Mvc;
 using SocialConnection.Connections;
 using SocialConnection.Connections.Interfaces;
+using SocialConnection.Data.Request;
 using SocialConnection.Data.Response;
 using ControllerBase = Microsoft.AspNetCore.Mvc.ControllerBase;
 
@@ -13,7 +15,7 @@ namespace EventHubApi.Controllers.Social
     {
         private static readonly string AppId = ConfigurationManager.AppSettings["google.calendar.appid"];
         private static readonly string AppSecret = ConfigurationManager.AppSettings["google.calendar.appsecret"];
-        private IOAuth2Connection<OAuth2AccessTokenResponseData> Calendar;
+        private IGoogleConnection Calendar;
 
         public GoogleCalendarController()
         {
@@ -48,9 +50,9 @@ namespace EventHubApi.Controllers.Social
         // GET social/google/calendar/post
         [HttpGet]
         [Route("post")]
-        public ActionResult<OAuth2AccessTokenResponseData> Post(string code, string redirectUri)
+        public ActionResult<PostResponseData> Post([FromBody] GoogleCalendarPostContentData content)
         {
-            return null;
+            return Calendar.CreateEvent(content);
         }
     }
 }
