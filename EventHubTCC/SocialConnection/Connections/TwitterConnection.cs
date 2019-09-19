@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Web;
@@ -109,6 +110,23 @@ namespace SocialConnection.Connections
             
             throw new CouldNotConnectException(
                 $"Error while connecting to Twitter Api when posting a new Tweet. Twitter EndPoint:{GetPostTweetEndPoint(contentRequestData)}.", HttpStatusCode.BadRequest);
+        }
+
+        /// <summary>
+        /// Delete previous created Tweet
+        /// Doc: https://developer.twitter.com/en/docs/tweets/post-and-engage/api-reference/post-statuses-destroy-id
+        /// </summary>
+        /// <param name="authorizationData">Authorization Data</param>
+        /// <param name="id">Tweet Id</param>
+        /// <returns>Boolean operation result</returns>
+        public bool DeleteTweet(OAuth1AuthorizationData authorizationData, string id)
+        {
+            Auth.SetUserCredentials(authorizationData.AppId,
+                authorizationData.AppSecret,
+                authorizationData.AccessToken,
+                authorizationData.AccessTokenSecret);
+
+            return Tweet.DestroyTweet(long.Parse(id));
         }
 
         private static ITweet PublishTweet(TwitterPostContentData contentRequestData)

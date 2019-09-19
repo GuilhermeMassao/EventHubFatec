@@ -1,5 +1,4 @@
 using System.Configuration;
-using EventHubApi.Models;
 using Microsoft.AspNetCore.Mvc;
 using SocialConnection.Connections;
 using SocialConnection.Connections.Interfaces;

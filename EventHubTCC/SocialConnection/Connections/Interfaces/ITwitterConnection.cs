@@ -6,5 +6,6 @@ namespace SocialConnection.Connections.Interfaces
     public interface ITwitterConnection : IOAuth1Connection<TwitterAccessTokenResponseData>
     {
         PostResponseData PostTweet(TwitterPostContentData contentData);
+        bool DeleteTweet(OAuth1AuthorizationData authorizationData, string id);
     }
 }

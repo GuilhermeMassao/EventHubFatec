@@ -53,6 +53,14 @@ namespace EventHubApi.Controllers.Social
         {
             return Twitter.PostTweet(PopulateContentData(content));
         }
+        
+        // GET social/twitter/delete
+        [HttpGet]
+        [Route("delete")]
+        public ActionResult<bool> Delete([FromBody] OAuth1BasicAuthentication authentication, string id)
+        {
+            return Twitter.DeleteTweet(PopulateAutorizationData(authentication) ,id);
+        }
 
         private static TwitterPostContentData PopulateContentData(TwitterPostRequestBody content)
         {
@@ -62,6 +70,14 @@ namespace EventHubApi.Controllers.Social
                 content.AccessTokenSecret,
                 content.Text,
                 content.Medias);
+        }
+
+        private static OAuth1AuthorizationData PopulateAutorizationData(OAuth1BasicAuthentication authentication)
+        {
+            return new OAuth1AuthorizationData(AppId,
+                AppSecret,
+                authentication.AccessToken,
+                authentication.AccessTokenSecret);
         }
 
         private static OAuth1TokenResponseData CreateOAuth1TokenDataForAccessToken(string oatuhToken, string verifierToken)
