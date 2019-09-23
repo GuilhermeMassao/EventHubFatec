@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Web;
@@ -47,7 +46,7 @@ namespace SocialConnection.Connections
             }
 
             throw new CouldNotConnectException(
-                "Error while connecting to Twitter Api when requesting token. Twitter EndPoint:{/oauth/request_token}.", response.StatusCode);
+                $"Error while connecting to Twitter Api when requesting token. Twitter EndPoint: /oauth/request_token.\n {response.Content}", response.StatusCode);
         }
 
         /// <summary>
@@ -84,7 +83,7 @@ namespace SocialConnection.Connections
             }
 
             throw new CouldNotConnectException(
-                $"Error while connecting to Twitter Api when requesting Access Token. Twitter EndPoint:{GetAccessTokenEndPoint(tokenResponseData)}.", response.StatusCode);
+                $"Error while connecting to Twitter Api when requesting Access Token. Twitter EndPoint:{GetAccessTokenEndPoint(tokenResponseData)}.\n {response.Content}", response.StatusCode);
         }
 
         /// <summary>
@@ -101,7 +100,7 @@ namespace SocialConnection.Connections
                 contentRequestData.AccessToken,
                 contentRequestData.AccessTokenSecret);
             var response = PublishTweet(contentRequestData);
-
+            
             if (response != null)
             {
                 // TODO Verificar as informações retornadas e adicioná-las no objeto

@@ -1,6 +1,6 @@
 using System.Web;
+using Newtonsoft.Json.Linq;
 using RestSharp;
-using RestSharp.Authenticators;
 using SocialConnection.Connections.Interfaces;
 using SocialConnection.Data.Request;
 using SocialConnection.Data.Response;
@@ -47,7 +47,7 @@ namespace SocialConnection.Connections
             }
 
             throw new CouldNotConnectException(
-                $"Error while connecting to Google Api when requesting Access Token. Google Calendar EndPoint: {AuthUrl}/oauth2/token.", response.StatusCode);
+                $"Error while connecting to Google Api when requesting Access Token. Google Calendar EndPoint: {AuthUrl}/oauth2/token.\n {response.Content}", response.StatusCode);
         }
 
         public OAuth2AccessTokenResponseData RefreshAccessToken(string appId, string appSecret, string refreshToken)
@@ -64,16 +64,16 @@ namespace SocialConnection.Connections
                 });
             var response = client.Execute(request);
 
-            var queryString = HttpUtility.ParseQueryString(response.Content);
+            var queryString = JObject.Parse(response.Content);
 
             if (response.IsSuccessful)
             {
-                return new OAuth2AccessTokenResponseData(queryString["access_token"],
-                    queryString["token_type"]);
+                return new OAuth2AccessTokenResponseData((string)queryString["access_token"],
+                    (string)queryString["token_type"]);
             }
 
             throw new CouldNotConnectException(
-                $"Error while connecting to Google Api when refreshing Access Token. Google Calendar EndPoint: {AuthUrl}/oauth2/token.", response.StatusCode);
+                $"Error while connecting to Google Api when refreshing Access Token. Google Calendar EndPoint: {AuthUrl}/oauth2/token. \n {response.Content}", response.StatusCode);
         }
 
         public PostResponseData CreateEvent(GoogleCalendarPostContentData contentData)
@@ -84,25 +84,20 @@ namespace SocialConnection.Connections
             request.AddJsonBody(
                 new
                 {
-                    start = new
-                    {
-                        dateTime = contentData.Start
-                    },
-                    end = new
-                    {
-                        dateTime = contentData.End
-                    },
+                    start = new { dateTime = contentData.Start },
+                    end = new { dateTime = contentData.End },
                     summary = contentData.Summary,
                     description = contentData.Description,
                     location = contentData.Location,
                     organizer = contentData.Organizer
                 });
             var response = client.Execute(request);
-            var queryString = HttpUtility.ParseQueryString(response.Content);
+            var queryString = JObject.Parse(response.Content);
 
             if (response.IsSuccessful)
             {
                 // TODO Popular com as informações para salvar no banco
+                // (string)JObject.Parse(response.Content)["id"]
                 return new PostResponseData();
             }
 
