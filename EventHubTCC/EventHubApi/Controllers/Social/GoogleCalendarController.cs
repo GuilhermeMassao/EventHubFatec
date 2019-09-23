@@ -53,5 +53,13 @@ namespace EventHubApi.Controllers.Social
         {
             return Calendar.CreateEvent(content);
         }
+        
+        // GET social/google/calendar/delete
+        [HttpGet]
+        [Route("delete")]
+        public ActionResult<bool> DeleteEvent([FromBody] string accessToken, string calendarId, string eventId)
+        {
+            return Calendar.DeleteEvent(accessToken, calendarId, eventId);
+        }
     }
 }

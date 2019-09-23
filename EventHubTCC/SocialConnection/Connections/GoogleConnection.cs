@@ -78,10 +78,7 @@ namespace SocialConnection.Connections
 
         public PostResponseData CreateEvent(GoogleCalendarPostContentData contentData)
         {
-            var client = new RestClient(CalendarUrl)
-            {
-                Authenticator = new OAuth2AuthorizationRequestHeaderAuthenticator(contentData.AccessToken)
-            };
+            var client = new RestClient(CalendarUrl);
             var request = new RestRequest($"/v3/calendars/{contentData.CalendarId}/events", Method.POST);
             request.AddHeader("Authorization", $"Bearer {contentData.AccessToken}");
             request.AddJsonBody(
@@ -111,6 +108,18 @@ namespace SocialConnection.Connections
 
             throw new CouldNotConnectException(
                 $"Error while connecting to Google Api when creating new event. Google Calendar EndPoint: {AuthUrl}/v3/calendars/{contentData.CalendarId}/events.\n {response.Content}", response.StatusCode);
+        }
+
+        public bool DeleteEvent(string accessToken, string calendarId, string eventId)
+        {
+            var client = new RestClient(CalendarUrl);
+            var request = new RestRequest($"/v3/calendars/{calendarId}/events/{eventId}", Method.DELETE);
+            request.AddHeader("Authorization", $"Bearer {accessToken}");
+            
+            var response = client.Execute(request);
+
+            return response.IsSuccessful ? true : throw new CouldNotConnectException(
+                $"Error while connecting to Google Api when creating new event. Google Calendar EndPoint: {AuthUrl}/v3/calendars/{calendarId}/events/{eventId}.\n {response.Content}", response.StatusCode);;
         }
 
         private static string GetAuthenticationEndPoint(string appId, string redirectUri)
