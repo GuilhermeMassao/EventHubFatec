@@ -6,7 +6,7 @@ using SocialConnection.Data.Request;
 using SocialConnection.Data.Response;
 using ControllerBase = Microsoft.AspNetCore.Mvc.ControllerBase;
 
-namespace EventHubApi.Controllers.Social
+namespace EventHubApi.SocialTestApi
 {
     [Route("social/google/calendar")]
     [ApiController]

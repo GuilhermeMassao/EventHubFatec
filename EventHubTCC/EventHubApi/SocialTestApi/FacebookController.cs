@@ -5,7 +5,7 @@ using SocialConnection.Connections.Interfaces;
 using SocialConnection.Data.Response;
 using ControllerBase = Microsoft.AspNetCore.Mvc.ControllerBase;
 
-namespace EventHubApi.Controllers.Social
+namespace EventHubApi.SocialTestApi
 {
     [Route("social/facebook")]
     [ApiController]

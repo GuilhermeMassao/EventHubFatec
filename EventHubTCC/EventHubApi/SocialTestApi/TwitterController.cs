@@ -1,5 +1,5 @@
 using System.Configuration;
-using EventHubApi.Models;
+using EventHubApi.SocialTestApi.Models;
 using Microsoft.AspNetCore.Mvc;
 using SocialConnection.Connections;
 using SocialConnection.Connections.Interfaces;
@@ -7,7 +7,7 @@ using SocialConnection.Data.Request;
 using SocialConnection.Data.Response;
 using ControllerBase = Microsoft.AspNetCore.Mvc.ControllerBase;
 
-namespace EventHubApi.Controllers.Social
+namespace EventHubApi.SocialTestApi
 {
     [Route("social/twitter")]
     [ApiController]
