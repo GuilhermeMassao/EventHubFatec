@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using System.Web;
 using Newtonsoft.Json.Linq;
 using RestSharp;
@@ -117,7 +119,7 @@ namespace SocialConnection.Connections
                 $"Error while connecting to Google Api when creating new event. Google Calendar EndPoint: {CalendarUrl}/v3/calendars/{calendarId}/events/{eventId}.\n {response.Content}", response.StatusCode);;
         }
 
-        public GoogleAgendaResponseData GetAgendaList(string accessToken)
+        public IEnumerable<GoogleAgendaResponseData> GetAgendaList(string accessToken)
         {
             var client = new RestClient(CalendarUrl);
             var request = new RestRequest("/v3/users/me/calendarList", Method.GET);
@@ -127,12 +129,12 @@ namespace SocialConnection.Connections
 
             if (response.IsSuccessful)
             {
-                var queryString = JObject.Parse(response.Content);
-                return new GoogleAgendaResponseData((string)queryString["id"], 
-                    (string)queryString["summary"]);
+                return JObject.Parse(response.Content)["items"]
+                    .Select(calendar => JObject.Parse(response.Content))
+                    .Select(queryString => new GoogleAgendaResponseData((string) queryString["id"],
+                                                                    (string) queryString["summary"])).ToList();
             }
             throw new CouldNotConnectException(
-                
                 $"Error while connecting to Google Api when get user calendar list. Google Calendar EndPoint: {CalendarUrl}/v3/users/me/calendarList.\n {response.Content}", response.StatusCode);;
         }
 
