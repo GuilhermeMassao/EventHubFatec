@@ -1,4 +1,4 @@
-namespace EventHubApi.Models
+namespace EventHubApi.SocialTestApi.Models
 {
     public class OAuth1BasicAuthentication
     {

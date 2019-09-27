@@ -1,6 +1,6 @@
 using SocialConnection.Models;
 
-namespace EventHubApi.Models
+namespace EventHubApi.SocialTestApi.Models
 {
     public class TwitterPostRequestBody
     {
