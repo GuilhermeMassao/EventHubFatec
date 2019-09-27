@@ -7,5 +7,6 @@ namespace SocialConnection.Connections.Interfaces
     {
         PostResponseData CreateEvent(GoogleCalendarPostContentData contentData);
         bool DeleteEvent(string accessToken, string calendarId, string eventId);
+        GoogleAgendaResponseData GetAgendaList(string accessToken);
     }
 }

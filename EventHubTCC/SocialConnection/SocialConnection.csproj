@@ -91,6 +91,7 @@
     <Compile Include="Data\Request\OAuth1AuthorizationData.cs" />
     <Compile Include="Data\Request\TweetRequestData.cs" />
     <Compile Include="Data\Request\TwitterPostContentData.cs" />
+    <Compile Include="Data\Response\GoogleAgendaResponseData.cs" />
     <Compile Include="Data\Response\OAuth2AccessTokenResponseData.cs" />
     <Compile Include="Data\Response\OAuth1AccessTokenResponseData.cs" />
     <Compile Include="Data\Response\OAuth1TokenResponseData.cs" />
