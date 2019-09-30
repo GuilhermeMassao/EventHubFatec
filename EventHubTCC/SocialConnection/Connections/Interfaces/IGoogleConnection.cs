@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using SocialConnection.Data.Request;
 using SocialConnection.Data.Response;
 
@@ -7,6 +8,6 @@ namespace SocialConnection.Connections.Interfaces
     {
         PostResponseData CreateEvent(GoogleCalendarPostContentData contentData);
         bool DeleteEvent(string accessToken, string calendarId, string eventId);
-        GoogleAgendaResponseData GetAgendaList(string accessToken);
+        IEnumerable<GoogleAgendaResponseData> GetAgendaList(string accessToken);
     }
 }
