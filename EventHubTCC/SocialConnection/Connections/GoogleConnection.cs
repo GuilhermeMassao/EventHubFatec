@@ -98,8 +98,14 @@ namespace SocialConnection.Connections
 
             if (response.IsSuccessful)
             {
-                // TODO Popular com as informações para salvar no banco
                 // (string)JObject.Parse(response.Content)["id"]
+                /*return PostResponseDataBuilder.AModel()
+                    .WithId((string)queryString["id"])
+                    .WithUserId(response.CreatedBy.Id)
+                    .WithContent(response.Text)
+                    .WithOrganizer(response.CreatedBy.Name)
+                    .WithCreateDate(response.CreatedAt)
+                    .Build();*/
                 return new PostResponseData();
             }
 

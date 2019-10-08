@@ -104,7 +104,13 @@ namespace SocialConnection.Connections
             if (response != null)
             {
                 // TODO Verificar as informações retornadas e adicioná-las no objeto
-                return PostResponseDataBuilder.AModel().Build();
+                return PostResponseDataBuilder.AModel()
+                    .WithId(response.IdStr)
+                    .WithUserId(response.CreatedBy.IdStr)
+                    .WithContent(response.Text)
+                    .WithOrganizer(response.CreatedBy.Name)
+                    .WithCreateDate(response.CreatedAt)
+                    .Build();
             }
             
             throw new CouldNotConnectException(

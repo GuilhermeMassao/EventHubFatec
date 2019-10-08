@@ -4,12 +4,11 @@ namespace SocialConnection.Data.Response
 {
     public class PostResponseData
     {
-        public long Id { get; set; }
-        public long UserId { get; set; }
+        public string Id { get; set; }
+        public string UserId { get; set; }
         public string Content { get; set; }
         public string Organizer { get; set; }
-        public string Place { get; set; }
-        public string CreateDate { get; set; }
+        public DateTime CreateDate { get; set; }
     }
 
     public class PostResponseDataBuilder
@@ -26,13 +25,13 @@ namespace SocialConnection.Data.Response
             return new PostResponseDataBuilder();
         }
 
-        public PostResponseDataBuilder WithId(long id)
+        public PostResponseDataBuilder WithId(string id)
         {
             Model.Id = id;
             return this;
         }
         
-        public PostResponseDataBuilder WithUserId(long id)
+        public PostResponseDataBuilder WithUserId(string id)
         {
             Model.UserId = id;
             return this;
@@ -49,14 +48,8 @@ namespace SocialConnection.Data.Response
             Model.Organizer = organizer;
             return this;
         }
-        
-        public PostResponseDataBuilder WithPlace(string place)
-        {
-            Model.Place = place;
-            return this;
-        }
-        
-        public PostResponseDataBuilder WithCreateDate(string createDate)
+
+        public PostResponseDataBuilder WithCreateDate(DateTime createDate)
         {
             Model.CreateDate = createDate;
             return this;
