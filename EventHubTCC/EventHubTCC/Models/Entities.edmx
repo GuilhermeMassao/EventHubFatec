@@ -1,0 +1,408 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="TCCModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Divulgacao">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Descricao" Type="varchar" MaxLength="2000" />
+          <Property Name="Title" Type="varchar" MaxLength="50" />
+          <Property Name="Fonte" Type="varchar" MaxLength="10" />
+          <Property Name="Id" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="DataAlteração" Type="varchar" MaxLength="10" />
+          <Property Name="Texto" Type="varchar" MaxLength="2000" />
+          <Property Name="IdTweet" Type="int" />
+          <Property Name="IdAgenda" Type="int" />
+          <Property Name="IdEvento" Type="int" />
+        </EntityType>
+        <EntityType Name="EnderecoEvento">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Cidade" Type="varchar" MaxLength="10" />
+          <Property Name="Logradouro" Type="varchar" MaxLength="10" />
+          <Property Name="Bairro" Type="varchar" MaxLength="50" />
+          <Property Name="Estado" Type="varchar" MaxLength="10" />
+          <Property Name="Id" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Complemento" Type="varchar" MaxLength="50" />
+          <Property Name="CEP" Type="varchar" MaxLength="10" />
+          <Property Name="Número" Type="varchar" MaxLength="10" />
+          <Property Name="IdEvento" Type="int" />
+        </EntityType>
+        <EntityType Name="Eventos">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="DataFim" Type="datetime" />
+          <Property Name="DataInicio" Type="datetime" />
+          <Property Name="NomeEvento" Type="varchar" MaxLength="50" />
+          <Property Name="Descricao" Type="varchar" MaxLength="500" />
+          <Property Name="IdUsuario" Type="int" />
+        </EntityType>
+        <EntityType Name="InscritosEvento">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="IdUsuario" Type="int" />
+          <Property Name="IdEvento" Type="int" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Senha" Type="varchar" MaxLength="50" />
+          <Property Name="TwitterAcessTokenSecret" Type="varchar" MaxLength="10" />
+          <Property Name="GoogleRefreshToken" Type="varchar" MaxLength="10" />
+          <Property Name="Email" Type="varchar" MaxLength="50" />
+          <Property Name="Nome" Type="varchar" MaxLength="200" />
+          <Property Name="TwitterAcessToken" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <Association Name="FK__Divulgaca__IdEve__52593CB8">
+          <End Role="Eventos" Type="Self.Eventos" Multiplicity="0..1" />
+          <End Role="Divulgacao" Type="Self.Divulgacao" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Eventos">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Divulgacao">
+              <PropertyRef Name="IdEvento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__EnderecoE__IdEve__5535A963">
+          <End Role="Eventos" Type="Self.Eventos" Multiplicity="0..1" />
+          <End Role="EnderecoEvento" Type="Self.EnderecoEvento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Eventos">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EnderecoEvento">
+              <PropertyRef Name="IdEvento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Eventos__IdUsuar__4BAC3F29">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="Eventos" Type="Self.Eventos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Eventos">
+              <PropertyRef Name="IdUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Inscritos__IdEve__4F7CD00D">
+          <End Role="Eventos" Type="Self.Eventos" Multiplicity="0..1" />
+          <End Role="InscritosEvento" Type="Self.InscritosEvento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Eventos">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="InscritosEvento">
+              <PropertyRef Name="IdEvento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Inscritos__IdUsu__4E88ABD4">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="InscritosEvento" Type="Self.InscritosEvento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="InscritosEvento">
+              <PropertyRef Name="IdUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TCCModelStoreContainer">
+          <EntitySet Name="Divulgacao" EntityType="Self.Divulgacao" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EnderecoEvento" EntityType="Self.EnderecoEvento" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Eventos" EntityType="Self.Eventos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="InscritosEvento" EntityType="Self.InscritosEvento" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Divulgaca__IdEve__52593CB8" Association="Self.FK__Divulgaca__IdEve__52593CB8">
+            <End Role="Eventos" EntitySet="Eventos" />
+            <End Role="Divulgacao" EntitySet="Divulgacao" />
+          </AssociationSet>
+          <AssociationSet Name="FK__EnderecoE__IdEve__5535A963" Association="Self.FK__EnderecoE__IdEve__5535A963">
+            <End Role="Eventos" EntitySet="Eventos" />
+            <End Role="EnderecoEvento" EntitySet="EnderecoEvento" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Eventos__IdUsuar__4BAC3F29" Association="Self.FK__Eventos__IdUsuar__4BAC3F29">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Eventos" EntitySet="Eventos" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Inscritos__IdEve__4F7CD00D" Association="Self.FK__Inscritos__IdEve__4F7CD00D">
+            <End Role="Eventos" EntitySet="Eventos" />
+            <End Role="InscritosEvento" EntitySet="InscritosEvento" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Inscritos__IdUsu__4E88ABD4" Association="Self.FK__Inscritos__IdUsu__4E88ABD4">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="InscritosEvento" EntitySet="InscritosEvento" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TCCModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Divulgacao">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Descricao" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
+          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Fonte" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Id" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DataAlteração" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Texto" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
+          <Property Name="IdTweet" Type="Int32" />
+          <Property Name="IdAgenda" Type="Int32" />
+          <Property Name="IdEvento" Type="Int32" />
+          <NavigationProperty Name="Evento" Relationship="Self.FK__Divulgaca__IdEve__52593CB8" FromRole="Divulgacao" ToRole="Eventos" />
+        </EntityType>
+        <EntityType Name="EnderecoEvento">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Cidade" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Logradouro" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Bairro" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Estado" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Id" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Complemento" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CEP" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Número" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="IdEvento" Type="Int32" />
+          <NavigationProperty Name="Evento" Relationship="Self.FK__EnderecoE__IdEve__5535A963" FromRole="EnderecoEvento" ToRole="Eventos" />
+        </EntityType>
+        <EntityType Name="Evento">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="DataFim" Type="DateTime" Precision="3" />
+          <Property Name="DataInicio" Type="DateTime" Precision="3" />
+          <Property Name="NomeEvento" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Descricao" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="IdUsuario" Type="Int32" />
+          <NavigationProperty Name="Divulgacaos" Relationship="Self.FK__Divulgaca__IdEve__52593CB8" FromRole="Eventos" ToRole="Divulgacao" />
+          <NavigationProperty Name="EnderecoEventoes" Relationship="Self.FK__EnderecoE__IdEve__5535A963" FromRole="Eventos" ToRole="EnderecoEvento" />
+          <NavigationProperty Name="Usuario" Relationship="Self.FK__Eventos__IdUsuar__4BAC3F29" FromRole="Eventos" ToRole="Usuario" />
+          <NavigationProperty Name="InscritosEventoes" Relationship="Self.FK__Inscritos__IdEve__4F7CD00D" FromRole="Eventos" ToRole="InscritosEvento" />
+        </EntityType>
+        <EntityType Name="InscritosEvento">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IdUsuario" Type="Int32" />
+          <Property Name="IdEvento" Type="Int32" />
+          <NavigationProperty Name="Evento" Relationship="Self.FK__Inscritos__IdEve__4F7CD00D" FromRole="InscritosEvento" ToRole="Eventos" />
+          <NavigationProperty Name="Usuario" Relationship="Self.FK__Inscritos__IdUsu__4E88ABD4" FromRole="InscritosEvento" ToRole="Usuario" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Senha" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TwitterAcessTokenSecret" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="GoogleRefreshToken" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Nome" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="TwitterAcessToken" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Eventos" Relationship="Self.FK__Eventos__IdUsuar__4BAC3F29" FromRole="Usuario" ToRole="Eventos" />
+          <NavigationProperty Name="InscritosEventoes" Relationship="Self.FK__Inscritos__IdUsu__4E88ABD4" FromRole="Usuario" ToRole="InscritosEvento" />
+        </EntityType>
+        <Association Name="FK__Divulgaca__IdEve__52593CB8">
+          <End Role="Eventos" Type="Self.Evento" Multiplicity="0..1" />
+          <End Role="Divulgacao" Type="Self.Divulgacao" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Eventos">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Divulgacao">
+              <PropertyRef Name="IdEvento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__EnderecoE__IdEve__5535A963">
+          <End Role="Eventos" Type="Self.Evento" Multiplicity="0..1" />
+          <End Role="EnderecoEvento" Type="Self.EnderecoEvento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Eventos">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EnderecoEvento">
+              <PropertyRef Name="IdEvento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Eventos__IdUsuar__4BAC3F29">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="Eventos" Type="Self.Evento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Eventos">
+              <PropertyRef Name="IdUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Inscritos__IdEve__4F7CD00D">
+          <End Role="Eventos" Type="Self.Evento" Multiplicity="0..1" />
+          <End Role="InscritosEvento" Type="Self.InscritosEvento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Eventos">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="InscritosEvento">
+              <PropertyRef Name="IdEvento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Inscritos__IdUsu__4E88ABD4">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="InscritosEvento" Type="Self.InscritosEvento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="InscritosEvento">
+              <PropertyRef Name="IdUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TCCEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Divulgacaos" EntityType="Self.Divulgacao" />
+          <EntitySet Name="EnderecoEventoes" EntityType="Self.EnderecoEvento" />
+          <EntitySet Name="Eventos" EntityType="Self.Evento" />
+          <EntitySet Name="InscritosEventoes" EntityType="Self.InscritosEvento" />
+          <EntitySet Name="Usuarios" EntityType="Self.Usuario" />
+          <AssociationSet Name="FK__Divulgaca__IdEve__52593CB8" Association="Self.FK__Divulgaca__IdEve__52593CB8">
+            <End Role="Eventos" EntitySet="Eventos" />
+            <End Role="Divulgacao" EntitySet="Divulgacaos" />
+          </AssociationSet>
+          <AssociationSet Name="FK__EnderecoE__IdEve__5535A963" Association="Self.FK__EnderecoE__IdEve__5535A963">
+            <End Role="Eventos" EntitySet="Eventos" />
+            <End Role="EnderecoEvento" EntitySet="EnderecoEventoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Eventos__IdUsuar__4BAC3F29" Association="Self.FK__Eventos__IdUsuar__4BAC3F29">
+            <End Role="Usuario" EntitySet="Usuarios" />
+            <End Role="Eventos" EntitySet="Eventos" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Inscritos__IdEve__4F7CD00D" Association="Self.FK__Inscritos__IdEve__4F7CD00D">
+            <End Role="Eventos" EntitySet="Eventos" />
+            <End Role="InscritosEvento" EntitySet="InscritosEventoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Inscritos__IdUsu__4E88ABD4" Association="Self.FK__Inscritos__IdUsu__4E88ABD4">
+            <End Role="Usuario" EntitySet="Usuarios" />
+            <End Role="InscritosEvento" EntitySet="InscritosEventoes" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TCCModelStoreContainer" CdmEntityContainer="TCCEntities">
+          <EntitySetMapping Name="Divulgacaos">
+            <EntityTypeMapping TypeName="TCCModel.Divulgacao">
+              <MappingFragment StoreEntitySet="Divulgacao">
+                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Fonte" ColumnName="Fonte" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="DataAlteração" ColumnName="DataAlteração" />
+                <ScalarProperty Name="Texto" ColumnName="Texto" />
+                <ScalarProperty Name="IdTweet" ColumnName="IdTweet" />
+                <ScalarProperty Name="IdAgenda" ColumnName="IdAgenda" />
+                <ScalarProperty Name="IdEvento" ColumnName="IdEvento" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EnderecoEventoes">
+            <EntityTypeMapping TypeName="TCCModel.EnderecoEvento">
+              <MappingFragment StoreEntitySet="EnderecoEvento">
+                <ScalarProperty Name="Cidade" ColumnName="Cidade" />
+                <ScalarProperty Name="Logradouro" ColumnName="Logradouro" />
+                <ScalarProperty Name="Bairro" ColumnName="Bairro" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Complemento" ColumnName="Complemento" />
+                <ScalarProperty Name="CEP" ColumnName="CEP" />
+                <ScalarProperty Name="Número" ColumnName="Número" />
+                <ScalarProperty Name="IdEvento" ColumnName="IdEvento" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Eventos">
+            <EntityTypeMapping TypeName="TCCModel.Evento">
+              <MappingFragment StoreEntitySet="Eventos">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="DataFim" ColumnName="DataFim" />
+                <ScalarProperty Name="DataInicio" ColumnName="DataInicio" />
+                <ScalarProperty Name="NomeEvento" ColumnName="NomeEvento" />
+                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="InscritosEventoes">
+            <EntityTypeMapping TypeName="TCCModel.InscritosEvento">
+              <MappingFragment StoreEntitySet="InscritosEvento">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="IdEvento" ColumnName="IdEvento" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuarios">
+            <EntityTypeMapping TypeName="TCCModel.Usuario">
+              <MappingFragment StoreEntitySet="Usuario">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Senha" ColumnName="Senha" />
+                <ScalarProperty Name="TwitterAcessTokenSecret" ColumnName="TwitterAcessTokenSecret" />
+                <ScalarProperty Name="GoogleRefreshToken" ColumnName="GoogleRefreshToken" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="TwitterAcessToken" ColumnName="TwitterAcessToken" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
