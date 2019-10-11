@@ -7,23 +7,18 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace EventHubTCC.Models
+namespace EventHubTCC.Models.Entities
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class EnderecoEvento
+    public partial class InscritosEvento
     {
-        public string Cidade { get; set; }
-        public string Logradouro { get; set; }
-        public string Bairro { get; set; }
-        public string Estado { get; set; }
         public string Id { get; set; }
-        public string Complemento { get; set; }
-        public string CEP { get; set; }
-        public string Número { get; set; }
+        public Nullable<int> IdUsuario { get; set; }
         public Nullable<int> IdEvento { get; set; }
     
         public virtual Evento Evento { get; set; }
+        public virtual Usuario Usuario { get; set; }
     }
 }

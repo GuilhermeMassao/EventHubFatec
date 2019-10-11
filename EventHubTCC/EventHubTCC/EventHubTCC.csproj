@@ -132,36 +132,41 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Divulgacao.cs">
+    <Compile Include="Models\Entities\Divulgacao.cs">
       <DependentUpon>Entities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\EnderecoEvento.cs">
+    <Compile Include="Models\Entities\EnderecoEvento.cs">
       <DependentUpon>Entities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Entities.Context.cs">
+    <Compile Include="Models\Entities\Entities.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Entities.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Entities.cs">
+    <Compile Include="Models\Entities\Entities.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Entities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Entities.Designer.cs">
+    <Compile Include="Models\Entities\Entities.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Entities.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Models\Evento.cs">
+    <Compile Include="Models\Entities\Evento.cs">
       <DependentUpon>Entities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\InscritosEvento.cs">
+    <Compile Include="Models\Entities\InscritosEvento.cs">
       <DependentUpon>Entities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Usuario.cs">
+    <Compile Include="Models\Entities\Usuario.cs">
       <DependentUpon>Entities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TO\EventAddressTO.cs" />
+    <Compile Include="Models\TO\EventSubscribersTO.cs" />
+    <Compile Include="Models\TO\EventTO.cs" />
+    <Compile Include="Models\TO\SharingTO.cs" />
+    <Compile Include="Models\TO\UserTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -173,23 +178,23 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Models\Entities.Context.tt">
+    <Content Include="Models\Entities\Entities.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Entities.Context.cs</LastGenOutput>
       <DependentUpon>Entities.edmx</DependentUpon>
     </Content>
-    <Content Include="Models\Entities.tt">
+    <Content Include="Models\Entities\Entities.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Entities.edmx</DependentUpon>
       <LastGenOutput>Entities.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <EntityDeploy Include="Models\Entities.edmx">
+    <EntityDeploy Include="Models\Entities\Entities.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Entities.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\Entities.edmx.diagram">
+    <Content Include="Models\Entities\Entities.edmx.diagram">
       <DependentUpon>Entities.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />

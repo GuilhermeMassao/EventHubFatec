@@ -7,33 +7,30 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace EventHubTCC.Models
+namespace EventHubTCC.Models.Entities
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Evento
+    public partial class Usuario
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Evento()
+        public Usuario()
         {
-            this.Divulgacaos = new HashSet<Divulgacao>();
-            this.EnderecoEventoes = new HashSet<EnderecoEvento>();
+            this.Eventos = new HashSet<Evento>();
             this.InscritosEventoes = new HashSet<InscritosEvento>();
         }
     
         public int Id { get; set; }
-        public Nullable<System.DateTime> DataFim { get; set; }
-        public Nullable<System.DateTime> DataInicio { get; set; }
-        public string NomeEvento { get; set; }
-        public string Descricao { get; set; }
-        public Nullable<int> IdUsuario { get; set; }
+        public string Senha { get; set; }
+        public string TwitterAcessTokenSecret { get; set; }
+        public string GoogleRefreshToken { get; set; }
+        public string Email { get; set; }
+        public string Nome { get; set; }
+        public string TwitterAcessToken { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Divulgacao> Divulgacaos { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<EnderecoEvento> EnderecoEventoes { get; set; }
-        public virtual Usuario Usuario { get; set; }
+        public virtual ICollection<Evento> Eventos { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<InscritosEvento> InscritosEventoes { get; set; }
     }

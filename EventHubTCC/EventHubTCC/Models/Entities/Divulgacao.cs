@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace EventHubTCC.Models
+namespace EventHubTCC.Models.Entities
 {
     using System;
     using System.Collections.Generic;
