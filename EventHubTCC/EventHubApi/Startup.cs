@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using EventHubApi.Bussiness;
+using EventHubApi.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -41,8 +43,9 @@ namespace EventHubApi
                 })
             );
             //IoC configuration
-//            services.AddTransient<IOAuth1Connection<OAuth1AccessTokenResponseData>, TwitterConnection>();
-//            services.AddTransient<IOAuth2Connection<OAuth2AccessTokenResponseData>, FacebookConnection>();
+            services.AddTransient<UserService, UserService>();
+            services.AddTransient<IUserRepository, UserRpository>();
+            //            services.AddTransient<IOAuth2Connection<OAuth2AccessTokenResponseData>, FacebookConnection>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

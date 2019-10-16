@@ -7,6 +7,9 @@
   <ItemGroup>
     <Folder Include="Controllers" />
     <Folder Include="wwwroot\" />
+    <Folder Include="Controllers\" />
+    <Folder Include="Bussiness\" />
+    <Folder Include="Repositories\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -14,6 +17,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.0.0-rc2" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.6.0-preview9.19421.4" />
+    <PackageReference Include="Unity.WebAPI" Version="5.4.0" />
   </ItemGroup>
 
   <ItemGroup>
