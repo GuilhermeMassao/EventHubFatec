@@ -5,9 +5,14 @@ VisualStudioVersion = 16.0.29209.62
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventHubTCC", "EventHubTCC\EventHubTCC.csproj", "{5AE5F182-18A5-420C-BA8E-CA79EB2CA65A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventHubApi", "EventHubApi\EventHubApi.csproj", "{43553377-BF59-4C28-B9D8-3E8DF05B85BA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventHubApi", "EventHubApi\EventHubApi.csproj", "{43553377-BF59-4C28-B9D8-3E8DF05B85BA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocialConnection", "SocialConnection\SocialConnection.csproj", "{56F3EE1E-C6A1-445D-8D49-C2FF2FB1A268}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Business", "Business\Business.csproj", "{60AC0110-77B5-4903-9991-E772525360B6}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5AE5F182-18A5-420C-BA8E-CA79EB2CA65A} = {5AE5F182-18A5-420C-BA8E-CA79EB2CA65A}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +32,10 @@ Global
 		{56F3EE1E-C6A1-445D-8D49-C2FF2FB1A268}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{56F3EE1E-C6A1-445D-8D49-C2FF2FB1A268}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{56F3EE1E-C6A1-445D-8D49-C2FF2FB1A268}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60AC0110-77B5-4903-9991-E772525360B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60AC0110-77B5-4903-9991-E772525360B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60AC0110-77B5-4903-9991-E772525360B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60AC0110-77B5-4903-9991-E772525360B6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

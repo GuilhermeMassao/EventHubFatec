@@ -12,12 +12,14 @@ namespace EventHubTCC.Models.Entities
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
-    
+
     public partial class TCCEntities : DbContext
     {
-        public TCCEntities()
+        DbContext _dbContext;
+        public TCCEntities(DbContext Db)
             : base("name=TCCEntities")
         {
+            _dbContext = Db;
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
