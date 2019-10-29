@@ -7,9 +7,9 @@ using EventHub.Domain.Services.BaseService;
 
 namespace EventHub.Application.Services.UserApplication
 {
-    public class UserApplication : ServiceApplication<UserInput, User, UserDTO>
+    public class UserApplication : ServiceApplication<UserInput, User>
     {
-        public UserApplication(IService<User,UserDTO> service,
+        public UserApplication(IService<User> service,
         IMapper inputToEntity): base(service, inputToEntity) {}
     }
 }

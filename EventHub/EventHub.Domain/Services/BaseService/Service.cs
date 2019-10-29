@@ -3,11 +3,10 @@ using System.Threading.Tasks;
 
 namespace EventHub.Domain.Services.BaseService
 {
-    public class Service<TEntity, TDto> : IService<TEntity, TDto>
+    public class Service<TEntity> : IService<TEntity>
         where TEntity : class
-        where TDto : class
     {
-        public async Task<int> Insert(TEntity input)
+        public async Task<int> Insert(TEntity dto)
         {
             return 0;
         }

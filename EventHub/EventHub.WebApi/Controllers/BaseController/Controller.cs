@@ -6,14 +6,13 @@ namespace EventHub.WebApi.Controllers.BaseController
 {
     [Route("api/v1/[controller]")]
     [ApiController]
-    public class Controller<TInput, TEntity, TDTO> : ControllerBase
+    public class Controller<TInput, TEntity> : ControllerBase
         where TInput : class
         where TEntity : class
-        where TDTO : class
     {
-        private readonly IServiceApplication<TInput, TEntity, TDTO> _service;
+        private readonly IServiceApplication<TInput, TEntity> _service;
     
-        public Controller(IServiceApplication<TInput, TEntity, TDTO> service)
+        public Controller(IServiceApplication<TInput, TEntity> service)
         {
             this._service = service;
         }

@@ -3,9 +3,8 @@ using System.Threading.Tasks;
 
 namespace EventHub.Domain.Services.BaseService
 {
-    public interface IService<TEntity, TDto>
+    public interface IService<TEntity>
         where TEntity : class
-        where TDto : class
     {
         Task<int> Delete(int id);
         Task<IEnumerable<TEntity>> GetAll();

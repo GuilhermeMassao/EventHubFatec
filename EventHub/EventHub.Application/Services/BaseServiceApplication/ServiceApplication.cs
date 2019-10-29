@@ -5,16 +5,15 @@ using System.Threading.Tasks;
 
 namespace EventHub.Application.Services.BaseServiceApplication
 {
-    public class ServiceApplication<TInput, TEntity, TDTO> :
-        IServiceApplication<TInput, TEntity, TDTO>
+    public class ServiceApplication<TInput, TEntity> :
+        IServiceApplication<TInput, TEntity>
         where TInput : class
         where TEntity : class
-        where TDTO : class
     {
-        private readonly IService<TEntity, TDTO> _service;
+        private readonly IService<TEntity> _service;
         private readonly IMapper _inputToEntity;
 
-        public ServiceApplication(IService<TEntity, TDTO> service, IMapper inputToEntity)
+        public ServiceApplication(IService<TEntity> service, IMapper inputToEntity)
         {
             this._service = service;
             this._inputToEntity = inputToEntity;
