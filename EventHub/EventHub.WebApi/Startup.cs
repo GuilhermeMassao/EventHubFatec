@@ -12,6 +12,13 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.Swagger;
 using EventHub.Application.Mapping;
+using EventHub.Application.Services.BaseServiceApplication;
+using EventHub.Domain.Services;
+using EventHub.Application.Services.UserApplication.Input;
+using EventHub.Domain.Entities;
+using EventHub.Application.Services.UserApplication;
+using EventHub.Domain.Services.BaseService;
+using EventHub.Domain.DTOs.User;
 
 namespace EventHub.WebApi
 {
@@ -40,6 +47,14 @@ namespace EventHub.WebApi
                     Description = "Management events and advertisement in social networks"
                 });
             });
+
+            //IoC configuration
+            services.AddScoped<IServiceApplication<UserInput, User, UserDTO>, ServiceApplication<UserInput, User, UserDTO>>();
+            services.AddScoped<UserApplication>();
+            services.AddScoped<IService<User, UserDTO>, Service<User, UserDTO>>();
+            services.AddScoped<UserService>();
+            /* mapping */
+            services.AddSingleton<InputToEntity>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

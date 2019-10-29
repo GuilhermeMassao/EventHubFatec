@@ -1,10 +1,13 @@
 ﻿using EventHub.Application.Services.BaseServiceApplication;
 using EventHub.Application.Services.UserApplication.Input;
-using EventHub.Application.Services.UserApplication.ViewModel;
+using EventHub.Domain.DTOs.User;
+using EventHub.Domain.Entities;
+using EventHub.Domain.Services.BaseService;
 
 namespace EventHub.Application.Services.UserApplication
 {
-    public class UserApplication : ServiceApplication<UserInput, UserViewModel>
-    {       
+    public class UserApplication : ServiceApplication<UserInput, User, UserDTO>
+    {
+        public UserApplication(IService<User,UserDTO> service): base(service) {}
     }
 }

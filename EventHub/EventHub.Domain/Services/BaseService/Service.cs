@@ -3,26 +3,26 @@ using System.Threading.Tasks;
 
 namespace EventHub.Domain.Services.BaseService
 {
-    public class Service<TInput, TViewModel> : IService<TInput, TViewModel>
-        where TInput : class
-        where TViewModel : class
+    public class Service<TEntity, TDto> : IService<TEntity, TDto>
+        where TEntity : class
+        where TDto : class
     {
-        public async Task<int> Insert(TInput input)
+        public async Task<int> Insert(TEntity input)
         {
             return default(int);
         }
 
-        public async Task<TViewModel> GetById(int id)
+        public async Task<TEntity> GetById(int id)
         {
-            return default(TViewModel);
+            return default(TEntity);
         }
 
-        public async Task<IEnumerable<TViewModel>> GetAll()
+        public async Task<IEnumerable<TEntity>> GetAll()
         {
-            return default(IEnumerable<TViewModel>);
+            return new List<TEntity>();
         }
 
-        public async Task<int> Update(int id, TInput input)
+        public async Task<int> Update(int id, TEntity input)
         {
             return default(int);
         }

@@ -3,14 +3,14 @@ using System.Threading.Tasks;
 
 namespace EventHub.Domain.Services.BaseService
 {
-    public interface IService<TInput, TViewModel>
-        where TInput : class
-        where TViewModel : class
+    public interface IService<TEntity, TDto>
+        where TEntity : class
+        where TDto : class
     {
         Task<int> Delete(int id);
-        Task<IEnumerable<TViewModel>> GetAll();
-        Task<TViewModel> GetById(int id);
-        Task<int> Insert(TInput input);
-        Task<int> Update(int id, TInput input);
+        Task<IEnumerable<TEntity>> GetAll();
+        Task<TEntity> GetById(int id);
+        Task<int> Insert(TEntity input);
+        Task<int> Update(int id, TEntity input);
     }
 }

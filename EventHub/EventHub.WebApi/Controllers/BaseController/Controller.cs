@@ -6,12 +6,18 @@ namespace EventHub.WebApi.Controllers.BaseController
 {
     [Route("api/v1/[controller]")]
     [ApiController]
-    public class Controller<TInput, TViewModel> : ControllerBase
+    public class Controller<TInput, TEntity, TDTO> : ControllerBase
         where TInput : class
-        where TViewModel : class
+        where TEntity : class
+        where TDTO : class
     {
-        private readonly IServiceApplication<TInput, TViewModel> _service;
+        private readonly IServiceApplication<TInput, TEntity, TDTO> _service;
     
+        public Controller(IServiceApplication<TInput, TEntity, TDTO> service)
+        {
+            this._service = service;
+        }
+
         [HttpPost]
         [ProducesResponseType(typeof(int), 201)]
         [ProducesResponseType(400)]
