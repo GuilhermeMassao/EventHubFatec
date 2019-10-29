@@ -1,7 +1,4 @@
 ﻿using AutoMapper;
-using EventHub.Application.Mapping;
-using EventHub.Domain.DTOs.User;
-using EventHub.Domain.Entities;
 using EventHub.Domain.Services.BaseService;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -15,16 +12,17 @@ namespace EventHub.Application.Services.BaseServiceApplication
         where TDTO : class
     {
         private readonly IService<TEntity, TDTO> _service;
-        private readonly IMapper inputToEntity;
+        private readonly IMapper _inputToEntity;
 
-        public ServiceApplication(IService<TEntity, TDTO> service)
+        public ServiceApplication(IService<TEntity, TDTO> service, IMapper inputToEntity)
         {
             this._service = service;
+            this._inputToEntity = inputToEntity;
         }
 
         public async Task<int> Insert(TInput input)
         {
-            return await _service.Insert(inputToEntity.Map<TInput, TEntity>(input));
+            return await _service.Insert(_inputToEntity.Map<TInput, TEntity>(input));
         }
 
         public async Task<TEntity> GetById(int id)
@@ -39,7 +37,7 @@ namespace EventHub.Application.Services.BaseServiceApplication
 
         public async Task<int> Update(int id, TInput input)
         {
-            return await _service.Update(id, inputToEntity.Map<TInput, TEntity>(input));
+            return await _service.Update(id, _inputToEntity.Map<TInput, TEntity>(input));
         }
 
         public async Task<int> Delete(int id)

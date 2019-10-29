@@ -36,7 +36,7 @@ namespace EventHub.WebApi
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            AutoMapperConfig.Register();
+            var mapperConfig = AutoMapperConfig.Register();
 
             services.AddSwaggerGen(c =>
             {
@@ -49,12 +49,18 @@ namespace EventHub.WebApi
             });
 
             //IoC configuration
+            /* WebAPI */
+            
+            /* Application */
             services.AddScoped<IServiceApplication<UserInput, User, UserDTO>, ServiceApplication<UserInput, User, UserDTO>>();
             services.AddScoped<UserApplication>();
+            services.AddSingleton(mapperConfig.CreateMapper());
+
+            /* Domain */
             services.AddScoped<IService<User, UserDTO>, Service<User, UserDTO>>();
             services.AddScoped<UserService>();
-            /* mapping */
-            services.AddSingleton<InputToEntity>();
+
+            /* Insfrastructure */
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

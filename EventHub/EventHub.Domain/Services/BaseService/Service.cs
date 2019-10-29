@@ -9,7 +9,7 @@ namespace EventHub.Domain.Services.BaseService
     {
         public async Task<int> Insert(TEntity input)
         {
-            return default(int);
+            return 0;
         }
 
         public async Task<TEntity> GetById(int id)
