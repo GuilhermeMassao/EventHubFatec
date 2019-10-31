@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace EventHub.Application.Services.BaseServiceApplication
+namespace EventHub.Application.Interfaces.BaseInterfaces
 {
     public interface IServiceApplication<TInput, TEntity>
         where TInput : class

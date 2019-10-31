@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using EventHub.Application.Interfaces.BaseInterfaces;
 
-namespace EventHub.Domain.Services.BaseService
+namespace EventHub.Application.GatewayServices.BaseGatewayService
 {
-    public class Service<TEntity> : IService<TEntity>
+    public class GatewayService<TEntity> : IGatewayService<TEntity>
         where TEntity : class
     {
         public async Task<int> Insert(TEntity dto)

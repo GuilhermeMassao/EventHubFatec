@@ -1,15 +1,15 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace EventHub.Domain.Services.BaseService
+namespace EventHub.Application.Interfaces.BaseInterfaces
 {
-    public interface IService<TEntity>
+    public interface IGatewayService<TEntity>
         where TEntity : class
     {
         Task<int> Delete(int id);
         Task<IEnumerable<TEntity>> GetAll();
         Task<TEntity> GetById(int id);
         Task<int> Insert(TEntity input);
-        Task<int> Update(int id, TEntity input);
+        Task<int> Update(int id, TEntity input);  
     }
 }

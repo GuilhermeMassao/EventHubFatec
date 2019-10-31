@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using EventHub.Domain.Services.BaseService;
+using EventHub.Application.Interfaces.BaseInterfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -10,10 +10,10 @@ namespace EventHub.Application.Services.BaseServiceApplication
         where TInput : class
         where TEntity : class
     {
-        private readonly IService<TEntity> _service;
+        private readonly IGatewayService<TEntity> _service;
         private readonly IMapper _inputToEntity;
 
-        public ServiceApplication(IService<TEntity> service, IMapper inputToEntity)
+        public ServiceApplication(IGatewayService<TEntity> service, IMapper inputToEntity)
         {
             this._service = service;
             this._inputToEntity = inputToEntity;

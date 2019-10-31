@@ -1,24 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.Swagger;
 using EventHub.Application.Mapping;
 using EventHub.Application.Services.BaseServiceApplication;
-using EventHub.Domain.Services;
 using EventHub.Application.Services.UserApplication.Input;
 using EventHub.Domain.Entities;
 using EventHub.Application.Services.UserApplication;
-using EventHub.Domain.Services.BaseService;
-using EventHub.Domain.DTOs.User;
+using EventHub.Application.Interfaces.BaseInterfaces;
+using EventHub.Application.GatewayServices.BaseGatewayService;
+using EventHub.Application.GatewayServices;
 
 namespace EventHub.WebApi
 {
@@ -57,8 +50,8 @@ namespace EventHub.WebApi
             services.AddSingleton(mapperConfig.CreateMapper());
 
             /* Domain */
-            services.AddScoped<IService<User>, Service<User>>();
-            services.AddScoped<UserService>();
+            services.AddScoped<IGatewayService<User>, GatewayService<User>>();
+            services.AddScoped<UserGatewayService>();
 
             /* Insfrastructure */
         }

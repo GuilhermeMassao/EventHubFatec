@@ -1,4 +1,5 @@
-﻿using EventHub.Application.Services.BaseServiceApplication;
+﻿using EventHub.Application.Interfaces.BaseInterfaces;
+using EventHub.Application.Services.BaseServiceApplication;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
