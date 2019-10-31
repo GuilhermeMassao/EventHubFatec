@@ -15,6 +15,7 @@ using EventHub.Application.GatewayServices;
 using EventHub.Infraestructure.Interfaces.Repository;
 using EventHub.Infraestructure.Repository.BaseRepository;
 using EventHub.Infraestructure.Repository;
+using EventHub.WebApi.Utils;
 
 namespace EventHub.WebApi
 {
@@ -46,7 +47,7 @@ namespace EventHub.WebApi
 
             //IoC configuration
             /* WebAPI */
-            
+
             /* Application */
             services.AddScoped<IServiceApplication<UserInput, User>, ServiceApplication<UserInput, User>>();
             services.AddScoped<UserApplication>();

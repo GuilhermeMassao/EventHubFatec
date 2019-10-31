@@ -1,5 +1,5 @@
 ﻿using EventHub.Application.Interfaces.BaseInterfaces;
-using EventHub.Application.Services.BaseServiceApplication;
+using EventHub.WebApi.Utils;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -24,7 +24,14 @@ namespace EventHub.WebApi.Controllers.BaseController
         [ProducesResponseType(500)]
         public virtual async Task<IActionResult> PostAsync([FromBody]TInput input)
         {
-            return Created("", await _service.Insert(input));
+            if(PayloadValidator.ValidateObject(input)){
+                var result = await _service.Insert(input);
+                if(result > -1) {
+                    return Created("User created successfully", result);
+                }
+            }
+            
+            return BadRequest();
         }
 
         [HttpGet]
