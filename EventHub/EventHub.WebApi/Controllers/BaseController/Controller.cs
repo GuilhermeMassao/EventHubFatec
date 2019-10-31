@@ -27,10 +27,10 @@ namespace EventHub.WebApi.Controllers.BaseController
             if(PayloadValidator.ValidateObject(input)){
                 var result = await _service.Insert(input);
                 if(result > -1) {
-                    return Created("User created successfully", result);
+                    return Created("", result);
                 }
             }
-            
+
             return BadRequest();
         }
 
