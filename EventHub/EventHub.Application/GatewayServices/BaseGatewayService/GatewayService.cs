@@ -1,35 +1,42 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using EventHub.Application.Interfaces.BaseInterfaces;
+using EventHub.Infraestructure.Interfaces.Repository;
 
 namespace EventHub.Application.GatewayServices.BaseGatewayService
 {
     public class GatewayService<TEntity> : IGatewayService<TEntity>
         where TEntity : class
     {
-        public async Task<int> Insert(TEntity dto)
+        private IRepository<TEntity> _repository;
+
+        public GatewayService(IRepository<TEntity> repository)
         {
-            return 0;
+            this._repository = repository;
+        }
+        public async Task<int> Insert(TEntity entity)
+        {
+            return _repository.Insert(entity);
         }
 
         public async Task<TEntity> GetById(int id)
         {
-            return default(TEntity);
+            return _repository.GetById(id);
         }
 
         public async Task<IEnumerable<TEntity>> GetAll()
         {
-            return new List<TEntity>();
+            return _repository.GetAll();
         }
 
-        public async Task<int> Update(int id, TEntity input)
+        public async Task<int> Update(int id, TEntity entity)
         {
-            return default(int);
+            return _repository.Update(id, entity);
         }
 
         public async Task<int> Delete(int id)
         {
-            return default(int);
+            return _repository.Delete(id);
         }
     }
 }

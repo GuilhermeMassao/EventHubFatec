@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\EventHub.Domain\EventHub.Domain.csproj" />
+    <ProjectReference Include="..\EventHub.Infraestructure\EventHub.Infraestructure.csproj" />
   </ItemGroup>
 
 </Project>

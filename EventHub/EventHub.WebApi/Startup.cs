@@ -12,6 +12,9 @@ using EventHub.Application.Services.UserApplication;
 using EventHub.Application.Interfaces.BaseInterfaces;
 using EventHub.Application.GatewayServices.BaseGatewayService;
 using EventHub.Application.GatewayServices;
+using EventHub.Infraestructure.Interfaces.Repository;
+using EventHub.Infraestructure.Repository.BaseRepository;
+using EventHub.Infraestructure.Repository;
 
 namespace EventHub.WebApi
 {
@@ -54,6 +57,8 @@ namespace EventHub.WebApi
             services.AddScoped<UserGatewayService>();
 
             /* Insfrastructure */
+            services.AddScoped<IRepository<User>, Repository<User>>();
+            services.AddScoped<UserRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
