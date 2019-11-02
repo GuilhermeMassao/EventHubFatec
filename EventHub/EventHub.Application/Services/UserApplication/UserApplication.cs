@@ -2,13 +2,13 @@
 using EventHub.Application.Interfaces.BaseInterfaces;
 using EventHub.Application.Services.BaseServiceApplication;
 using EventHub.Application.Services.UserApplication.Input;
-using EventHub.Domain.Entities;
+using EventHub.Domain;
 
 namespace EventHub.Application.Services.UserApplication
 {
-    public class UserApplication : ServiceApplication<UserInput, User>
+    public class UserApplication : ServiceApplication<UserInput, Usuario>
     {
-        public UserApplication(IGatewayService<User> service,
+        public UserApplication(IGatewayService<Usuario> service,
         IMapper inputToEntity): base(service, inputToEntity) {}
     }
 }

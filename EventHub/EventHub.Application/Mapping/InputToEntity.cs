@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using EventHub.Application.Services.UserApplication.Input;
-using EventHub.Domain.Entities;
+using EventHub.Domain;
 
 namespace EventHub.Application.Mapping
 {
@@ -8,8 +8,8 @@ namespace EventHub.Application.Mapping
     {
         public InputToEntity()
         {
-            CreateMap<UserInput, User>();
-            CreateMap<UserTokensInput, User>();
+            CreateMap<UserInput, Usuario>();
+            CreateMap<UserTokensInput, Usuario>();
         }
     }
 }

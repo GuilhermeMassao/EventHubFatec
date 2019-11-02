@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{35965B4F-2D19-4C0E-B65E-054907358E53}</ProjectGuid>
+    <ProjectGuid>{B9DCB53D-194C-499D-A272-14B812E7FD6D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>EventHub.Application</RootNamespace>
-    <AssemblyName>EventHub.Application</AssemblyName>
+    <RootNamespace>EventHub.Infrastructure</RootNamespace>
+    <AssemblyName>EventHub.Infrastructure</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -31,9 +31,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AutoMapper, Version=9.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
-      <HintPath>..\packages\AutoMapper.9.0.0\lib\net461\AutoMapper.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -44,33 +41,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GatewayServices\BaseGatewayService\GatewayService.cs" />
-    <Compile Include="GatewayServices\UserGatewayService.cs" />
-    <Compile Include="Interfaces\BaseInterfaces\IGatewayService.cs" />
-    <Compile Include="Interfaces\BaseInterfaces\IServiceApplication.cs" />
-    <Compile Include="Mapping\AutoMapperConfig.cs" />
-    <Compile Include="Mapping\DtoToViewModel.cs" />
-    <Compile Include="Mapping\InputToEntity.cs" />
+    <Compile Include="Interfaces\Repository\IRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\BaseServiceApplication\ServiceApplication.cs" />
-    <Compile Include="Services\BaseServiceApplication\ViewModel\ServiceViewModel.cs" />
-    <Compile Include="Services\UserApplication\Input\UserInput.cs" />
-    <Compile Include="Services\UserApplication\Input\UserTokensInput.cs" />
-    <Compile Include="Services\UserApplication\UserApplication.cs" />
-    <Compile Include="Services\UserApplication\ViewModel\UserViewModel.cs" />
+    <Compile Include="Repository\BaseRepository\Repository.cs" />
+    <Compile Include="Repository\UserRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EventHub.Domain\EventHub.Domain.csproj">
       <Project>{3259adb5-91ef-4679-867a-a08c9ee25240}</Project>
       <Name>EventHub.Domain</Name>
     </ProjectReference>
-    <ProjectReference Include="..\EventHub.Infrastructure\EventHub.Infrastructure.csproj">
-      <Project>{b9dcb53d-194c-499d-a272-14b812e7fd6d}</Project>
-      <Name>EventHub.Infrastructure</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

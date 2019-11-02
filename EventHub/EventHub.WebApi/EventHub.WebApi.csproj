@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
@@ -19,7 +19,7 @@
   <ItemGroup>
     <ProjectReference Include="..\EventHub.Application\EventHub.Application.csproj" />
     <ProjectReference Include="..\EventHub.Domain\EventHub.Domain.csproj" />
-    <ProjectReference Include="..\EventHub.Infraestructure\EventHub.Infraestructure.csproj" />
+    <ProjectReference Include="..\EventHub.Infrastructure\EventHub.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

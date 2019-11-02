@@ -7,15 +7,15 @@ using Swashbuckle.AspNetCore.Swagger;
 using EventHub.Application.Mapping;
 using EventHub.Application.Services.BaseServiceApplication;
 using EventHub.Application.Services.UserApplication.Input;
-using EventHub.Domain.Entities;
 using EventHub.Application.Services.UserApplication;
 using EventHub.Application.Interfaces.BaseInterfaces;
 using EventHub.Application.GatewayServices.BaseGatewayService;
 using EventHub.Application.GatewayServices;
+using EventHub.WebApi.Utils;
 using EventHub.Infraestructure.Interfaces.Repository;
 using EventHub.Infraestructure.Repository.BaseRepository;
 using EventHub.Infraestructure.Repository;
-using EventHub.WebApi.Utils;
+using EventHub.Domain;
 
 namespace EventHub.WebApi
 {
@@ -49,16 +49,16 @@ namespace EventHub.WebApi
             /* WebAPI */
 
             /* Application */
-            services.AddScoped<IServiceApplication<UserInput, User>, ServiceApplication<UserInput, User>>();
+            services.AddScoped<IServiceApplication<UserInput, Usuario>, ServiceApplication<UserInput, Usuario>>();
             services.AddScoped<UserApplication>();
             services.AddSingleton(mapperConfig.CreateMapper());
 
             /* Domain */
-            services.AddScoped<IGatewayService<User>, GatewayService<User>>();
+            services.AddScoped<IGatewayService<Usuario>, GatewayService<Usuario>>();
             services.AddScoped<UserGatewayService>();
 
             /* Insfrastructure */
-            services.AddScoped<IRepository<User>, Repository<User>>();
+            services.AddScoped<IRepository<Usuario>, Repository<Usuario>>();
             services.AddScoped<UserRepository>();
         }
 
