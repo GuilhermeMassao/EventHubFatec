@@ -12,14 +12,14 @@ namespace EventHub.Domain
     using System;
     using System.Collections.Generic;
     
-    public partial class Evento
+    public partial class Eventos
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Evento()
+        public Eventos()
         {
-            this.Divulgacaos = new HashSet<Divulgacao>();
-            this.EnderecoEventoes = new HashSet<EnderecoEvento>();
-            this.InscritosEventoes = new HashSet<InscritosEvento>();
+            this.Divulgacao = new HashSet<Divulgacao>();
+            this.EnderecoEvento = new HashSet<EnderecoEvento>();
+            this.InscritosEvento = new HashSet<InscritosEvento>();
         }
     
         public int Id { get; set; }
@@ -30,11 +30,11 @@ namespace EventHub.Domain
         public Nullable<int> IdUsuario { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Divulgacao> Divulgacaos { get; set; }
+        public virtual ICollection<Divulgacao> Divulgacao { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<EnderecoEvento> EnderecoEventoes { get; set; }
+        public virtual ICollection<EnderecoEvento> EnderecoEvento { get; set; }
         public virtual Usuario Usuario { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<InscritosEvento> InscritosEventoes { get; set; }
+        public virtual ICollection<InscritosEvento> InscritosEvento { get; set; }
     }
 }

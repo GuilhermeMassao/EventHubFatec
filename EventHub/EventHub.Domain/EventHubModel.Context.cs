@@ -25,10 +25,10 @@ namespace EventHub.Domain
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Divulgacao> Divulgacaos { get; set; }
-        public virtual DbSet<EnderecoEvento> EnderecoEventoes { get; set; }
-        public virtual DbSet<Evento> Eventos { get; set; }
-        public virtual DbSet<InscritosEvento> InscritosEventoes { get; set; }
-        public virtual DbSet<Usuario> Usuarios { get; set; }
+        public virtual DbSet<Divulgacao> Divulgacao { get; set; }
+        public virtual DbSet<EnderecoEvento> EnderecoEvento { get; set; }
+        public virtual DbSet<Eventos> Eventos { get; set; }
+        public virtual DbSet<InscritosEvento> InscritosEvento { get; set; }
+        public virtual DbSet<Usuario> Usuario { get; set; }
     }
 }

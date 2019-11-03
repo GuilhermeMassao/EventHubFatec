@@ -51,11 +51,12 @@ namespace EventHub.WebApi
             /* Application */
             services.AddScoped<IServiceApplication<UserInput, Usuario>, ServiceApplication<UserInput, Usuario>>();
             services.AddScoped<UserApplication>();
+            services.AddScoped<IGatewayService<Usuario>, GatewayService<Usuario>>();
+            services.AddScoped<UserGatewayService>();
             services.AddSingleton(mapperConfig.CreateMapper());
 
             /* Domain */
-            services.AddScoped<IGatewayService<Usuario>, GatewayService<Usuario>>();
-            services.AddScoped<UserGatewayService>();
+            services.AddScoped<EventHubEntities>();
 
             /* Insfrastructure */
             services.AddScoped<IRepository<Usuario>, Repository<Usuario>>();

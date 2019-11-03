@@ -18,7 +18,7 @@ namespace EventHub.Domain
         public Nullable<int> IdUsuario { get; set; }
         public Nullable<int> IdEvento { get; set; }
     
-        public virtual Evento Evento { get; set; }
+        public virtual Eventos Eventos { get; set; }
         public virtual Usuario Usuario { get; set; }
     }
 }

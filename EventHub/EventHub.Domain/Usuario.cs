@@ -17,8 +17,8 @@ namespace EventHub.Domain
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Usuario()
         {
-            this.Eventos = new HashSet<Evento>();
-            this.InscritosEventoes = new HashSet<InscritosEvento>();
+            this.Eventos = new HashSet<Eventos>();
+            this.InscritosEvento = new HashSet<InscritosEvento>();
         }
     
         public int Id { get; set; }
@@ -30,8 +30,8 @@ namespace EventHub.Domain
         public string TwitterAcessToken { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Evento> Eventos { get; set; }
+        public virtual ICollection<Eventos> Eventos { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<InscritosEvento> InscritosEventoes { get; set; }
+        public virtual ICollection<InscritosEvento> InscritosEvento { get; set; }
     }
 }

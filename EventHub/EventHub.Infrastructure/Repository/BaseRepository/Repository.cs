@@ -1,16 +1,17 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using EventHub.Domain;
 using EventHub.Infraestructure.Interfaces.Repository;
 
 namespace EventHub.Infraestructure.Repository.BaseRepository
 {
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     {
-        /*protected readonly DbContext context;
-        public Repository(DbContexnt context)
+        protected readonly EventHubEntities context;
+        public Repository(EventHubEntities context)
         {
             this.context = context;
         }
-        */
         public int Delete(int id)
         {
             return 1;
@@ -18,8 +19,7 @@ namespace EventHub.Infraestructure.Repository.BaseRepository
 
         public IEnumerable<TEntity> GetAll()
         {
-            // return context.Set<TRentity>().ToList()
-            return new List<TEntity>();
+            return context.Set<TEntity>().ToList(); ;
         }
 
         public TEntity GetById(int id)
