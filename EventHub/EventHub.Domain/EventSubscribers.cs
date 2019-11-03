@@ -12,18 +12,13 @@ namespace EventHub.Domain
     using System;
     using System.Collections.Generic;
     
-    public partial class EnderecoEvento
+    public partial class EventSubscribers
     {
-        public string Cidade { get; set; }
-        public string Logradouro { get; set; }
-        public string Bairro { get; set; }
-        public string Estado { get; set; }
-        public string Id { get; set; }
-        public string Complemento { get; set; }
-        public string CEP { get; set; }
-        public string Número { get; set; }
-        public Nullable<int> IdEvento { get; set; }
+        public int Id { get; set; }
+        public int UserId { get; set; }
+        public int EventId { get; set; }
     
-        public virtual Eventos Eventos { get; set; }
+        public virtual Event Event { get; set; }
+        public virtual User User { get; set; }
     }
 }

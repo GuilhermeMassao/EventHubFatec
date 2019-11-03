@@ -12,29 +12,28 @@ namespace EventHub.Domain
     using System;
     using System.Collections.Generic;
     
-    public partial class Eventos
+    public partial class Event
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Eventos()
+        public Event()
         {
-            this.Divulgacao = new HashSet<Divulgacao>();
-            this.EnderecoEvento = new HashSet<EnderecoEvento>();
-            this.InscritosEvento = new HashSet<InscritosEvento>();
+            this.EventSubscribers = new HashSet<EventSubscribers>();
+            this.GoogleCalendarSocialMarketing = new HashSet<GoogleCalendarSocialMarketing>();
         }
     
         public int Id { get; set; }
-        public Nullable<System.DateTime> DataFim { get; set; }
-        public Nullable<System.DateTime> DataInicio { get; set; }
-        public string NomeEvento { get; set; }
-        public string Descricao { get; set; }
-        public Nullable<int> IdUsuario { get; set; }
+        public int UserId { get; set; }
+        public int AdressId { get; set; }
+        public System.DateTime StartDate { get; set; }
+        public System.DateTime EndDate { get; set; }
+        public string EventName { get; set; }
+        public string EventDescription { get; set; }
     
+        public virtual Adress Adress { get; set; }
+        public virtual User User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Divulgacao> Divulgacao { get; set; }
+        public virtual ICollection<EventSubscribers> EventSubscribers { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<EnderecoEvento> EnderecoEvento { get; set; }
-        public virtual Usuario Usuario { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<InscritosEvento> InscritosEvento { get; set; }
+        public virtual ICollection<GoogleCalendarSocialMarketing> GoogleCalendarSocialMarketing { get; set; }
     }
 }

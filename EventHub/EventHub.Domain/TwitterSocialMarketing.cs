@@ -12,13 +12,10 @@ namespace EventHub.Domain
     using System;
     using System.Collections.Generic;
     
-    public partial class InscritosEvento
+    public partial class TwitterSocialMarketing
     {
-        public string Id { get; set; }
-        public Nullable<int> IdUsuario { get; set; }
-        public Nullable<int> IdEvento { get; set; }
-    
-        public virtual Eventos Eventos { get; set; }
-        public virtual Usuario Usuario { get; set; }
+        public int Id { get; set; }
+        public string TweetId { get; set; }
+        public string ShortUrlTweet { get; set; }
     }
 }

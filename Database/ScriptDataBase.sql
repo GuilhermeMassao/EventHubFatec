@@ -25,8 +25,8 @@ CREATE TABLE [Event] (
 )
 
 ALTER TABLE [Event] 
-    ADD CONSTRAINT [FK_Event_User] FOREIGN KEY(UserId) REFERENCES [User](Id)
-    ADD CONSTRAINT [FK_Event_adress] FOREIGN KEY(AdressId) REFERENCES [Adress](Id)
+    ADD CONSTRAINT [FK_Event_User] FOREIGN KEY(UserId) REFERENCES [User](Id),
+		CONSTRAINT [FK_Event_adress] FOREIGN KEY(AdressId) REFERENCES [Adress](Id)
 
 CREATE TABLE [EventSubscribers] (
     Id INT PRIMARY KEY IDENTITY (1, 1) NOT NULL,
@@ -35,8 +35,8 @@ CREATE TABLE [EventSubscribers] (
 )
 
 ALTER TABLE [EventSubscribers] 
-    ADD CONSTRAINT [FK_EventSubscribers_User] FOREIGN KEY(UserId) REFERENCES [User](Id)
-    ADD CONSTRAINT [FK_EventSubscribers_Event] FOREIGN KEY(EventId) REFERENCES [Event](Id)
+    ADD CONSTRAINT [FK_EventSubscribers_User] FOREIGN KEY(UserId) REFERENCES [User](Id),
+		CONSTRAINT [FK_EventSubscribers_Event] FOREIGN KEY(EventId) REFERENCES [Event](Id)
 
 CREATE TABLE [GoogleCalendarSocialMarketing] (
     Id INT PRIMARY KEY IDENTITY(1, 1) NOT NULL,

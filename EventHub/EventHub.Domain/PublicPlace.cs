@@ -12,26 +12,18 @@ namespace EventHub.Domain
     using System;
     using System.Collections.Generic;
     
-    public partial class Usuario
+    public partial class PublicPlace
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Usuario()
+        public PublicPlace()
         {
-            this.Eventos = new HashSet<Eventos>();
-            this.InscritosEvento = new HashSet<InscritosEvento>();
+            this.Adress = new HashSet<Adress>();
         }
     
         public int Id { get; set; }
-        public string Senha { get; set; }
-        public string TwitterAcessTokenSecret { get; set; }
-        public string GoogleRefreshToken { get; set; }
-        public string Email { get; set; }
-        public string Nome { get; set; }
-        public string TwitterAcessToken { get; set; }
+        public string placeName { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Eventos> Eventos { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<InscritosEvento> InscritosEvento { get; set; }
+        public virtual ICollection<Adress> Adress { get; set; }
     }
 }

@@ -5,7 +5,7 @@ using EventHub.WebApi.Controllers.BaseController;
 
 namespace EventHub.WebApi.Controllers
 {
-    public class UserController : Controller<UserInput, Usuario>
+    public class UserController : Controller<UserInput, User>
     {
         public UserController(UserApplication userService) : base(userService) {}
     }

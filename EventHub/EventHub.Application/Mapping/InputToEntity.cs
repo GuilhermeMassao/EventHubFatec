@@ -8,8 +8,8 @@ namespace EventHub.Application.Mapping
     {
         public InputToEntity()
         {
-            CreateMap<UserInput, Usuario>();
-            CreateMap<UserTokensInput, Usuario>();
+            CreateMap<UserInput, User>();
+            CreateMap<UserTokensInput, User>();
         }
     }
 }

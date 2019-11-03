@@ -6,9 +6,9 @@ using EventHub.Domain;
 
 namespace EventHub.Application.Services.UserApplication
 {
-    public class UserApplication : ServiceApplication<UserInput, Usuario>
+    public class UserApplication : ServiceApplication<UserInput, User>
     {
-        public UserApplication(IGatewayService<Usuario> service,
+        public UserApplication(IGatewayService<User> service,
         IMapper inputToEntity): base(service, inputToEntity) {}
     }
 }

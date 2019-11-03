@@ -4,9 +4,9 @@ using EventHub.Infraestructure.Interfaces.Repository;
 
 namespace EventHub.Application.GatewayServices
 {
-    public class UserGatewayService : GatewayService<Usuario>
+    public class UserGatewayService : GatewayService<User>
     {
-        public UserGatewayService(IRepository<Usuario> repository) : base(repository)
+        public UserGatewayService(IRepository<User> repository) : base(repository)
         {
         }
     }

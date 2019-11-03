@@ -12,18 +12,13 @@ namespace EventHub.Domain
     using System;
     using System.Collections.Generic;
     
-    public partial class Divulgacao
+    public partial class GoogleCalendarSocialMarketing
     {
-        public string Descricao { get; set; }
-        public string Title { get; set; }
-        public string Fonte { get; set; }
-        public string Id { get; set; }
-        public string DataAlteração { get; set; }
-        public string Texto { get; set; }
-        public Nullable<int> IdTweet { get; set; }
-        public Nullable<int> IdAgenda { get; set; }
-        public Nullable<int> IdEvento { get; set; }
+        public int Id { get; set; }
+        public int EventId { get; set; }
+        public string HashCalendar { get; set; }
+        public string CalendarLink { get; set; }
     
-        public virtual Eventos Eventos { get; set; }
+        public virtual Event Event { get; set; }
     }
 }
