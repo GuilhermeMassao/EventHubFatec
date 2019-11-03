@@ -1,4 +1,4 @@
-create database EventHub
+CREATE DATABASE EventHub
 go
 
 Use EventHub
@@ -13,6 +13,25 @@ CREATE TABLE [User] (
     GoogleRefreshToken VARCHAR(10) NULL,
     TwitterAcessToken VARCHAR(200) NULL
 )
+
+CREATE TABLE [PublicPlace] (
+    Id INT PRIMARY KEY IDENTITY (1, 1) NOT NULL,
+    placeName VARCHAR(20) NOT NULL 
+)
+
+CREATE TABLE [Adress] (
+    Id INTEGER PRIMARY KEY IDENTITY (1, 1) NOT NULL,
+    PublicPlaceId INT NOT NULL,  -- Logradouro
+    City VARCHAR(50) NOT NULL,
+    UF VARCHAR(2) NOT NULL,
+    CEP VARCHAR(10) NOT NULL,
+    Neighborhood VARCHAR(50) NOT NULL, -- Bairro
+    AdressComplement VARCHAR(50) NULL, -- Complemento
+    AdressNumber VARCHAR(10) NOT NULL
+)
+
+ALTER TABLE [Adress]
+    ADD CONSTRAINT [FK_Adress_PublicPlace] FOREIGN KEY(PublicPlaceId) REFERENCES [PublicPlace](Id)
 
 CREATE TABLE [Event] (
     Id INT PRIMARY KEY IDENTITY(1, 1) NOT NULL,
@@ -52,23 +71,4 @@ CREATE TABLE [TwitterSocialMarketing](
     Id INT PRIMARY KEY IDENTITY(1, 1) NOT NULL,
     TweetId VARCHAR(20) NOT NULL,
     ShortUrlTweet VARCHAR(30) NULL
-)
-
-CREATE TABLE [Adress] (
-    Id INTEGER PRIMARY KEY IDENTITY (1, 1) NOT NULL,
-    PublicPlaceId INT NOT NULL,  -- Logradouro
-    City VARCHAR(50) NOT NULL,
-    UF VARCHAR(2) NOT NULL,
-    CEP VARCHAR(10) NOT NULL,
-    Neighborhood VARCHAR(50) NOT NULL, -- Bairro
-    AdressComplement VARCHAR(50) NULL, -- Complemento
-    AdressNumber VARCHAR(10) NOT NULL
-)
-
-ALTER TABLE [Adress]
-    ADD CONSTRAINT [FK_Adress_PublicPlace] FOREIGN KEY(PublicPlaceId) REFERENCES [PublicPlace](Id)
-
-CREATE TABLE [PublicPlace] (
-    Id INT PRIMARY KEY IDENTITY (1, 1) NOT NULL,
-    placeName VARCHAR(20) NOT NULL 
 )
