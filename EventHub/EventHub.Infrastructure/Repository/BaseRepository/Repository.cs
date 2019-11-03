@@ -19,7 +19,7 @@ namespace EventHub.Infraestructure.Repository.BaseRepository
 
         public IEnumerable<TEntity> GetAll()
         {
-            return context.Set<TEntity>().ToList(); ;
+            return context.Set<TEntity>().ToList();
         }
 
         public TEntity GetById(int id)
