@@ -1,10 +1,12 @@
 IF NOT EXISTS (SELECT 1 FROM sys.databases WHERE name = 'EventHub')
 BEGIN
-    CREATE DATABASE EventHub
-    GO
+   CREATE DATABASE EventHub
+END
+GO
 
+IF EXISTS (SELECT 1 FROM sys.databases WHERE name = 'EventHub')
+BEGIN
     USE EventHub
-    GO
 
     IF OBJECT_ID(N'dbo.User', N'U') IS NULL
     BEGIN
