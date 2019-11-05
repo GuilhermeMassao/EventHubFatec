@@ -12,31 +12,31 @@ namespace EventHub.Application.GatewayServices.BaseGatewayService
 
         public GatewayService(IRepository<TEntity> repository)
         {
-            this._repository = repository;
+            _repository = repository;
         }
-        public async Task<int> Insert(TEntity entity)
+        public async Task<bool> Insert(TEntity entity)
         {
-            return _repository.Insert(entity);
+            return await _repository.Insert(entity);
         }
 
         public async Task<TEntity> GetById(int id)
         {
-            return _repository.GetById(id);
+            return await _repository.GetById(id);
         }
 
         public async Task<IEnumerable<TEntity>> GetAll()
         {
-            return _repository.GetAll();
+            return await _repository.GetAll();
         }
 
-        public async Task<int> Update(int id, TEntity entity)
+        public async Task<bool> Update(int id, TEntity entity)
         {
-            return _repository.Update(id, entity);
+            return await _repository.Update(id, entity);
         }
 
-        public async Task<int> Delete(int id)
+        public async Task<bool> Delete(int id)
         {
-            return _repository.Delete(id);
+            return await _repository.DeleteAsync(id);
         }
     }
 }

@@ -7,10 +7,10 @@ namespace EventHub.Application.Interfaces.BaseInterfaces
         where TInput : class
         where TEntity : class
     {
-        Task<int> Delete(int id);
+        Task<bool> Delete(int id);
         Task<IEnumerable<TEntity>> GetAll();
         Task<TEntity> GetById(int id);
-        Task<int> Insert(TInput input);
-        Task<int> Update(int id, TInput input);
+        Task<bool> Insert(TInput input);
+        Task<bool> Update(int id, TInput input);
     }
 }

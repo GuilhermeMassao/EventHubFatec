@@ -15,20 +15,17 @@ namespace EventHub.WebApi.Controllers.BaseController
     
         public Controller(IServiceApplication<TInput, TEntity> service)
         {
-            this._service = service;
+            _service = service;
         }
 
         [HttpPost]
-        [ProducesResponseType(typeof(int), 201)]
+        [ProducesResponseType(typeof(bool), 201)]
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
         public virtual async Task<IActionResult> PostAsync([FromBody]TInput input)
         {
             if(PayloadValidator.ValidateObject(input)){
-                var result = await _service.Insert(input);
-                if(result > -1) {
-                    return Created("", result);
-                }
+                return Created("", await _service.Insert(input));
             }
 
             return BadRequest();
@@ -36,7 +33,7 @@ namespace EventHub.WebApi.Controllers.BaseController
 
         [HttpGet]
         [Route("{id}")]
-        [ProducesResponseType(typeof(int), 200)]
+        [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
         public virtual async Task<IActionResult> GetById([FromRoute] int id)
@@ -45,7 +42,7 @@ namespace EventHub.WebApi.Controllers.BaseController
         }
 
         [HttpGet]
-        [ProducesResponseType(typeof(string), 200)]
+        [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
         public virtual async Task<IActionResult> GetAll()
@@ -55,7 +52,7 @@ namespace EventHub.WebApi.Controllers.BaseController
 
         [HttpPut]
         [Route("{id}")]
-        [ProducesResponseType(typeof(int), 202)]
+        [ProducesResponseType(typeof(bool), 202)]
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
         public async Task<IActionResult> Put([FromRoute] int id, [FromBody] TInput input)
@@ -65,10 +62,10 @@ namespace EventHub.WebApi.Controllers.BaseController
 
         [HttpDelete]
         [Route("{id}")]
-        [ProducesResponseType(typeof(int), 200)]
+        [ProducesResponseType(typeof(bool), 200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
-        public async Task<IActionResult> Delete([FromRoute] short id)
+        public async Task<IActionResult> Delete([FromRoute] int id)
         {
             return Ok(await _service.Delete(id));
         }

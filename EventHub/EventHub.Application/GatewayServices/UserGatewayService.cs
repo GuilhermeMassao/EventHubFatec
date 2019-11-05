@@ -1,4 +1,5 @@
 using EventHub.Application.GatewayServices.BaseGatewayService;
+using EventHub.Application.Services.UserApplication.Input;
 using EventHub.Domain;
 using EventHub.Infraestructure.Interfaces.Repository;
 
