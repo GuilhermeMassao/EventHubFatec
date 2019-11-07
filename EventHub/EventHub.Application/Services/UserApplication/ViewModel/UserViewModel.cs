@@ -1,8 +1,6 @@
-﻿using EventHub.Application.Services.BaseServiceApplication.ViewModel;
-
-namespace EventHub.Application.Services.UserApplication.ViewModel
+﻿namespace EventHub.Application.Services.UserApplication.ViewModel
 {
-    public class UserViewModel : ServiceViewModel
+    public class UserViewModel
     {
         public string Name { get; set; }
         public string Email { get; set; }

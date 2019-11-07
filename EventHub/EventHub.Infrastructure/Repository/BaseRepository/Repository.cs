@@ -50,25 +50,6 @@ namespace EventHub.Infraestructure.Repository.BaseRepository
             return await context.Set<TEntity>().FindAsync(id);
         }
 
-        public async Task<bool> Insert(TEntity entity)
-        {
-            try
-            {
-                context.Set<TEntity>().Add(entity);
-                context.SaveChanges();
-
-                if(await context.Set<TEntity>().FindAsync(entity) == null)
-                {
-                    return false;
-                }
-
-                return true;
-
-            } catch (Exception e) {
-                throw new Exception(e.Message);
-            }
-        }
-
         public async Task<bool> Update(int id, TEntity entity)
         {
             try

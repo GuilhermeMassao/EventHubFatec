@@ -1,14 +1,47 @@
 ﻿using AutoMapper;
-using EventHub.Application.Interfaces.BaseInterfaces;
-using EventHub.Application.Services.BaseServiceApplication;
 using EventHub.Application.Services.UserApplication.Input;
+using EventHub.Business.Business;
 using EventHub.Domain;
+using EventHub.Domain.DTOs.User;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace EventHub.Application.Services.UserApplication
 {
-    public class UserApplication : ServiceApplication<UserInput, User>
+    public class UserApplication
     {
-        public UserApplication(IGatewayService<User> service,
-        IMapper inputToEntity): base(service, inputToEntity) {}
+        private readonly UserBusiness userBusiness;
+        private readonly IMapper _inputToEntity;
+
+        public UserApplication(UserBusiness userBusiness, IMapper inputToEntity)
+        {
+            this.userBusiness = userBusiness;
+            _inputToEntity = inputToEntity;
+        }
+
+        public async Task<bool> CreateUser(UserInput input)
+        {
+            return await userBusiness.CreateUser(_inputToEntity.Map<UserInput, User>(input));
+        }
+
+        public async Task<User> GetById(int id)
+        {
+            return await userBusiness.GetById(id);
+        }
+
+        public async Task<IEnumerable<User>> GetAll()
+        {
+            return await userBusiness.GetAll();
+        }
+
+        public async Task<bool> Update(int id, UserInput input)
+        {
+            return await userBusiness.Update(id, _inputToEntity.Map<UserInput, User>(input));
+        }
+
+        public async Task<bool> Delete(int id)
+        {
+            return await userBusiness.Delete(id);
+        }
     }
 }

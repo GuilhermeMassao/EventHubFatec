@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29424.173
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.902
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0 - WebApi", "0 - WebApi", "{3B096351-34D0-460E-A5BF-FD84019E45C9}"
 EndProject
@@ -18,6 +18,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventHub.Application", "EventHub.Application\EventHub.Application.csproj", "{35965B4F-2D19-4C0E-B65E-054907358E53}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventHub.Domain", "EventHub.Domain\EventHub.Domain.csproj", "{3259ADB5-91EF-4679-867A-A08C9EE25240}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4 - Business", "4 - Business", "{102C21D8-5BFD-42C1-AF6B-6B47C86E5867}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventHub.Business", "EventHub.Business\EventHub.Business.csproj", "{683B4CCB-2445-4AF5-A3E6-84EE36936D57}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +45,10 @@ Global
 		{3259ADB5-91EF-4679-867A-A08C9EE25240}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3259ADB5-91EF-4679-867A-A08C9EE25240}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3259ADB5-91EF-4679-867A-A08C9EE25240}.Release|Any CPU.Build.0 = Release|Any CPU
+		{683B4CCB-2445-4AF5-A3E6-84EE36936D57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{683B4CCB-2445-4AF5-A3E6-84EE36936D57}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{683B4CCB-2445-4AF5-A3E6-84EE36936D57}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{683B4CCB-2445-4AF5-A3E6-84EE36936D57}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -50,6 +58,7 @@ Global
 		{B9DCB53D-194C-499D-A272-14B812E7FD6D} = {3C32BBF3-184B-462D-A117-6B26CF2B6EBD}
 		{35965B4F-2D19-4C0E-B65E-054907358E53} = {C309698A-9F79-4700-9876-04008A361279}
 		{3259ADB5-91EF-4679-867A-A08C9EE25240} = {A9D28A79-0C7B-4C77-AFC4-D4FEAF726167}
+		{683B4CCB-2445-4AF5-A3E6-84EE36936D57} = {102C21D8-5BFD-42C1-AF6B-6B47C86E5867}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A18A1E6D-CE88-43D8-AFBB-20D9461D3F7B}

@@ -5,17 +5,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
 using EventHub.Application.Mapping;
-using EventHub.Application.Services.BaseServiceApplication;
-using EventHub.Application.Services.UserApplication.Input;
 using EventHub.Application.Services.UserApplication;
-using EventHub.Application.Interfaces.BaseInterfaces;
-using EventHub.Application.GatewayServices.BaseGatewayService;
-using EventHub.Application.GatewayServices;
-using EventHub.WebApi.Utils;
 using EventHub.Infraestructure.Interfaces.Repository;
-using EventHub.Infraestructure.Repository.BaseRepository;
 using EventHub.Infraestructure.Repository;
 using EventHub.Domain;
+using EventHub.Business.Business;
+using EventHub.Infraestructure.Repository.BaseRepository;
 
 namespace EventHub.WebApi
 {
@@ -49,18 +44,17 @@ namespace EventHub.WebApi
             /* WebAPI */
 
             /* Application */
-            services.AddScoped<IServiceApplication<UserInput, User>, ServiceApplication<UserInput, User>>();
             services.AddScoped<UserApplication>();
-            services.AddScoped<IGatewayService<User>, GatewayService<User>>();
-            services.AddScoped<UserGatewayService>();
             services.AddSingleton(mapperConfig.CreateMapper());
 
             /* Domain */
             services.AddScoped<EventHubEntities>();
 
             /* Insfrastructure */
-            services.AddScoped<IRepository<User>, Repository<User>>();
-            services.AddScoped<UserRepository>();
+            services.AddScoped<IRepository<User>, UserRepository>();
+
+            /* Business */
+            services.AddScoped<UserBusiness>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
