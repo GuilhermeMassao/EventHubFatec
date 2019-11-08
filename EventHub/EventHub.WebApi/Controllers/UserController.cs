@@ -22,6 +22,7 @@ namespace EventHub.WebApi.Controllers
         [ProducesResponseType(typeof(bool), 201)]
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
+        [ProducesResponseType(503)]
         public virtual async Task<IActionResult> CreateUser([FromBody] UserInput input)
         {
             if (PayloadValidator.ValidateObject(input))
@@ -35,17 +36,25 @@ namespace EventHub.WebApi.Controllers
         [HttpGet]
         [Route("{id}")]
         [ProducesResponseType(200)]
+        [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
+        [ProducesResponseType(503)]
         public virtual async Task<IActionResult> GetById([FromRoute] int id)
         {
-            return Ok(await userApplication.GetById(id));
+            var user = await userApplication.GetById(id);
+            if (user == null)
+            {
+                return NoContent();
+            }
+            return Ok(user);
         }
 
         [HttpGet]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
+        [ProducesResponseType(503)]
         public virtual async Task<IActionResult> GetAll()
         {
             return Ok(await userApplication.GetAll());
@@ -66,6 +75,7 @@ namespace EventHub.WebApi.Controllers
         [ProducesResponseType(typeof(bool), 200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
+        [ProducesResponseType(503)]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
             return Ok(await userApplication.Delete(id));
