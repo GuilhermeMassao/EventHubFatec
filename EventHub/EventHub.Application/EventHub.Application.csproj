@@ -201,10 +201,15 @@
     <Compile Include="Mapping\DtoToViewModel.cs" />
     <Compile Include="Mapping\InputToEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\EventApplication\AdressPublicPlace.cs" />
+    <Compile Include="Services\EventApplication\Input\EventAdress.cs" />
+    <Compile Include="Services\EventApplication\EventApplication.cs" />
+    <Compile Include="Services\EventApplication\Input\EventInput.cs" />
     <Compile Include="Services\UserApplication\Input\UserInput.cs" />
     <Compile Include="Services\UserApplication\Input\UserTokensInput.cs" />
     <Compile Include="Services\UserApplication\UserApplication.cs" />
     <Compile Include="Services\UserApplication\ViewModel\UserViewModel.cs" />
+    <Compile Include="Utils\PayloadValidator.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EventHub.Business\EventHub.Business.csproj">

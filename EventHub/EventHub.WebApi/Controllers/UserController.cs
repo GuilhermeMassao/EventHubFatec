@@ -1,6 +1,5 @@
 ﻿using EventHub.Application.Services.UserApplication;
 using EventHub.Application.Services.UserApplication.Input;
-using EventHub.WebApi.Utils;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -25,9 +24,11 @@ namespace EventHub.WebApi.Controllers
         [ProducesResponseType(503)]
         public virtual async Task<IActionResult> CreateUser([FromBody] UserInput input)
         {
-            if (PayloadValidator.ValidateObject(input))
+            var result = await userApplication.CreateUser(input);
+
+            if (result) // refatorar depois para retornar o object (ou ver se o front consegue se virar e dar um get para se logar)
             {
-                return Created("New user created with sucess", await userApplication.CreateUser(input));
+                return Created("New user created with sucess", result);
             }
 
             return BadRequest();

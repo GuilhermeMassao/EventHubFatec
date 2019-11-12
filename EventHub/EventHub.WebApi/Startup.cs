@@ -11,6 +11,7 @@ using EventHub.Infraestructure.Repository;
 using EventHub.Domain;
 using EventHub.Business.Business;
 using EventHub.Infraestructure.Repository.BaseRepository;
+using EventHub.Application.Services.EventApplication;
 
 namespace EventHub.WebApi
 {
@@ -45,6 +46,7 @@ namespace EventHub.WebApi
 
             /* Application */
             services.AddScoped<UserApplication>();
+            services.AddScoped<EventApplication>();
             services.AddSingleton(mapperConfig.CreateMapper());
 
             /* Domain */
@@ -55,6 +57,7 @@ namespace EventHub.WebApi
 
             /* Business */
             services.AddScoped<UserBusiness>();
+            services.AddScoped<EventBusiness>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

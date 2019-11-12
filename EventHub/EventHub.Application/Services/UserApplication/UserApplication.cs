@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using EventHub.Application.Services.UserApplication.Input;
+using EventHub.Application.Utils;
 using EventHub.Business.Business;
 using EventHub.Domain;
-using EventHub.Domain.DTOs.User;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -21,7 +21,11 @@ namespace EventHub.Application.Services.UserApplication
 
         public async Task<bool> CreateUser(UserInput input)
         {
-            return await userBusiness.CreateUser(_inputToEntity.Map<UserInput, User>(input));
+            if (PayloadValidator.ValidateObject(input))
+            {
+                return await userBusiness.CreateUser(_inputToEntity.Map<UserInput, User>(input));
+            }
+            return false;
         }
 
         public async Task<User> GetById(int id)

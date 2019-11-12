@@ -1,18 +1,19 @@
+﻿
 using System.Reflection;
 
-namespace EventHub.WebApi.Utils
+namespace EventHub.Application.Utils
 {
     public class PayloadValidator
     {
-        private PayloadValidator(){}
+        private PayloadValidator() { }
         public static bool ValidateObject(object myObject)
         {
-            foreach(PropertyInfo pi in myObject.GetType().GetProperties())
+            foreach (PropertyInfo pi in myObject.GetType().GetProperties())
             {
-                if(pi.PropertyType == typeof(string))
+                if (pi.PropertyType == typeof(string))
                 {
                     string value = (string)pi.GetValue(myObject);
-                    if(string.IsNullOrEmpty(value))
+                    if (string.IsNullOrEmpty(value))
                     {
                         return false;
                     }
@@ -20,6 +21,5 @@ namespace EventHub.WebApi.Utils
             }
             return true;
         }
-       
     }
 }
