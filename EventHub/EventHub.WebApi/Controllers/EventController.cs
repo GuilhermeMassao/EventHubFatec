@@ -31,6 +31,53 @@ namespace EventHub.WebApi.Controllers
 
             return BadRequest();
         }
+        [HttpGet]
+        [Route("{id}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(500)]
+        [ProducesResponseType(503)]
+        public virtual async Task<IActionResult> GetById([FromRoute] int id)
+        {
+            var eventGet = await eventApplication.GetById(id);
+            if (eventGet == null)
+            {
+                return NoContent();
+            }
+            return Ok(eventGet);
+        }
+
+        [HttpGet]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(500)]
+        [ProducesResponseType(503)]
+        public virtual async Task<IActionResult> GetAll()
+        {
+            return Ok(await eventApplication.GetAll());
+        }
+
+        [HttpPut]
+        [Route("{id}")]
+        [ProducesResponseType(typeof(bool), 202)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> Put([FromRoute] int id, [FromBody] EventInput input)
+        {
+            return Accepted(await eventApplication.Update(id, input));
+        }
+
+        [HttpDelete]
+        [Route("{id}")]
+        [ProducesResponseType(typeof(bool), 200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(500)]
+        [ProducesResponseType(503)]
+        public async Task<IActionResult> Delete([FromRoute] int id)
+        {
+            return Ok(await eventApplication.Delete(id));
+        }
     }
 }
 

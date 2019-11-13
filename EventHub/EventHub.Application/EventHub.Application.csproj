@@ -201,7 +201,7 @@
     <Compile Include="Mapping\DtoToViewModel.cs" />
     <Compile Include="Mapping\InputToEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\EventApplication\AdressPublicPlace.cs" />
+    <Compile Include="Services\EventApplication\Input\AdressPublicPlace.cs" />
     <Compile Include="Services\EventApplication\Input\EventAdress.cs" />
     <Compile Include="Services\EventApplication\EventApplication.cs" />
     <Compile Include="Services\EventApplication\Input\EventInput.cs" />

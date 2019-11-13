@@ -1,4 +1,6 @@
-﻿namespace EventHub.Application.Services.EventApplication
+﻿using EventHub.Application.Services.EventApplication.Input;
+
+namespace EventHub.Application.Services.EventApplication
 {
     public class EventAdress
     {

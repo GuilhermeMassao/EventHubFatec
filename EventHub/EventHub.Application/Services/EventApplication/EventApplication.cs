@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using AutoMapper;
 using EventHub.Application.Services.EventApplication.Input;
 using EventHub.Application.Utils;
@@ -28,6 +30,26 @@ namespace EventHub.Application.Services.EventApplication
             }
 
             return null;
+        }
+
+        public async Task<Event> GetById(int id)
+        {
+            return await eventBusiness.GetById(id);
+        }
+
+        public async Task<IEnumerable<Event>> GetAll()
+        {
+            return await eventBusiness.GetAll();
+        }
+
+        public Task<bool> Update(int id, EventInput input)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<object> Delete(int id)
+        {
+            return await eventBusiness.Delete(id);
         }
     }
 }

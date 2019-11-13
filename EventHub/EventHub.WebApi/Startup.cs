@@ -12,6 +12,7 @@ using EventHub.Domain;
 using EventHub.Business.Business;
 using EventHub.Infraestructure.Repository.BaseRepository;
 using EventHub.Application.Services.EventApplication;
+using EventHub.Infrastructure.Repository;
 
 namespace EventHub.WebApi
 {
@@ -54,6 +55,7 @@ namespace EventHub.WebApi
 
             /* Insfrastructure */
             services.AddScoped<IRepository<User>, UserRepository>();
+            services.AddScoped<IRepository<Event>, EventRepository>();
 
             /* Business */
             services.AddScoped<UserBusiness>();
