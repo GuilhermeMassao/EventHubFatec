@@ -3,7 +3,6 @@ BEGIN
    CREATE DATABASE EventHub
 END
 GO
-
 IF EXISTS (SELECT 1 FROM sys.databases WHERE name = 'EventHub')
 BEGIN
     USE EventHub
@@ -121,6 +120,7 @@ BEGIN
     BEGIN
         CREATE TABLE [TwitterSocialMarketing](
             Id INT IDENTITY(1, 1) NOT NULL,
+			EventId INT NOT NULL,
             TweetId VARCHAR(20) NOT NULL,
             ShortUrlTweet VARCHAR(30) NULL
         )
@@ -128,5 +128,9 @@ BEGIN
         /*Primary key*/
         ALTER TABLE [dbo].[TwitterSocialMarketing]
             ADD CONSTRAINT [PK_TwitterSocialMarketing] PRIMARY KEY CLUSTERED ([Id] ASC)
+
+		/*Foreign key*/
+        ALTER TABLE [TwitterSocialMarketing] 
+            ADD CONSTRAINT [FK_TwitterSocialMarketing_Event] FOREIGN KEY(EventId) REFERENCES [Event](Id)
     END
 END
