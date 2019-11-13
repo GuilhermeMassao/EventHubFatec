@@ -21,7 +21,7 @@ namespace EventHub.Domain
         }
     
         public int Id { get; set; }
-        public string placeName { get; set; }
+        public string PlaceName { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Adress> Adress { get; set; }

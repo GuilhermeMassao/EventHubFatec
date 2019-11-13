@@ -15,7 +15,10 @@ namespace EventHub.Domain
     public partial class TwitterSocialMarketing
     {
         public int Id { get; set; }
+        public int EventId { get; set; }
         public string TweetId { get; set; }
         public string ShortUrlTweet { get; set; }
+    
+        public virtual Event Event { get; set; }
     }
 }

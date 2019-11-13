@@ -19,6 +19,7 @@ namespace EventHub.Domain
         {
             this.EventSubscribers = new HashSet<EventSubscribers>();
             this.GoogleCalendarSocialMarketing = new HashSet<GoogleCalendarSocialMarketing>();
+            this.TwitterSocialMarketing = new HashSet<TwitterSocialMarketing>();
         }
     
         public int Id { get; set; }
@@ -35,5 +36,7 @@ namespace EventHub.Domain
         public virtual ICollection<EventSubscribers> EventSubscribers { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<GoogleCalendarSocialMarketing> GoogleCalendarSocialMarketing { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TwitterSocialMarketing> TwitterSocialMarketing { get; set; }
     }
 }

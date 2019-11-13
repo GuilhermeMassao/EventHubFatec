@@ -52,13 +52,14 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="placeName" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="PlaceName" Type="varchar" MaxLength="20" Nullable="false" />
         </EntityType>
         <EntityType Name="TwitterSocialMarketing">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EventId" Type="int" Nullable="false" />
           <Property Name="TweetId" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="ShortUrlTweet" Type="varchar" MaxLength="30" />
         </EntityType>
@@ -146,6 +147,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_TwitterSocialMarketing_Event">
+          <End Role="Event" Type="Self.Event" Multiplicity="1" />
+          <End Role="TwitterSocialMarketing" Type="Self.TwitterSocialMarketing" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TwitterSocialMarketing">
+              <PropertyRef Name="EventId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="EventHubModelStoreContainer">
           <EntitySet Name="Adress" EntityType="Self.Adress" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Event" EntityType="Self.Event" Schema="dbo" store:Type="Tables" />
@@ -177,6 +190,10 @@
           <AssociationSet Name="FK_GoogleCalendarSocialMarketing_Event" Association="Self.FK_GoogleCalendarSocialMarketing_Event">
             <End Role="Event" EntitySet="Event" />
             <End Role="GoogleCalendarSocialMarketing" EntitySet="GoogleCalendarSocialMarketing" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TwitterSocialMarketing_Event" Association="Self.FK_TwitterSocialMarketing_Event">
+            <End Role="Event" EntitySet="Event" />
+            <End Role="TwitterSocialMarketing" EntitySet="TwitterSocialMarketing" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -214,6 +231,7 @@
           <NavigationProperty Name="User" Relationship="Self.FK_Event_User" FromRole="Event" ToRole="User" />
           <NavigationProperty Name="EventSubscribers" Relationship="Self.FK_EventSubscribers_Event" FromRole="Event" ToRole="EventSubscribers" />
           <NavigationProperty Name="GoogleCalendarSocialMarketing" Relationship="Self.FK_GoogleCalendarSocialMarketing_Event" FromRole="Event" ToRole="GoogleCalendarSocialMarketing" />
+          <NavigationProperty Name="TwitterSocialMarketing" Relationship="Self.FK_TwitterSocialMarketing_Event" FromRole="Event" ToRole="TwitterSocialMarketing" />
         </EntityType>
         <EntityType Name="EventSubscribers">
           <Key>
@@ -240,7 +258,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="placeName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PlaceName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Adress" Relationship="Self.FK_Adress_PublicPlace" FromRole="PublicPlace" ToRole="Adress" />
         </EntityType>
         <EntityType Name="TwitterSocialMarketing">
@@ -248,8 +266,10 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EventId" Type="Int32" Nullable="false" />
           <Property Name="TweetId" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="ShortUrlTweet" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Event" Relationship="Self.FK_TwitterSocialMarketing_Event" FromRole="TwitterSocialMarketing" ToRole="Event" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -325,6 +345,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_TwitterSocialMarketing_Event">
+          <End Role="Event" Type="Self.Event" Multiplicity="1" />
+          <End Role="TwitterSocialMarketing" Type="Self.TwitterSocialMarketing" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TwitterSocialMarketing">
+              <PropertyRef Name="EventId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_EventSubscribers_User">
           <End Role="User" Type="Self.User" Multiplicity="1" />
           <End Role="EventSubscribers" Type="Self.EventSubscribers" Multiplicity="*" />
@@ -337,7 +369,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="EventHubEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Adress" EntityType="Self.Adress" />
           <EntitySet Name="Event" EntityType="Self.Event" />
           <EntitySet Name="EventSubscribers" EntityType="Self.EventSubscribers" />
@@ -365,6 +397,10 @@
             <End Role="Event" EntitySet="Event" />
             <End Role="GoogleCalendarSocialMarketing" EntitySet="GoogleCalendarSocialMarketing" />
           </AssociationSet>
+          <AssociationSet Name="FK_TwitterSocialMarketing_Event" Association="Self.FK_TwitterSocialMarketing_Event">
+            <End Role="Event" EntitySet="Event" />
+            <End Role="TwitterSocialMarketing" EntitySet="TwitterSocialMarketing" />
+          </AssociationSet>
           <AssociationSet Name="FK_EventSubscribers_User" Association="Self.FK_EventSubscribers_User">
             <End Role="User" EntitySet="User" />
             <End Role="EventSubscribers" EntitySet="EventSubscribers" />
@@ -375,7 +411,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="EventHubModelStoreContainer" CdmEntityContainer="EventHubEntities">
+        <EntityContainerMapping StorageEntityContainer="EventHubModelStoreContainer" CdmEntityContainer="Entities">
           <EntitySetMapping Name="Adress">
             <EntityTypeMapping TypeName="EventHubModel.Adress">
               <MappingFragment StoreEntitySet="Adress">
@@ -426,7 +462,7 @@
             <EntityTypeMapping TypeName="EventHubModel.PublicPlace">
               <MappingFragment StoreEntitySet="PublicPlace">
                 <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="placeName" ColumnName="placeName" />
+                <ScalarProperty Name="PlaceName" ColumnName="PlaceName" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -434,6 +470,7 @@
             <EntityTypeMapping TypeName="EventHubModel.TwitterSocialMarketing">
               <MappingFragment StoreEntitySet="TwitterSocialMarketing">
                 <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="EventId" ColumnName="EventId" />
                 <ScalarProperty Name="TweetId" ColumnName="TweetId" />
                 <ScalarProperty Name="ShortUrlTweet" ColumnName="ShortUrlTweet" />
               </MappingFragment>
