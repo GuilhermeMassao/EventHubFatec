@@ -6,6 +6,7 @@ using System;
 using System.Data.SqlClient;
 using Dapper;
 using System.Threading.Tasks;
+using EventHub.Infrastructure.Queries;
 
 namespace EventHub.Infraestructure.Repository
 {
@@ -17,8 +18,7 @@ namespace EventHub.Infraestructure.Repository
             {
                 using (var connection = new SqlConnection(ConnectionHelper.ConnectionString))
                 {
-                    var obj = await connection.QueryAsync<User>($@"INSERT INTO [User] (UserName, Email, UserPassword)
-                                                                        VALUES ('{entity.UserName}', '{entity.Email}', '{entity.UserPassword}');");
+                    var obj = await connection.QueryAsync<User>(UserQueries.CreateUserQuery(entity));
                     return true;
                 }
             }

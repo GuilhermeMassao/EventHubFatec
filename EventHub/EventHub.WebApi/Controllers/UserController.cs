@@ -1,6 +1,7 @@
 ﻿using EventHub.Application.Services.UserApplication;
 using EventHub.Application.Services.UserApplication.Input;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace EventHub.WebApi.Controllers
@@ -31,7 +32,7 @@ namespace EventHub.WebApi.Controllers
                 return Created("New user created with sucess", result);
             }
 
-            return BadRequest();
+            return BadRequest("Can't create new user");
         }
 
         [HttpGet]

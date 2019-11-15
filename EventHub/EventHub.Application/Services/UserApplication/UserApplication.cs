@@ -2,7 +2,6 @@
 using EventHub.Application.Services.UserApplication.Input;
 using EventHub.Application.Utils;
 using EventHub.Business.Business;
-using EventHub.Domain;
 using EventHub.Domain.Entities;
 using System.Collections.Generic;
 using System.Threading.Tasks;

@@ -45,34 +45,5 @@ namespace EventHub.Infraestructure.Repository.BaseRepository
         {
             throw new NotImplementedException();
         }
-        /*
-public async Task<TEntity> GetById(int id)
-{
-   return await context.Set<TEntity>().FindAsync(id);
-}
-
-public async Task<bool> Update(int id, TEntity entity)
-{
-   try
-   {
-       var obj = await GetById(id);
-       if(obj != null)
-       {
-           context.Entry(obj).CurrentValues.SetValues(entity);
-           context.SaveChanges();
-
-           if (context.Set<TEntity>().Find(obj) == null)
-           {
-               return false;
-           }
-       }
-
-       return true;
-   }
-   catch (Exception e)
-   {
-       throw new Exception(e.Message);
-   }
-}*/
     }
 }
