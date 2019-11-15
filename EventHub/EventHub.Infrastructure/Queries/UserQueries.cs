@@ -16,5 +16,11 @@ namespace EventHub.Infrastructure.Queries
             return $@"INSERT INTO [User] (UserName, Email, UserPassword)
                         VALUES ('{entity.UserName}', '{entity.Email}', '{entity.UserPassword}');";
         }
+
+        public static string GetByEmailQuery(string email)
+        {
+            return $@"SELECT * FROM [USER]
+                        WHERE Email = '{email}';";
+        }
     }
 }

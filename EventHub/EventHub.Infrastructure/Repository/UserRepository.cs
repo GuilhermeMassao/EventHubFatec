@@ -18,7 +18,7 @@ namespace EventHub.Infraestructure.Repository
             {
                 using (var connection = new SqlConnection(ConnectionHelper.ConnectionString))
                 {
-                    var obj = await connection.QueryAsync<User>(UserQueries.CreateUserQuery(entity));
+                    await connection.QueryAsync<User>(UserQueries.CreateUserQuery(entity));
                     return true;
                 }
             }
@@ -28,9 +28,14 @@ namespace EventHub.Infraestructure.Repository
             }
         }
 
-        public bool GetByEmail(string email)
+        public async Task<bool> GetByEmail(string email)
         {
-            return false;
+            using (var connection = new SqlConnection(ConnectionHelper.ConnectionString))
+            {
+                var result = await connection.QueryFirstOrDefaultAsync<User>(UserQueries.GetByEmailQuery(email));
+
+                return result != null;
+            }
         }
     }
 }

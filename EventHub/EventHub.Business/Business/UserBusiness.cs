@@ -17,7 +17,7 @@ namespace EventHub.Business.Business
 
         public async Task<bool> CreateUser(User entity)
         {
-            if(repository.GetByEmail(entity.Email))
+            if(await repository.GetByEmail(entity.Email))
             {
                 return false;
             }
