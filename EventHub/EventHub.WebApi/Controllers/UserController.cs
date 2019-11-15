@@ -1,5 +1,6 @@
 ﻿using EventHub.Application.Services.UserApplication;
 using EventHub.Application.Services.UserApplication.Input;
+using EventHub.Domain.Input;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
@@ -81,6 +82,23 @@ namespace EventHub.WebApi.Controllers
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
             return Ok(await userApplication.Delete(id));
+        }
+
+        [HttpPost]
+        [Route("/login")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(500)]
+        [ProducesResponseType(503)]
+        public virtual async Task<IActionResult> UserLogin([FromBody] UserLoginInput input)
+        {
+            var result = await userApplication.UserLogin(input);
+
+            if (result != null)
+            {
+                return Ok(result);
+            }
+            return NoContent();
         }
     }
 }

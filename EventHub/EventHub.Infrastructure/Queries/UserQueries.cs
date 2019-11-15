@@ -1,4 +1,5 @@
 ﻿using EventHub.Domain.Entities;
+using EventHub.Domain.Input;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,13 @@ namespace EventHub.Infrastructure.Queries
         {
             return $@"SELECT * FROM [USER]
                         WHERE Email = '{email}';";
+        }
+
+        public static string GetByEmailAndPasswordQuery(UserLoginInput data)
+        {
+            return $@"SELECT * FROM [USER]
+                        WHERE Email = '{data.Email}'
+                        AND UserPassword = '{data.UserPassword}'";
         }
     }
 }

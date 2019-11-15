@@ -7,6 +7,7 @@ using System.Data.SqlClient;
 using Dapper;
 using System.Threading.Tasks;
 using EventHub.Infrastructure.Queries;
+using EventHub.Domain.Input;
 
 namespace EventHub.Infraestructure.Repository
 {
@@ -35,6 +36,16 @@ namespace EventHub.Infraestructure.Repository
                 var result = await connection.QueryFirstOrDefaultAsync<User>(UserQueries.GetByEmailQuery(email));
 
                 return result != null;
+            }
+        }
+
+        public async Task<User> GetByEmailAndPassword(UserLoginInput input)
+        {
+            using (var connection = new SqlConnection(ConnectionHelper.ConnectionString))
+            {
+                var result = await connection.QueryFirstOrDefaultAsync<User>(UserQueries.GetByEmailAndPasswordQuery(input));
+
+                return result;
             }
         }
     }

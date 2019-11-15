@@ -1,6 +1,8 @@
 ﻿using EventHub.Domain.Entities;
+using EventHub.Domain.Input;
 using EventHub.Infraestructure.Interfaces.Repository;
 using EventHub.Infraestructure.Repository;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -44,5 +46,9 @@ namespace EventHub.Business.Business
             return await repository.Delete(id);
         }
 
+        public async Task<User> UserLogin(UserLoginInput input)
+        {
+            return await repository.GetByEmailAndPassword(input);
+        }
     }
 }

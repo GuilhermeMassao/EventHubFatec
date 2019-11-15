@@ -3,6 +3,8 @@ using EventHub.Application.Services.UserApplication.Input;
 using EventHub.Application.Utils;
 using EventHub.Business.Business;
 using EventHub.Domain.Entities;
+using EventHub.Domain.Input;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -46,6 +48,15 @@ namespace EventHub.Application.Services.UserApplication
         public async Task<bool> Delete(int id)
         {
             return await userBusiness.Delete(id);
+        }
+
+        public async Task<User> UserLogin(UserLoginInput input)
+        {
+            if (PayloadValidator.ValidateObject(input))
+            {
+                return await userBusiness.UserLogin(input);
+            }
+            return null;
         }
     }
 }

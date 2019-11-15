@@ -5,7 +5,6 @@ using System.Data.SqlClient;
 using System.Threading.Tasks;
 using EventHub.Infraestructure.Interfaces.Repository;
 using EventHub.Infrastructure.Helpers;
-using EventHub.Domain.Entities;
 
 namespace EventHub.Infraestructure.Repository.BaseRepository
 {

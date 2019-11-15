@@ -204,6 +204,7 @@
     <Compile Include="Entities\PublicPlace.cs" />
     <Compile Include="Entities\TwitterSocialMarketing.cs" />
     <Compile Include="Entities\User.cs" />
+    <Compile Include="Input\UserLoginInput.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
