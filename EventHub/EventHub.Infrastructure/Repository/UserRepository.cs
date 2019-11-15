@@ -1,48 +1,36 @@
 using EventHub.Domain.Entities;
 using EventHub.Infraestructure.Repository.BaseRepository;
+using EventHub.Infrastructure.Helpers;
 using EventHub.Infrastructure.Interfaces.Repository;
 using System;
-using System.Linq;
+using System.Data.SqlClient;
+using Dapper;
 using System.Threading.Tasks;
 
 namespace EventHub.Infraestructure.Repository
 {
     public class UserRepository : Repository<User>, IUserRepository
     {
-        /*
         public async Task<bool> CreateUser(User entity)
         {
             try
             {
-                //context.User.Add(entity);
-                context.SaveChanges();
-
-                if (await context.Set<User>().FindAsync(entity) == null)
+                using (var connection = new SqlConnection(ConnectionHelper.ConnectionString))
                 {
-                    return false;
+                    var obj = await connection.QueryAsync<User>($@"INSERT INTO [User] (UserName, Email, UserPassword)
+                                                                        VALUES ('{entity.UserName}', '{entity.Email}', '{entity.UserPassword}');");
+                    return true;
                 }
-
-                return true;
-
             }
             catch (Exception e)
             {
-                throw new Exception(e.Message);
+                return false;
             }
         }
 
         public bool GetByEmail(string email)
         {
-            return context.Set<User>().ToList().Any(user => user.Email == email);
-        }*/
-        public Task<bool> CreateUser(User entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool GetByEmail(string email)
-        {
-            throw new NotImplementedException();
+            return false;
         }
     }
 }

@@ -35,7 +35,7 @@ namespace EventHub.Business.Business
 
         public async Task<object> Delete(int id)
         {
-            return await repository.DeleteAsync(id);
+            return await repository.Delete(id);
         }
     }
 }

@@ -66,6 +66,7 @@ namespace EventHub.WebApi.Controllers
         public async Task<IActionResult> Put([FromRoute] int id, [FromBody] EventInput input)
         {
             return Accepted(await eventApplication.Update(id, input));
+
         }
 
         [HttpDelete]

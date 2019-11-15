@@ -12,36 +12,15 @@ namespace EventHub.Infraestructure.Repository.BaseRepository
     public class Repository<TEntity> : IRepository<TEntity> 
         where TEntity : class
     {
-        public Task<bool> DeleteAsync(int id)
+        public async Task<bool> Delete(int id)
         {
-            throw new NotImplementedException();
+            using (var connection = new SqlConnection(ConnectionHelper.ConnectionString))
+            {
+                var obj = await connection.QueryAsync<TEntity>($"DELETE FROM [{typeof(TEntity).Name}] WHERE Id = '{id}'");
+                return true;
+            }
         }
 
-        /*
-public async Task<bool> DeleteAsync(int id)
-{
-   try
-   {
-       var entity = await GetById(id);
-       await Task.FromResult(context.Set<TEntity>().Remove(entity));
-       context.SaveChanges();
-
-       entity = await GetById(id);
-
-       if(entity != null)
-       {
-           return false;
-       }
-
-       return true;
-   }
-   catch(Exception e)
-   {
-       throw new Exception(e.Message);
-   }
-
-}
-*/
         public async Task<IEnumerable<TEntity>> GetAll()
         {
             using (var connection = new SqlConnection(ConnectionHelper.ConnectionString))
