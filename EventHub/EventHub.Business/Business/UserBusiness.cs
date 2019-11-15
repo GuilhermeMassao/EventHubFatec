@@ -1,5 +1,4 @@
-﻿using EventHub.Domain;
-using EventHub.Domain.DTOs.User;
+﻿using EventHub.Domain.Entities;
 using EventHub.Infraestructure.Interfaces.Repository;
 using EventHub.Infraestructure.Repository;
 using System.Collections.Generic;

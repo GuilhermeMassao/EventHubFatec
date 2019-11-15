@@ -6,6 +6,7 @@ using EventHub.Application.Services.EventApplication.Input;
 using EventHub.Application.Utils;
 using EventHub.Business.Business;
 using EventHub.Domain;
+using EventHub.Domain.Entities;
 
 namespace EventHub.Application.Services.EventApplication
 {

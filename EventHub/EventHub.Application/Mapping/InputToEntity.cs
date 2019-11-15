@@ -3,6 +3,7 @@ using EventHub.Application.Services.EventApplication;
 using EventHub.Application.Services.EventApplication.Input;
 using EventHub.Application.Services.UserApplication.Input;
 using EventHub.Domain;
+using EventHub.Domain.Entities;
 
 namespace EventHub.Application.Mapping
 {

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using EventHub.Domain;
+using EventHub.Domain.Entities;
 using EventHub.Infraestructure.Interfaces.Repository;
 using EventHub.Infrastructure.Repository;
 

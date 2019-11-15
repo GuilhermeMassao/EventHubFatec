@@ -38,9 +38,9 @@ namespace EventHub.WebApi.Controllers
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
         [ProducesResponseType(503)]
-        public virtual async Task<IActionResult> GetById([FromRoute] int id)
+        public virtual IActionResult GetById([FromRoute] int id)
         {
-            var eventGet = await eventApplication.GetById(id);
+            var eventGet = eventApplication.GetById(id);
             if (eventGet == null)
             {
                 return NoContent();

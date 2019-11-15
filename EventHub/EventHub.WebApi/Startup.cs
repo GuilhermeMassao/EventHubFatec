@@ -13,6 +13,8 @@ using EventHub.Business.Business;
 using EventHub.Infraestructure.Repository.BaseRepository;
 using EventHub.Application.Services.EventApplication;
 using EventHub.Infrastructure.Repository;
+using EventHub.Domain.Entities;
+using System.Data.Entity;
 
 namespace EventHub.WebApi
 {
@@ -51,14 +53,12 @@ namespace EventHub.WebApi
             services.AddSingleton(mapperConfig.CreateMapper());
 
             /* Domain */
-            services.AddScoped<EventHubEntities>();
 
             /* Insfrastructure */
             services.AddScoped<IRepository<User>, UserRepository>();
             services.AddScoped<IRepository<Event>, EventRepository>();
             services.AddScoped<IRepository<Adress>, AdressRepository>();
             services.AddScoped<IRepository<PublicPlace>, PublicPlaceRepository>();
-
             /* Business */
             services.AddScoped<UserBusiness>();
             services.AddScoped<EventBusiness>();

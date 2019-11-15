@@ -58,7 +58,7 @@ namespace EventHub.WebApi.Controllers
         [ProducesResponseType(503)]
         public virtual async Task<IActionResult> GetAll()
         {
-            return Ok(await userApplication.GetAll());
+            return Ok(userApplication.GetAll().Result);
         }
 
         [HttpPut]

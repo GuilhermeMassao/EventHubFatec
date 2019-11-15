@@ -1,5 +1,4 @@
-using EventHub.Domain;
-using EventHub.Domain.DTOs.User;
+using EventHub.Domain.Entities;
 using EventHub.Infraestructure.Repository.BaseRepository;
 using EventHub.Infrastructure.Interfaces.Repository;
 using System;
@@ -10,21 +9,12 @@ namespace EventHub.Infraestructure.Repository
 {
     public class UserRepository : Repository<User>, IUserRepository
     {
-        public UserRepository(EventHubEntities context) : base(context)
-        {
-        }
-
+        /*
         public async Task<bool> CreateUser(User entity)
         {
             try
             {
-                User user = new User
-                {
-                    UserName = "rodrigo",
-                    Email = "rodrigo@email.com",
-                    UserPassword = "123"
-                };
-                context.User.Add(user);
+                //context.User.Add(entity);
                 context.SaveChanges();
 
                 if (await context.Set<User>().FindAsync(entity) == null)
@@ -44,6 +34,15 @@ namespace EventHub.Infraestructure.Repository
         public bool GetByEmail(string email)
         {
             return context.Set<User>().ToList().Any(user => user.Email == email);
+        }*/
+        public Task<bool> CreateUser(User entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool GetByEmail(string email)
+        {
+            throw new NotImplementedException();
         }
     }
 }
