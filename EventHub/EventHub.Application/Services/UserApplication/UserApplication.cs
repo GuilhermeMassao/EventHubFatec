@@ -4,7 +4,6 @@ using EventHub.Application.Utils;
 using EventHub.Business.Business;
 using EventHub.Domain.Entities;
 using EventHub.Domain.Input;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

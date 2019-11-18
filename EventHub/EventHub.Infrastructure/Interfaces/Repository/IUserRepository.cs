@@ -1,12 +1,10 @@
-﻿using EventHub.Domain;
-using EventHub.Domain.Entities;
+﻿using EventHub.Domain.Entities;
 using EventHub.Domain.Input;
-using EventHub.Infraestructure.Interfaces.Repository;
 using System.Threading.Tasks;
 
 namespace EventHub.Infrastructure.Interfaces.Repository
 {
-    interface IUserRepository : IRepository<User>
+    public interface IUserRepository
     {
         Task<bool> CreateUser(User entity);
         Task<bool> GetByEmail(string email);

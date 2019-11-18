@@ -39,10 +39,5 @@ namespace EventHub.Infraestructure.Repository.BaseRepository
                 return obj;
             }
         }
-
-        public Task<bool> Update(int id, TEntity input)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

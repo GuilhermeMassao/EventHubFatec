@@ -11,17 +11,22 @@ BEGIN
     BEGIN
         CREATE TABLE [dbo].[User] (
             Id INT IDENTITY(1, 1) NOT NULL,
-            UserName VARCHAR(200) NOT NULL,
+            UserName VARCHAR(50) NOT NULL,
             Email VARCHAR(50) NOT NULL,
-            UserPassword VARCHAR(50) NOT NULL,
+            UserPassword VARCHAR(15) NOT NULL,
             TwitterAcessTokenSecret VARCHAR(10) NULL,
+            TwitterAcessToken VARCHAR(200) NULL,
             GoogleRefreshToken VARCHAR(10) NULL,
-            TwitterAcessToken VARCHAR(200) NULL
+            ActiveUser BIT NOT NULL
         )
 
         /*Primary key*/
         ALTER TABLE [dbo].[User]
             ADD CONSTRAINT [PK_User] PRIMARY KEY CLUSTERED ([Id] ASC)
+
+        /*Value Default*/
+        ALTER TABLE [dbo].[User]
+		    ADD CONSTRAINT [DF_ActiveUser] DEFAULT (1) FOR [ActiveUser]
     END
 
     IF OBJECT_ID(N'dbo.PublicPlace', N'U') IS NULL
@@ -46,7 +51,8 @@ BEGIN
             CEP VARCHAR(10) NOT NULL,
             Neighborhood VARCHAR(50) NOT NULL, -- Bairro
             AdressComplement VARCHAR(50) NULL, -- Complemento
-            AdressNumber VARCHAR(10) NOT NULL
+            AdressNumber VARCHAR(5) NOT NULL,
+            ActiveAdress BIT NOT NULL
         )
 
         /*Primary key*/
@@ -56,18 +62,25 @@ BEGIN
         /*Foreign key*/
         ALTER TABLE [Adress]
             ADD CONSTRAINT [FK_Adress_PublicPlace] FOREIGN KEY(PublicPlaceId) REFERENCES [PublicPlace](Id)
+
+        /*Value Default*/
+        ALTER TABLE [dbo].[Adress]
+		    ADD CONSTRAINT [DF_ActiveAdress] DEFAULT (1) FOR [ActiveAdress]
     END
 
     IF OBJECT_ID(N'dbo.Event', N'U') IS NULL
     BEGIN
         CREATE TABLE [dbo].[Event] (
             Id INT IDENTITY(1, 1) NOT NULL,
-            UserId INT NOT NULL,
+            UserOwnerId INT NOT NULL,
             AdressId INT NOT NULL,
             StartDate DATETIME NOT NULL,
             EndDate DATETIME NOT NULL,
-            EventName VARCHAR(50),
-            EventDescription VARCHAR(500),
+            EventName VARCHAR(80) NOT NULL,
+            EventShortDescription VARCHAR(50),
+            EventDescription VARCHAR(1000),
+            TicketsLimit INT NOT NULL,
+            ActiveEvent BIT NOT NULL
         )
         
         /*Primary key*/
@@ -75,27 +88,32 @@ BEGIN
             ADD CONSTRAINT [PK_Event] PRIMARY KEY CLUSTERED ([Id] ASC)
 
         /*Foreign keys*/
-        ALTER TABLE [Event] 
-            ADD CONSTRAINT [FK_Event_User] FOREIGN KEY(UserId) REFERENCES [User](Id),
+        ALTER TABLE [dbo].[Event]
+            ADD CONSTRAINT [FK_Event_UserOwnerId] FOREIGN KEY(UserOwnerId) REFERENCES [User](Id),
                 CONSTRAINT [FK_Event_adress] FOREIGN KEY(AdressId) REFERENCES [Adress](Id)
+
+        /*Value Default*/
+        ALTER TABLE [dbo].[Event]
+		    ADD CONSTRAINT [DF_ActiveEvent] DEFAULT (1) FOR [ActiveEvent]
+        
     END
 
-    IF OBJECT_ID(N'dbo.EventSubscribers', N'U') IS NULL
+    IF OBJECT_ID(N'dbo.EventSubscriptions', N'U') IS NULL
     BEGIN
-        CREATE TABLE [EventSubscribers] (
+        CREATE TABLE [dbo].[EventSubscriptions] (
             Id INT IDENTITY (1, 1) NOT NULL,
             UserId INT NOT NULL,
             EventId INT NOT NULL
         )
 
         /*Primary key*/
-        ALTER TABLE [dbo].[EventSubscribers]
-            ADD CONSTRAINT [PK_EventSubscribers] PRIMARY KEY CLUSTERED ([Id] ASC)
+        ALTER TABLE [dbo].[EventSubscriptions]
+            ADD CONSTRAINT [PK_EventSubscriptions] PRIMARY KEY CLUSTERED ([Id] ASC)
 
         /*Foreign keys*/
-        ALTER TABLE [EventSubscribers] 
-            ADD CONSTRAINT [FK_EventSubscribers_User] FOREIGN KEY(UserId) REFERENCES [User](Id),
-                CONSTRAINT [FK_EventSubscribers_Event] FOREIGN KEY(EventId) REFERENCES [Event](Id)
+        ALTER TABLE [dbo].[EventSubscriptions]
+            ADD CONSTRAINT [FK_EventSubscriptions_User] FOREIGN KEY(UserId) REFERENCES [User](Id),
+                CONSTRAINT [FK_EventSubscriptions_Event] FOREIGN KEY(EventId) REFERENCES [Event](Id)
     END
 
     IF OBJECT_ID(N'dbo.GoogleCalendarSocialMarketing', N'U') IS NULL

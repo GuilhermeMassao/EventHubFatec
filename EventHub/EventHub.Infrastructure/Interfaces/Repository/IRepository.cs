@@ -9,6 +9,5 @@ namespace EventHub.Infraestructure.Interfaces.Repository
         Task<bool> Delete(int id);
         Task<IEnumerable<TEntity>> GetAll();
         Task<TEntity> GetById(int id);
-        Task<bool> Update(int id, TEntity input); 
     }
 }

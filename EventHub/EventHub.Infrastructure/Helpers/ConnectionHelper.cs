@@ -1,17 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using EventHub.Infrastructure.Helpers.Interfaces;
+using System.Data.SqlClient;
 
 namespace EventHub.Infrastructure.Helpers
 {
-    public class ConnectionHelper
+    public class ConnectionHelper : IConnectionDatabase
     {
-        private ConnectionHelper() { }
+        public string ConnectionString()
+        {
+            var buildConnectionString = new SqlConnectionStringBuilder
+            {
+                ["Data Sorce"] = @"Server=localhost\SQLEXPRESS",
+                ["Initial Catolog"] = "EventHub",
+                ["Connect Timeout"] = "120",
+                ["Integrated Security"] = true
+            };
 
-        public static readonly string ConnectionString = @"Server=localhost\SQLEXPRESS;Database=EventHub;Trusted_Connection=True;";
+            return buildConnectionString.ToString();
+        }
+        //public static readonly string ConnectionString = @"Server =localhost\SQLEXPRESS;Database=EventHub;Trusted_Connection=True;";
         //public static readonly string ConnectionString = ConfigurationManager.ConnectionStrings["connectionString"].ConnectionString;
     }
 }

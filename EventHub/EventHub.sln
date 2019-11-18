@@ -7,7 +7,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0 - WebApi", "0 - WebApi", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventHub.WebApi", "EventHub.WebApi\EventHub.WebApi.csproj", "{C7657181-0D07-437F-87C4-285329207D1F}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3 - Infraestructure", "3 - Infraestructure", "{3C32BBF3-184B-462D-A117-6B26CF2B6EBD}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4 - Infraestructure", "4 - Infraestructure", "{3C32BBF3-184B-462D-A117-6B26CF2B6EBD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventHub.Infrastructure", "EventHub.Infrastructure\EventHub.Infrastructure.csproj", "{B9DCB53D-194C-499D-A272-14B812E7FD6D}"
 EndProject
@@ -19,7 +19,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventHub.Application", "Eve
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventHub.Domain", "EventHub.Domain\EventHub.Domain.csproj", "{3259ADB5-91EF-4679-867A-A08C9EE25240}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4 - Business", "4 - Business", "{102C21D8-5BFD-42C1-AF6B-6B47C86E5867}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3 - Business", "3 - Business", "{102C21D8-5BFD-42C1-AF6B-6B47C86E5867}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventHub.Business", "EventHub.Business\EventHub.Business.csproj", "{683B4CCB-2445-4AF5-A3E6-84EE36936D57}"
 EndProject

@@ -1,10 +1,5 @@
 ﻿using EventHub.Domain.Entities;
 using EventHub.Domain.Input;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EventHub.Infrastructure.Queries
 {
@@ -15,7 +10,7 @@ namespace EventHub.Infrastructure.Queries
         public static string CreateUserQuery(User entity)
         {
             return $@"INSERT INTO [User] (UserName, Email, UserPassword)
-                        VALUES ('{entity.UserName}', '{entity.Email}', '{entity.UserPassword}');";
+                        VALUES ('{entity.UserName}', '{entity.Email}', '{entity.UserPassword}')";
         }
 
         public static string GetByEmailQuery(string email)

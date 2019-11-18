@@ -198,6 +198,7 @@
     <Compile Include="DTOs\User\UserDto.cs" />
     <Compile Include="DTOs\User\UserTokensDTO.cs" />
     <Compile Include="Entities\Adress.cs" />
+    <Compile Include="Entities\EntityBase\Entity.cs" />
     <Compile Include="Entities\Event.cs" />
     <Compile Include="Entities\EventSubscribers.cs" />
     <Compile Include="Entities\GoogleCalendarSocialMarketing.cs" />

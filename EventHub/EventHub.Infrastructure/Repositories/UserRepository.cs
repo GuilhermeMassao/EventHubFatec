@@ -1,5 +1,4 @@
 using EventHub.Domain.Entities;
-using EventHub.Infraestructure.Repository.BaseRepository;
 using EventHub.Infrastructure.Helpers;
 using EventHub.Infrastructure.Interfaces.Repository;
 using System;
@@ -8,18 +7,37 @@ using Dapper;
 using System.Threading.Tasks;
 using EventHub.Infrastructure.Queries;
 using EventHub.Domain.Input;
+using EventHub.Infrastructure.Helpers.Interfaces;
+using EventHub.Infrastructure.Interfaces.StroreProcedures;
+using System.Data;
 
 namespace EventHub.Infraestructure.Repository
 {
-    public class UserRepository : Repository<User>, IUserRepository
+    public class UserRepository : IUserRepository
     {
+        private readonly IConnectionDatabase _dataBaseConnection;
+        private readonly SqlConnection _connection;
+        private readonly IStoreProcedure _storeProcedure;
+
+        public UserRepository()
+        {
+            _dataBaseConnection = new ConnectionHelper();
+            _connection = new SqlConnection(_dataBaseConnection.ConnectionString());
+        }
+
         public async Task<bool> CreateUser(User entity)
         {
+            var parameters = new DynamicParameters();
+
+            parameters.Add("@UserName", entity.UserName, DbType.String);
+            parameters.Add("@Email", entity.Email, DbType.String);
+            parameters.Add("@UserPassword", entity.UserPassword, DbType.String);
+
             try
             {
-                using (var connection = new SqlConnection(ConnectionHelper.ConnectionString))
+                using (_connection)
                 {
-                    await connection.QueryAsync<User>(UserQueries.CreateUserQuery(entity));
+                    _connection.Execute(_storeProcedure.InsertUser, param: parameters, commandType: CommandType.StoredProcedure);
                     return true;
                 }
             }
