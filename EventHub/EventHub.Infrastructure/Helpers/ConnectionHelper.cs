@@ -9,10 +9,19 @@ namespace EventHub.Infrastructure.Helpers
         {
             var buildConnectionString = new SqlConnectionStringBuilder
             {
-                ["Data Sorce"] = @"Server=localhost\SQLEXPRESS",
-                ["Initial Catolog"] = "EventHub",
+                //Gléber Connection
+                ["Data Source"] = "localhost,1401",
+                ["Initial Catalog"] = "EventHub",
                 ["Connect Timeout"] = "120",
-                ["Integrated Security"] = true
+                ["Integrated Security"] = false,
+                ["User Id"] = "sa",
+                ["Password"] = "123Aa321!"
+
+                //Rodrigo Connection
+                //["Data Source"] = "localhost\SQLEXPRESS",
+                //["Initial Catalog"] = "EventHub",
+                //["Connect Timeout"] = "120",
+                //["Integrated Security"] = true
             };
 
             return buildConnectionString.ToString();

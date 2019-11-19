@@ -29,25 +29,25 @@ namespace EventHub.Application.Services.UserApplication
             return false;
         }
 
-        public async Task<User> GetById(int id)
-        {
-            return await userBusiness.GetById(id);
-        }
+        //public async Task<User> GetById(int id)
+        //{
+        //    return await userBusiness.GetById(id);
+        //}
 
-        public async Task<IEnumerable<User>> GetAll()
-        {
-            return await userBusiness.GetAll();
-        }
+        //public async Task<IEnumerable<User>> GetAll()
+        //{
+        //    return await userBusiness.GetAll();
+        //}
 
-        public async Task<bool> Update(int id, UserInput input)
-        {
-            return await userBusiness.Update(id, _inputToEntity.Map<UserInput, User>(input));
-        }
+        //public async Task<bool> Update(int id, UserInput input)
+        //{
+        //    return await userBusiness.Update(id, _inputToEntity.Map<UserInput, User>(input));
+        //}
 
-        public async Task<bool> Delete(int id)
-        {
-            return await userBusiness.Delete(id);
-        }
+        //public async Task<bool> Delete(int id)
+        //{
+        //    return await userBusiness.Delete(id);
+        //}
 
         public async Task<User> UserLogin(UserLoginInput input)
         {

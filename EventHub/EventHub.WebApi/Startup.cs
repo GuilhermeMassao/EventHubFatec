@@ -6,15 +6,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
 using EventHub.Application.Mapping;
 using EventHub.Application.Services.UserApplication;
-using EventHub.Infraestructure.Interfaces.Repository;
 using EventHub.Infraestructure.Repository;
-using EventHub.Domain;
 using EventHub.Business.Business;
-using EventHub.Infraestructure.Repository.BaseRepository;
-using EventHub.Application.Services.EventApplication;
-using EventHub.Infrastructure.Repository;
 using EventHub.Domain.Entities;
-using System.Data.Entity;
+using EventHub.Infrastructure.Interfaces.Repository;
 
 namespace EventHub.WebApi
 {
@@ -49,19 +44,19 @@ namespace EventHub.WebApi
 
             /* Application */
             services.AddScoped<UserApplication>();
-            services.AddScoped<EventApplication>();
+            //services.AddScoped<EventApplication>();
             services.AddSingleton(mapperConfig.CreateMapper());
 
             /* Domain */
 
             /* Insfrastructure */
-            services.AddScoped<IRepository<User>, UserRepository>();
-            services.AddScoped<IRepository<Event>, EventRepository>();
-            services.AddScoped<IRepository<Adress>, AdressRepository>();
-            services.AddScoped<IRepository<PublicPlace>, PublicPlaceRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            //services.AddScoped<IRepository<Event>, EventRepository>();
+            //services.AddScoped<IRepository<Adress>, AdressRepository>();
+            //services.AddScoped<IRepository<PublicPlace>, PublicPlaceRepository>();
             /* Business */
             services.AddScoped<UserBusiness>();
-            services.AddScoped<EventBusiness>();
+            //services.AddScoped<EventBusiness>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

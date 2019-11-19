@@ -5,11 +5,11 @@ using System;
 using System.Data.SqlClient;
 using Dapper;
 using System.Threading.Tasks;
-using EventHub.Infrastructure.Queries;
 using EventHub.Domain.Input;
 using EventHub.Infrastructure.Helpers.Interfaces;
 using EventHub.Infrastructure.Interfaces.StroreProcedures;
 using System.Data;
+using EventHub.Infrastructure.Repositories.StoreProcedures;
 
 namespace EventHub.Infraestructure.Repository
 {
@@ -23,6 +23,7 @@ namespace EventHub.Infraestructure.Repository
         {
             _dataBaseConnection = new ConnectionHelper();
             _connection = new SqlConnection(_dataBaseConnection.ConnectionString());
+            _storeProcedure = new StoreProcedure();
         }
 
         public async Task<bool> CreateUser(User entity)
@@ -37,33 +38,63 @@ namespace EventHub.Infraestructure.Repository
             {
                 using (_connection)
                 {
-                    _connection.Execute(_storeProcedure.InsertUser, param: parameters, commandType: CommandType.StoredProcedure);
-                    return true;
+                    var createdId = await _connection.QueryFirstOrDefaultAsync<int?>
+                    (
+                        _storeProcedure.InsertUser, 
+                        param: parameters, 
+                        commandType: CommandType.StoredProcedure
+                    );
+
+                    if (createdId != null)
+                    {
+                        return true;
+                    }
+
+                    return false;
                 }
             }
             catch (Exception e)
             {
-                return false;
+                throw new Exception(e.Message);   
             }
         }
 
-        public async Task<bool> GetByEmail(string email)
+        public async Task<User> GetByEmail(string email)
         {
-            using (var connection = new SqlConnection(ConnectionHelper.ConnectionString))
-            {
-                var result = await connection.QueryFirstOrDefaultAsync<User>(UserQueries.GetByEmailQuery(email));
+            var parameters = new DynamicParameters();
 
-                return result != null;
+            parameters.Add("@Email", email, DbType.String);
+
+            using (_connection)
+            {
+                var user =  await _connection.QueryFirstOrDefaultAsync<User>
+                (
+                    _storeProcedure.SelectUserByEmail,
+                    param: parameters,
+                    commandType: CommandType.StoredProcedure
+                );
+
+                return user;
             }
         }
 
         public async Task<User> GetByEmailAndPassword(UserLoginInput input)
         {
-            using (var connection = new SqlConnection(ConnectionHelper.ConnectionString))
-            {
-                var result = await connection.QueryFirstOrDefaultAsync<User>(UserQueries.GetByEmailAndPasswordQuery(input));
+            var parameters = new DynamicParameters();
 
-                return result;
+            parameters.Add("@Email", input.Email, DbType.String);
+            parameters.Add("@UserPassword", input.UserPassword, DbType.String);
+
+            using (_connection)
+            {
+                var user = await _connection.QueryFirstOrDefaultAsync<User>
+                (
+                    _storeProcedure.SelectUserByEmailAndPassword,
+                    param: parameters,
+                    commandType: CommandType.StoredProcedure
+                );
+
+                return user;
             }
         }
     }

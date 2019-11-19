@@ -7,7 +7,7 @@ namespace EventHub.Infrastructure.Interfaces.Repository
     public interface IUserRepository
     {
         Task<bool> CreateUser(User entity);
-        Task<bool> GetByEmail(string email);
+        Task<User> GetByEmail(string email);
         Task<User> GetByEmailAndPassword(UserLoginInput user);
     }
 }
