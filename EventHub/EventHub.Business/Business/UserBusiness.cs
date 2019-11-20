@@ -22,7 +22,9 @@ namespace EventHub.Business.Business
             var resultId = await _repository.CreateUser(entity);
             if (resultId != null)
             {
-                return await _repository.GetById(resultId.GetValueOrDefault());
+                var user = await _repository.GetById(resultId.GetValueOrDefault());
+                user.Id = resultId.GetValueOrDefault();
+                return user;
             }
 
             return null;
