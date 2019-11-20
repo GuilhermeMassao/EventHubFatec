@@ -8,11 +8,4 @@ import { Router } from '@angular/router';
 })
 export class AppComponent {
   title = 'EventHub';
-
-  constructor(private router: Router) { }
-
-  ngOnInit() {
-    if (localStorage.getItem('user') == null)
-        this.router.navigateByUrl('login');
-  }
 }

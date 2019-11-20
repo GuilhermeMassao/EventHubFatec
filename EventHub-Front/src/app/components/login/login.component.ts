@@ -21,7 +21,7 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     //console.log(localStorage.getItem('user'));
     if (localStorage.getItem('user') != null)
-      this.router.navigateByUrl('');
+        this.router.navigateByUrl('home');
   }
 
   onSubmit(form: NgForm) {
@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('user', res.email);
         //localStorage.setItem('user', JSON.stringify(res));
         //console.log(localStorage.getItem('user'));
-        this.router.navigateByUrl('');
+        this.router.navigateByUrl('home');
       },
       err => {
         if (err.status == 400)
