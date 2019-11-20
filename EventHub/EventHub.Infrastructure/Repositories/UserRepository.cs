@@ -16,13 +16,13 @@ namespace EventHub.Infraestructure.Repository
     public class UserRepository : IUserRepository
     {
         private readonly IConnectionDatabase _dataBaseConnection;
-        private readonly SqlConnection _connection;
+        private SqlConnection _connection;
         private readonly IStoreProcedure _storeProcedure;
 
         public UserRepository()
         {
             _dataBaseConnection = new ConnectionHelper();
-            _connection = new SqlConnection(_dataBaseConnection.ConnectionString());
+            //_connection = new SqlConnection(_dataBaseConnection.ConnectionString());
             _storeProcedure = new StoreProcedure();
         }
 
@@ -36,7 +36,7 @@ namespace EventHub.Infraestructure.Repository
 
             try
             {
-                using (_connection)
+                using (_connection = new SqlConnection(_dataBaseConnection.ConnectionString()))
                 {
                     var createdId = await _connection.QueryFirstOrDefaultAsync<int?>
                     (
@@ -65,7 +65,7 @@ namespace EventHub.Infraestructure.Repository
 
             parameters.Add("@Id", id, DbType.Int32);
 
-            using (_connection)
+            using (_connection = new SqlConnection(_dataBaseConnection.ConnectionString()))
             {
                 var user = await _connection.QueryFirstOrDefaultAsync<User>
                 (
@@ -84,7 +84,7 @@ namespace EventHub.Infraestructure.Repository
 
             parameters.Add("@Email", email, DbType.String);
 
-            using (_connection)
+            using (_connection = new SqlConnection(_dataBaseConnection.ConnectionString()))
             {
                 var user =  await _connection.QueryFirstOrDefaultAsync<User>
                 (
@@ -104,7 +104,7 @@ namespace EventHub.Infraestructure.Repository
             parameters.Add("@Email", input.Email, DbType.String);
             parameters.Add("@UserPassword", input.UserPassword, DbType.String);
 
-            using (_connection)
+            using (_connection = new SqlConnection(_dataBaseConnection.ConnectionString()))
             {
                 var user = await _connection.QueryFirstOrDefaultAsync<User>
                 (

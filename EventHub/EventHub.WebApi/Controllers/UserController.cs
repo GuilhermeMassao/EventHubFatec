@@ -33,7 +33,7 @@ namespace EventHub.WebApi.Controllers
                 return Created("New user created with sucess", result);
             }
 
-            return BadRequest("Can't create new user");
+            return BadRequest();
         }
 
         //[HttpGet]

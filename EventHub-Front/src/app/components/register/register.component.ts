@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
 import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -9,7 +10,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class RegisterComponent implements OnInit {
 
-  constructor(public service: UserService, private toastr: ToastrService) { }
+  constructor(public service: UserService, private router: Router, private toastr: ToastrService) { }
 
   ngOnInit() {
     this.service.formModel.reset();
@@ -18,26 +19,17 @@ export class RegisterComponent implements OnInit {
   onSubmit() {
     this.service.register().subscribe(
       (res: any) => {
-        console.log(res);
-        if (res.succeeded) {
+        console.log('res = ' + res);
           this.service.formModel.reset();
-          this.toastr.success('New user created!', 'Registration successful.');
-        } else {
-          res.errors.forEach(element => {
-            switch (element.code) {
-              case 'DuplicateUserName':
-                this.toastr.error('Username is already taken','Registration failed.');
-                break;
-
-              default:
-              this.toastr.error(element.description,'Registration failed.');
-                break;
-            }
-          });
-        }
+          this.toastr.success('Novo usuário criado com sucesso');
+          localStorage.setItem('user', JSON.stringify({id: res.id, userName: res.userName, email: res.email}));
+          this.router.navigateByUrl('home');
       },
       err => {
-        console.log(err);
+        if(err.status == 400)
+        this.toastr.error('Erro usuário já está na base');
+        else
+          console.log(err);
       }
     );
   }
