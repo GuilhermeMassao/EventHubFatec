@@ -17,14 +17,15 @@ namespace EventHub.Business.Business
             _repository = new UserRepository();
         }
 
-        public async Task<bool> CreateUser(User entity)
+        public async Task<User> CreateUser(User entity)
         {
-            if (await _repository.CreateUser(entity))
+            var resultId = await _repository.CreateUser(entity);
+            if (resultId != null)
             {
-                return true;
+                return await _repository.GetById(resultId.GetValueOrDefault());
             }
 
-            return false;
+            return null;
         }
 
         //public async Task<User> GetById(int id)

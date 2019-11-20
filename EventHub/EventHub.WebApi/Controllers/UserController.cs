@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace EventHub.WebApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/user")]
     [ApiController]
     public class UserController : ControllerBase
     {
@@ -20,7 +20,7 @@ namespace EventHub.WebApi.Controllers
         }
 
         [HttpPost]
-        [ProducesResponseType(typeof(bool), 201)]
+        [ProducesResponseType(201)]
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
         [ProducesResponseType(503)]
@@ -28,7 +28,7 @@ namespace EventHub.WebApi.Controllers
         {
             var result = await userApplication.CreateUser(input);
 
-            if (result) // refatorar depois para retornar o object (ou ver se o front consegue se virar e dar um get para se logar)
+            if (result != null)
             {
                 return Created("New user created with sucess", result);
             }

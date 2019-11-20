@@ -27,8 +27,7 @@ export class LoginComponent implements OnInit {
   onSubmit(form: NgForm) {
     this.service.login(form.value).subscribe(
       (res: any) => {
-        localStorage.setItem('user', res.email);
-        //localStorage.setItem('user', JSON.stringify(res));
+        localStorage.setItem('user', JSON.stringify({id: res.id, userName: res.userName, email: res.email}));
         //console.log(localStorage.getItem('user'));
         this.router.navigateByUrl('home');
       },

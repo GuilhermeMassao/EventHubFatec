@@ -20,13 +20,13 @@ namespace EventHub.Application.Services.UserApplication
             _inputToEntity = inputToEntity;
         }
 
-        public async Task<bool> CreateUser(UserInput input)
+        public async Task<User> CreateUser(UserInput input)
         {
             if (PayloadValidator.ValidateObject(input))
             {
                 return await userBusiness.CreateUser(_inputToEntity.Map<UserInput, User>(input));
             }
-            return false;
+            return null;
         }
 
         //public async Task<User> GetById(int id)

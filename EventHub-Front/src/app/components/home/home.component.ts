@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent {
 
+  userName = JSON.parse(localStorage.getItem('user')).userName;
   constructor(private router: Router) { }
 
   onLogout() {

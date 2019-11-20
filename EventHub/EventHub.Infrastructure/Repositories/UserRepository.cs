@@ -26,7 +26,7 @@ namespace EventHub.Infraestructure.Repository
             _storeProcedure = new StoreProcedure();
         }
 
-        public async Task<bool> CreateUser(User entity)
+        public async Task<int?> CreateUser(User entity)
         {
             var parameters = new DynamicParameters();
 
@@ -47,15 +47,34 @@ namespace EventHub.Infraestructure.Repository
 
                     if (createdId != null)
                     {
-                        return true;
+                        return createdId;
                     }
 
-                    return false;
+                    return null;
                 }
             }
             catch (Exception e)
             {
                 throw new Exception(e.Message);   
+            }
+        }
+
+        public async Task<User> GetById(int id)
+        {
+            var parameters = new DynamicParameters();
+
+            parameters.Add("@Id", id, DbType.Int32);
+
+            using (_connection)
+            {
+                var user = await _connection.QueryFirstOrDefaultAsync<User>
+                (
+                    _storeProcedure.SelectUserById,
+                    param: parameters,
+                    commandType: CommandType.StoredProcedure
+                );
+
+                return user;
             }
         }
 
