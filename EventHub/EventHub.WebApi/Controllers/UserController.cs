@@ -98,7 +98,7 @@ namespace EventHub.WebApi.Controllers
             {
                 return Ok(result);
             }
-            return NoContent();
+            return BadRequest();
         }
     }
 }
