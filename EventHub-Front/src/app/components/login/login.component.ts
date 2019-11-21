@@ -21,7 +21,7 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     //console.log(localStorage.getItem('user'));
     if (localStorage.getItem('user') != null)
-        this.router.navigateByUrl('home');
+        this.router.navigateByUrl('eventhub/home');
   }
 
   onSubmit(form: NgForm) {
@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
       (res: any) => {
         localStorage.setItem('user', JSON.stringify({id: res.id, userName: res.userName, email: res.email}));
         //console.log(localStorage.getItem('user'));
-        this.router.navigateByUrl('home');
+        this.router.navigateByUrl('eventhub/home');
       },
       err => {
         if (err.status == 400)
