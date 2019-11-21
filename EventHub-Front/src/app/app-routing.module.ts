@@ -12,9 +12,9 @@ const routes: Routes = [
   { path: 'cadastro', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
   {
-    path: 'eventhub', component: AppOverlayComponent,
+    path: 'eventhub', component: AppOverlayComponent, canActivate:[AuthGuard],
     children: [
-      { path: 'home', component: HomeComponent, canActivate:[AuthGuard] },
+      { path: 'home', component: HomeComponent, canActivate:[AuthGuard]},
       { path: 'user/profile', component: UserInfoComponent, canActivate:[AuthGuard] }
     ]
   }
