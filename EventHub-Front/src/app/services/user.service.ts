@@ -9,6 +9,7 @@ export class UserService {
 
   constructor(private fb: FormBuilder, private http: HttpClient) { }
   readonly BaseURI = 'http://localhost:61096';
+  readonly BaseFrontURI = "http://localhost:4200";
 
   formModel = this.fb.group({
     UserName: ['', Validators.required],
@@ -40,5 +41,9 @@ export class UserService {
 
   login(formData) {
     return this.http.post(this.BaseURI + '/login', formData);
+  }
+
+  twitterLogin(callBackUrl: string) {
+
   }
 }
