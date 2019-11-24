@@ -1,0 +1,135 @@
+.page{
+    height: 100%;
+    width: 100%;
+    min-height: 400px;
+    background-color: #5f27cd;
+    color: white;
+}
+.page__demo{
+    padding-top: 5%;
+    padding-bottom: 20%;
+    margin: 0 auto;
+    width: 50%;
+    align-items: center;
+    justify-content: center;
+}
+
+button{
+    background-color: white;
+    padding: 3;
+    border: solid 3px #5f27cd;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 20px;
+    width: 100%;
+    border-width: 3px;
+    border-radius: 25px;
+    font-size: 18px;
+    color: #5f27cd;
+}
+
+button:hover{
+    background-color: transparent;
+    padding: 3;
+    border: solid px white;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 20px;
+    width: 100%;
+    border-width: 3px;
+    border-radius: 25px;
+    font-size: 18px;
+    color: white;
+}
+button:disabled{
+    background-color: white;
+    padding: 3;
+    border: solid 3px #5f27cd;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 20px;
+    width: 100%;
+    border-width: 3px;
+    border-radius: 25px;
+    font-size: 18px;
+    color: #5f27cd;
+}
+
+input{
+    background-color: transparent;
+    padding: 20px;
+    border: solid 2px white;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 20px;
+    width: 100%;
+    border-width: 3px;
+    border-radius: 25px;
+    font-size: 18px;
+    color: white;
+}
+
+input:focus{
+    background-color: transparent;
+    padding: 20px;
+    border: solid 2px white;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 20px;
+    width: 100%;
+    border-width: 3px;
+    border-radius: 25px;
+    font-size: 18px;
+    color: white;
+}
+
+::-webkit-input-placeholder {
+    color: white;
+ }
+
+ :-moz-placeholder { /* Firefox 18- */
+    color: white;
+ }
+
+ ::-moz-placeholder {  /* Firefox 19+ */
+    color: white;
+ }
+ :-ms-input-placeholder {
+    color: white;
+ }
+
+ label{
+     text-align: center;
+     font-size: 70px;
+     margin: 10px;
+ }
+ svg#clouds {
+    position: fixed;
+    bottom: -260px;
+    left: -230px;
+    z-index: 10;
+    width: 1920px;
+  }
+
+  .submenu{
+      color: white;
+      font-size: 18px;
+      border: solid 2px white;
+      border-radius: 25px;
+      margin: 12px;
+      padding: 10px;
+      padding-left: 20px;
+      padding-right: 20px;
+  }
+
+  .submenu:hover{
+    color: #5f27cd;
+    background-color: white;
+    font-size: 18px;
+    border: solid 2px white;
+    border-radius: 25px;
+    margin: 10px;
+    padding: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
