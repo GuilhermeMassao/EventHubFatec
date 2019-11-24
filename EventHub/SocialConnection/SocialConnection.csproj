@@ -158,7 +158,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Connections\FacebookConnection.cs" />
     <Compile Include="Connections\GoogleConnection.cs" />
     <Compile Include="Connections\Interfaces\IGoogleConnection.cs" />
     <Compile Include="Connections\Interfaces\IOAuth2Connection.cs" />

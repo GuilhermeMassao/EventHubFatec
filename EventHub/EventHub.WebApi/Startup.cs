@@ -10,6 +10,7 @@ using EventHub.Infraestructure.Repository;
 using EventHub.Business.Business;
 using EventHub.Domain.Entities;
 using EventHub.Infrastructure.Interfaces.Repository;
+using EventHub.Application.Services.SocialApplication;
 
 namespace EventHub.WebApi
 {
@@ -44,6 +45,7 @@ namespace EventHub.WebApi
 
             /* Application */
             services.AddScoped<UserApplication>();
+            services.AddScoped<SocialApplication>();
             //services.AddScoped<EventApplication>();
             services.AddSingleton(mapperConfig.CreateMapper());
 
@@ -56,6 +58,7 @@ namespace EventHub.WebApi
             //services.AddScoped<IRepository<PublicPlace>, PublicPlaceRepository>();
             /* Business */
             services.AddScoped<UserBusiness>();
+            services.AddScoped<SocialBusiness>();
             //services.AddScoped<EventBusiness>();
         }
 

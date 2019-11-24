@@ -165,6 +165,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Business\SocialBusiness.cs" />
     <Compile Include="Business\UserBusiness.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -176,6 +177,10 @@
     <ProjectReference Include="..\EventHub.Infrastructure\EventHub.Infrastructure.csproj">
       <Project>{B9DCB53D-194C-499D-A272-14B812E7FD6D}</Project>
       <Name>EventHub.Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SocialConnection\SocialConnection.csproj">
+      <Project>{56F3EE1E-C6A1-445D-8D49-C2FF2FB1A268}</Project>
+      <Name>SocialConnection</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -204,6 +204,7 @@
     <Compile Include="Services\EventApplication\Input\AdressPublicPlace.cs" />
     <Compile Include="Services\EventApplication\Input\EventAdress.cs" />
     <Compile Include="Services\EventApplication\Input\EventInput.cs" />
+    <Compile Include="Services\SocialApplication\SocialApplication.cs" />
     <Compile Include="Services\UserApplication\Input\UserInput.cs" />
     <Compile Include="Services\UserApplication\Input\UserTokensInput.cs" />
     <Compile Include="Services\UserApplication\UserApplication.cs" />
