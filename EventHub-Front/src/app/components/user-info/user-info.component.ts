@@ -13,12 +13,17 @@ export class UserInfoComponent implements OnInit {
   constructor(private service: UserService, private router: Router, private toastr: ToastrService) { }
 
   ngOnInit() {
-    console.log(this.router.url);
+    console.log("oi")
   }
 
   
   twitterLogin() {
-    this.service.twitterLogin("")
+    this.service.getTwitterAuthorizeUrl(this.router.url).subscribe(
+      res => {
+        console.log(res.toString())
+        document.location.href = res.toString()
+      }
+    );
   }
 
 }

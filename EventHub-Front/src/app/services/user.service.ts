@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpParams } from "@angular/common/http";
+import { RequestTokenResponseData } from '../interfaces/RequestTokenResponseData';
 
 @Injectable({
   providedIn: 'root'
@@ -43,7 +44,8 @@ export class UserService {
     return this.http.post(this.BaseURI + '/login', formData);
   }
 
-  twitterLogin(callBackUrl: string) {
-
+  getTwitterAuthorizeUrl(callBackUrl: string) {
+    const params = new HttpParams().set('callbackUrl', (this.BaseFrontURI + callBackUrl));
+    return this.http.get(this.BaseURI + '/twitter', {params, responseType: 'text'});
   }
 }

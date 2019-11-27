@@ -1,4 +1,5 @@
 ﻿using SocialConnection.Connections;
+using SocialConnection.Data.Response;
 using SocialConnection.Exceptions;
 using System.Threading.Tasks;
 
@@ -18,7 +19,12 @@ namespace EventHub.Business.Business
             {
                 try
                 {
-                    return Newtonsoft.Json.JsonConvert.SerializeObject(twitter.GetRequestToken(TWITTER_APP_KEY, TWITTER_APP_KEY_SECRET, callbackurl));
+                    var requestTokenData = twitter.GetRequestToken(TWITTER_APP_KEY, TWITTER_APP_KEY_SECRET, callbackurl);
+                    if(requestTokenData.OAuthCallbackConfirmed)
+                    {
+                        return twitter.GetAuthorizeTokenUri(requestTokenData.Token);
+                    }
+                    return "";
                 } catch(CouldNotConnectException e)
                 {
                     return "";

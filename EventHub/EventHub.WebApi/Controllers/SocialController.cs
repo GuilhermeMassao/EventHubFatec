@@ -28,7 +28,8 @@ namespace EventHub.WebApi.Controllers
 
             if (result != "")
             {
-                return Ok(Newtonsoft.Json.JsonConvert.DeserializeObject<RequestTokenResponseData>(result));
+                //return Ok(Newtonsoft.Json.JsonConvert.DeserializeObject<RequestTokenResponseData>(result));
+                return Ok(result);
             }
 
             return BadRequest();
