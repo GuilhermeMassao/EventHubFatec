@@ -11,5 +11,7 @@ namespace EventHub.Domain.Entities
         public string TwitterAcessToken { get; set; }
         public string GoogleRefreshToken { get; set; }
         public bool ActiveUser { get; set; }
+        public bool HasTwitterLogin { get; set; }
+        public bool HasGoogleLogin { get; set; }
     }
 }

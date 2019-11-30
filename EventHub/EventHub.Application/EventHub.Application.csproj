@@ -206,7 +206,6 @@
     <Compile Include="Services\EventApplication\Input\EventInput.cs" />
     <Compile Include="Services\SocialApplication\SocialApplication.cs" />
     <Compile Include="Services\UserApplication\Input\UserInput.cs" />
-    <Compile Include="Services\UserApplication\Input\UserTokensInput.cs" />
     <Compile Include="Services\UserApplication\UserApplication.cs" />
     <Compile Include="Services\UserApplication\ViewModel\UserViewModel.cs" />
     <Compile Include="Utils\PayloadValidator.cs" />
@@ -223,6 +222,10 @@
     <ProjectReference Include="..\EventHub.Infrastructure\EventHub.Infrastructure.csproj">
       <Project>{b9dcb53d-194c-499d-a272-14b812e7fd6d}</Project>
       <Name>EventHub.Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SocialConnection\SocialConnection.csproj">
+      <Project>{56F3EE1E-C6A1-445D-8D49-C2FF2FB1A268}</Project>
+      <Name>SocialConnection</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

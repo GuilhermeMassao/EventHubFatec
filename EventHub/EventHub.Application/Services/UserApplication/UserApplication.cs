@@ -57,5 +57,14 @@ namespace EventHub.Application.Services.UserApplication
             }
             return null;
         }
+
+        public async Task<bool> UpdateTwitterToken(int id, UserTwitterTokensInput input)
+        {
+            if (PayloadValidator.ValidateObject(input))
+            {
+                return await userBusiness.UpdateTwitterToken(id, input);
+            }
+            return false;
+        }
     }
 }

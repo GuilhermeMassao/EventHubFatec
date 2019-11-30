@@ -56,10 +56,19 @@ namespace EventHub.Business.Business
 
             if (user != null)
             {
+                if(_repository.GetTwitterTokenByUserId(user.Id) != null)
+                {
+                    user.HasTwitterLogin = true;
+                }
                 return user;
             }
 
             return default(User);
+        }
+
+        public async Task<bool> UpdateTwitterToken(int id, UserTwitterTokensInput input)
+        {
+            return await _repository.UpdateTwitterToken(id, input);
         }
     }
 }

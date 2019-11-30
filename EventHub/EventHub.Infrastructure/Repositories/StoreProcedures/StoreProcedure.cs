@@ -12,6 +12,8 @@ namespace EventHub.Infrastructure.Repositories.StoreProcedures
         public string SelectUserById => "SelectUserById";
         public string SelectGoogleTokenByUserId => "SelectGoogleTokenByUserId";
         public string SelectTwitterTokensByUserId => "SelectTwitterTokensByUserId";
+        public string UpdateUserTwitterToken => "UpdateUserTwitterToken";
+
         #endregion
     }
 }

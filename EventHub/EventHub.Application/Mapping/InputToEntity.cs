@@ -4,6 +4,7 @@ using EventHub.Application.Services.EventApplication.Input;
 using EventHub.Application.Services.UserApplication.Input;
 using EventHub.Domain;
 using EventHub.Domain.Entities;
+using EventHub.Domain.Input;
 
 namespace EventHub.Application.Mapping
 {
@@ -13,7 +14,7 @@ namespace EventHub.Application.Mapping
         {
             // user
             CreateMap<UserInput, User>();
-            CreateMap<UserTokensInput, User>();
+            CreateMap<UserTwitterTokensInput, User>();
 
             // event
             CreateMap<EventInput, Event>();

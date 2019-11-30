@@ -7,6 +7,8 @@ namespace SocialConnection.Data.Response
         public bool OAuthCallbackConfirmed { get; set; }
         public string TokenVerifier { get; set; }
 
+        public OAuth1TokenResponseData() { }
+
         public OAuth1TokenResponseData(string token, string tokenSecret, bool oAuthCallbackConfirmed)
         {
             Token = token;

@@ -1,1 +1,4 @@
-<button type="button" (click)="twitterLogin()">Login with twitter</button>
+<div>
+    <p *ngIf="hasTwitterLogin" style="color: white;">Já esta logado com o Twitter</p>
+    <button *ngIf="!hasTwitterLogin" type="button" (click)="twitterLogin()">Login with twitter</button>
+</div>

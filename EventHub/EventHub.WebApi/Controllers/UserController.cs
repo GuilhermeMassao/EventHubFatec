@@ -100,5 +100,22 @@ namespace EventHub.WebApi.Controllers
             }
             return BadRequest();
         }
+
+        [HttpPut]
+        [Route("/twitter/token/{id}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(500)]
+        [ProducesResponseType(503)]
+        public virtual async Task<IActionResult> UpdateTwitterToken([FromRoute] int id, [FromBody] UserTwitterTokensInput input)
+        {
+            var result = await userApplication.UpdateTwitterToken(id, input);
+
+            if (result)
+            {
+                return Ok();
+            }
+            return BadRequest();
+        }
     }
 }

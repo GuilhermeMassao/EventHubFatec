@@ -9,5 +9,6 @@
         string SelectUserByEmail { get; }
         string SelectUserByEmailAndPassword { get; }
         string SelectUserById { get; }
+        string UpdateUserTwitterToken { get; }
     }
 }

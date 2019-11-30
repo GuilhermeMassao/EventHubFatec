@@ -31,5 +31,22 @@ namespace EventHub.Business.Business
                 }
             });
         }
+
+        public Task<TwitterAccessTokenResponseData> GetTwitterAccessToken(OAuth1TokenResponseData input)
+        {
+            TwitterConnection twitter = new TwitterConnection();
+
+            return Task.Run(() =>
+            {
+                try
+                {
+                    return twitter.GetAccessToken(input);
+                }
+                catch (CouldNotConnectException e)
+                {
+                    return null;
+                }
+            });
+        }
     }
 }

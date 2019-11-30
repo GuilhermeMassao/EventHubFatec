@@ -96,7 +96,6 @@ namespace EventHub.Infraestructure.Repository
                 return user;
             }
         }
-
         public async Task<User> GetByEmailAndPassword(UserLoginInput input)
         {
             var parameters = new DynamicParameters();
@@ -114,6 +113,52 @@ namespace EventHub.Infraestructure.Repository
                 );
 
                 return user;
+            }
+        }
+
+        public async Task<User> GetTwitterTokenByUserId(int id)
+        {
+            var parameters = new DynamicParameters();
+
+            parameters.Add("@Id", id, DbType.Int32);
+
+            using (_connection = new SqlConnection(_dataBaseConnection.ConnectionString()))
+            {
+                var user = await _connection.QueryFirstOrDefaultAsync<User>
+                (
+                    _storeProcedure.SelectTwitterTokensByUserId,
+                    param: parameters,
+                    commandType: CommandType.StoredProcedure
+                );
+
+                return user;
+            }
+        }
+
+        public async Task<bool> UpdateTwitterToken(int id, UserTwitterTokensInput input)
+        {
+            var parameters = new DynamicParameters();
+
+            parameters.Add("@Id", id, DbType.Int32);
+            parameters.Add("@TwitterAcessToken", input.TwitterAcessToken, DbType.String);
+            parameters.Add("@TwitterAcessTokenSecret", input.TwitterAcessTokenSecret, DbType.String);
+
+            try
+            {
+                using (_connection = new SqlConnection(_dataBaseConnection.ConnectionString()))
+                {
+                    await _connection.QueryFirstOrDefaultAsync<int?>
+                    (
+                        _storeProcedure.UpdateUserTwitterToken,
+                        param: parameters,
+                        commandType: CommandType.StoredProcedure
+                    );
+                        return true;
+                }
+            }
+            catch (Exception e)
+            {
+                return false;
             }
         }
     }

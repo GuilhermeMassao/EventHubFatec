@@ -10,5 +10,7 @@ namespace EventHub.Infrastructure.Interfaces.Repository
         Task<User> GetById(int id);
         Task<User> GetByEmail(string email);
         Task<User> GetByEmailAndPassword(UserLoginInput user);
+        Task<User> GetTwitterTokenByUserId(int id);
+        Task<bool> UpdateTwitterToken(int id, UserTwitterTokensInput input);
     }
 }

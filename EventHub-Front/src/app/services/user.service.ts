@@ -48,4 +48,20 @@ export class UserService {
     const params = new HttpParams().set('callbackUrl', (this.BaseFrontURI + callBackUrl));
     return this.http.get(this.BaseURI + '/twitter', {params, responseType: 'text'});
   }
+
+  getTwitterAccessToken(oauthToken: string, oauthVerifier: string) {
+    var body = {
+      Token: oauthToken,
+      TokenVerifier: oauthVerifier
+    };
+    return this.http.post(this.BaseURI + '/twitter/access', body);
+  }
+
+  saveTwitterAccessToken(data: any, id: string) {
+    var body = {
+      TwitterAcessToken: data.accessToken,
+      TwitterAcessTokenSecret: data.accessTokenSecret
+    };
+    return this.http.put(this.BaseURI + '/twitter/token/' + id, body);
+  }
 }

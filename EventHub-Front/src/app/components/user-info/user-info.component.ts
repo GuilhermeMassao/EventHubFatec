@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
 import { ToastrService } from 'ngx-toastr';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-user-info',
@@ -10,10 +10,12 @@ import { Router } from '@angular/router';
 })
 export class UserInfoComponent implements OnInit {
 
-  constructor(private service: UserService, private router: Router, private toastr: ToastrService) { }
+  hasTwitterLogin = JSON.parse(localStorage.getItem('user')).twitterLogin;
+
+  constructor(private service: UserService, private router: Router, private toastr: ToastrService, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
-    console.log("oi")
+    this.verifyTwitterCallback()
   }
 
   
@@ -26,4 +28,37 @@ export class UserInfoComponent implements OnInit {
     );
   }
 
+  verifyTwitterCallback() {
+    this.activatedRoute.queryParams.subscribe(params => {
+      if(params.oauth_token != null && params.oauth_verifier != null) {
+        this.service.getTwitterAccessToken(params.oauth_token, params.oauth_verifier).subscribe(
+          res => {
+            this.service.saveTwitterAccessToken(res, JSON.parse(localStorage.getItem('user')).id).subscribe(
+              res => {
+                this.router.navigateByUrl('eventhub/user/profile');
+              },
+              err => {
+                if (err.status == 400) {
+                  this.toastr.error('Erro ao tentar logar no Twitter!','Tente novamente mais tarde.');
+                  this.router.navigateByUrl('eventhub/user/profile');
+                }
+                else {
+                  console.log(err);
+                }
+              }
+            )
+          },
+          err => {
+            if (err.status == 400) {
+              this.toastr.error('Erro ao tentar logar no Twitter!','Tente novamente mais tarde.');
+              this.router.navigateByUrl('eventhub/user/profile');
+            }
+            else {
+              console.log(err);
+            }
+          }
+        )
+      }
+    })
+  }
 }
