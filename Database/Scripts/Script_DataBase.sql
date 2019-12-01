@@ -14,7 +14,7 @@ BEGIN
             UserName VARCHAR(50) NOT NULL,
             Email VARCHAR(50) NOT NULL,
             UserPassword VARCHAR(15) NOT NULL,
-            TwitterAcessTokenSecret VARCHAR(100) NULL,
+            TwitterAcessTokenSecret VARCHAR(10) NULL,
             TwitterAcessToken VARCHAR(200) NULL,
             GoogleRefreshToken VARCHAR(10) NULL,
             ActiveUser BIT NOT NULL
@@ -77,8 +77,8 @@ BEGIN
             StartDate DATETIME NOT NULL,
             EndDate DATETIME NOT NULL,
             EventName VARCHAR(80) NOT NULL,
-            EventShortDescription VARCHAR(50),
-            EventDescription VARCHAR(1000),
+            EventShortDescription VARCHAR(50) NULL,
+            EventDescription VARCHAR(1000) NULL,
             TicketsLimit INT NOT NULL,
             ActiveEvent BIT NOT NULL
         )
