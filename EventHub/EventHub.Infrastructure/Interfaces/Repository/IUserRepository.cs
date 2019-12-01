@@ -13,6 +13,7 @@ namespace EventHub.Infrastructure.Interfaces.Repository
         Task<User> GetByEmailAndPassword(UserLoginInput user);
         Task<User> GetTwitterTokenByUserId(int id);
         Task<bool> UpdateTwitterToken(int id, UserTwitterTokensInput input);
+        Task<bool> UpdateGoogleToken(int id, GoogleRefreshTokenInput input);
         Task<bool> Update(int id, User entity);
         Task<bool> Delete(int id);
     }

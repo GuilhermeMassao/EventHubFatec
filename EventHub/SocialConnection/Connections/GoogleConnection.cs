@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -39,13 +40,14 @@ namespace SocialConnection.Connections
                 });
             var response = client.Execute(request);
 
-            var queryString = HttpUtility.ParseQueryString(response.Content);
+            //var queryString = HttpUtility.ParseQueryString(Newtonsoft.Json.JsonConvert.DeserializeObject(response.Content).ToString());
+            var queryString = JObject.Parse(response.Content);
 
             if (response.IsSuccessful)
             {
-                return new OAuth2AccessTokenResponseData(queryString["access_token"],
-                    queryString["token_type"],
-                    queryString["refresh_token"]);
+                return new OAuth2AccessTokenResponseData(Convert.ToString(queryString["access_token"]),
+                    Convert.ToString(queryString["token_type"]),
+                    Convert.ToString(queryString["refresh_token"]));
             }
 
             throw new CouldNotConnectException(

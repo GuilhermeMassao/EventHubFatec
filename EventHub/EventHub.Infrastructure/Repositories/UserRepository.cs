@@ -192,6 +192,25 @@ namespace EventHub.Infraestructure.Repository
             }
         }
 
+        public async Task<User> GetGoogleTokenByUserId(int id)
+        {
+            var parameters = new DynamicParameters();
+
+            parameters.Add("@Id", id, DbType.Int32);
+
+            using (_connection = new SqlConnection(_dataBaseConnection.ConnectionString()))
+            {
+                var user = await _connection.QueryFirstOrDefaultAsync<User>
+                (
+                    _storeProcedure.SelectGoogleTokenByUserId,
+                    param: parameters,
+                    commandType: CommandType.StoredProcedure
+                );
+
+                return user;
+            }
+        }
+
         public async Task<bool> UpdateTwitterToken(int id, UserTwitterTokensInput input)
         {
             var parameters = new DynamicParameters();
@@ -210,7 +229,33 @@ namespace EventHub.Infraestructure.Repository
                         param: parameters,
                         commandType: CommandType.StoredProcedure
                     );
-                        return true;
+                    return true;
+                }
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+        
+        public async Task<bool> UpdateGoogleToken(int id, GoogleRefreshTokenInput input)
+        {
+            var parameters = new DynamicParameters();
+
+            parameters.Add("@Id", id, DbType.Int32);
+            parameters.Add("@GoogleRefreshToken", input.RefreshToken, DbType.String);
+
+            try
+            {
+                using (_connection = new SqlConnection(_dataBaseConnection.ConnectionString()))
+                {
+                    await _connection.QueryFirstOrDefaultAsync<int?>
+                    (
+                        _storeProcedure.UpdateUserGoogleToken,
+                        param: parameters,
+                        commandType: CommandType.StoredProcedure
+                    );
+                    return true;
                 }
             }
             catch (Exception)

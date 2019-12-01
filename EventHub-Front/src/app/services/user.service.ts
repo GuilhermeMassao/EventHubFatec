@@ -64,4 +64,24 @@ export class UserService {
     };
     return this.http.put(this.BaseURI + '/twitter/token/' + id, body);
   }
+
+  getGoogleAuthorizeUrl(callBackUrl: string) {
+    const params = new HttpParams().set('callbackUrl', (this.BaseFrontURI + callBackUrl));
+    return this.http.get(this.BaseURI + '/google', {params, responseType: 'text'});
+  }
+
+  getGoogleAccessToken(code: string, callBackUrl: string) {
+    var body = {
+      Code: code,
+      CallbackUrl: this.BaseFrontURI + callBackUrl
+    };
+    return this.http.post(this.BaseURI + '/google/access', body);
+  }
+
+  saveGoogleAccessToken(refreshToken: any, id: string) {
+    var body = {
+      RefreshToken: refreshToken
+    };
+    return this.http.put(this.BaseURI + '/google/token/' + id, body);
+  }
 }

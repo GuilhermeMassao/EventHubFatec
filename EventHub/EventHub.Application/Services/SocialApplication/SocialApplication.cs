@@ -1,4 +1,5 @@
 ﻿using EventHub.Business.Business;
+using EventHub.Domain.Input;
 using SocialConnection.Data.Response;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,15 @@ namespace EventHub.Application.Services.SocialApplication
         public async Task<TwitterAccessTokenResponseData> GetTwitterAccessToken(OAuth1TokenResponseData input)
         {
             return await socialBusiness.GetTwitterAccessToken(input);
+        }
+
+        public async Task<string> GetGoogleAtuhUri(string callbackurl)
+        {
+            return await socialBusiness.GetGoogleAtuhUri(callbackurl);
+        }
+        public async Task<OAuth2AccessTokenResponseData> GetGooleAccessToken(GoogleAccessTokenInput input)
+        {
+            return await socialBusiness.GetGooleAccessToken(input);
         }
     }
 }

@@ -16,7 +16,7 @@ BEGIN
             UserPassword VARCHAR(15) NOT NULL,
             TwitterAcessTokenSecret VARCHAR(10) NULL,
             TwitterAcessToken VARCHAR(200) NULL,
-            GoogleRefreshToken VARCHAR(10) NULL,
+            GoogleRefreshToken VARCHAR(200) NULL,
             ActiveUser BIT NOT NULL
         )
 

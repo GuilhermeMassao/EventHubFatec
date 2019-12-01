@@ -79,6 +79,11 @@ namespace EventHub.Business.Business
                 {
                     user.HasTwitterLogin = true;
                 }
+
+                if (_repository.GetTwitterTokenByUserId(user.Id) != null)
+                {
+                    user.HasGoogleLogin = true;
+                }
                 return user;
             }
 
@@ -88,6 +93,11 @@ namespace EventHub.Business.Business
         public async Task<bool> UpdateTwitterToken(int id, UserTwitterTokensInput input)
         {
             return await _repository.UpdateTwitterToken(id, input);
+        }
+        
+        public async Task<bool> UpdateGoogleToken(int id, GoogleRefreshTokenInput input)
+        {
+            return await _repository.UpdateGoogleToken(id, input);
         }
     }
 }

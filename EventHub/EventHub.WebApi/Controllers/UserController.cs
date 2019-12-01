@@ -119,5 +119,22 @@ namespace EventHub.WebApi.Controllers
             }
             return BadRequest();
         }
+
+        [HttpPut]
+        [Route("/google/token/{id}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(500)]
+        [ProducesResponseType(503)]
+        public virtual async Task<IActionResult> UpdateGoogleToken([FromRoute] int id, [FromBody] GoogleRefreshTokenInput input)
+        {
+            var result = await userApplication.UpdateGoogleToken(id, input);
+
+            if (result)
+            {
+                return Ok();
+            }
+            return BadRequest();
+        }
     }
 }

@@ -70,5 +70,13 @@ namespace EventHub.Application.Services.UserApplication
             }
             return false;
         }
+        public async Task<bool> UpdateGoogleToken(int id, GoogleRefreshTokenInput input)
+        {
+            if (PayloadValidator.ValidateObject(input))
+            {
+                return await userBusiness.UpdateGoogleToken(id, input);
+            }
+            return false;
+        }
     }
 }
