@@ -20,4 +20,5 @@ BEGIN
         [dbo].[User]
     WHERE
         Id = @Id
+	AND ActiveUser = 1;
 END

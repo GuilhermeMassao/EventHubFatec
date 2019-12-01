@@ -10,6 +10,7 @@ using EventHub.Infrastructure.Helpers.Interfaces;
 using EventHub.Infrastructure.Interfaces.StroreProcedures;
 using System.Data;
 using EventHub.Infrastructure.Repositories.StoreProcedures;
+using EventHub.Domain.DTOs.User;
 
 namespace EventHub.Infraestructure.Repository
 {
@@ -22,7 +23,6 @@ namespace EventHub.Infraestructure.Repository
         public UserRepository()
         {
             _dataBaseConnection = new ConnectionHelper();
-            //_connection = new SqlConnection(_dataBaseConnection.ConnectionString());
             _storeProcedure = new StoreProcedure();
         }
 
@@ -45,21 +45,16 @@ namespace EventHub.Infraestructure.Repository
                         commandType: CommandType.StoredProcedure
                     );
 
-                    if (createdId != null)
-                    {
-                        return createdId;
-                    }
-
-                    return null;
+                    return createdId;
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                throw new Exception(e.Message);   
+                return null;
             }
         }
 
-        public async Task<User> GetById(int id)
+        public async Task<UserDTO> GetById(int id)
         {
             var parameters = new DynamicParameters();
 
@@ -67,18 +62,23 @@ namespace EventHub.Infraestructure.Repository
 
             using (_connection = new SqlConnection(_dataBaseConnection.ConnectionString()))
             {
-                var user = await _connection.QueryFirstOrDefaultAsync<User>
+                var user = await _connection.QueryFirstOrDefaultAsync<UserDTO>
                 (
                     _storeProcedure.SelectUserById,
                     param: parameters,
                     commandType: CommandType.StoredProcedure
                 );
 
+                if (user != null)
+                {
+                    user.Id = id;
+                }
+
                 return user;
             }
         }
 
-        public async Task<User> GetByEmail(string email)
+        public async Task<UserDTO> GetByEmail(string email)
         {
             var parameters = new DynamicParameters();
 
@@ -86,7 +86,7 @@ namespace EventHub.Infraestructure.Repository
 
             using (_connection = new SqlConnection(_dataBaseConnection.ConnectionString()))
             {
-                var user =  await _connection.QueryFirstOrDefaultAsync<User>
+                var user =  await _connection.QueryFirstOrDefaultAsync<UserDTO>
                 (
                     _storeProcedure.SelectUserByEmail,
                     param: parameters,
@@ -96,6 +96,7 @@ namespace EventHub.Infraestructure.Repository
                 return user;
             }
         }
+
         public async Task<User> GetByEmailAndPassword(UserLoginInput input)
         {
             var parameters = new DynamicParameters();
@@ -113,6 +114,62 @@ namespace EventHub.Infraestructure.Repository
                 );
 
                 return user;
+            }
+        }
+
+        public async Task<bool> Update(int id, User entity)
+        {
+            
+            var parameters = new DynamicParameters();
+
+            parameters.Add("@Id", entity.Id, DbType.String);
+            parameters.Add("@UserName", entity.UserName, DbType.String);
+            parameters.Add("@Email", entity.Email, DbType.String);
+            parameters.Add("@UserPassword", entity.UserPassword, DbType.String);
+
+            try
+            {
+                using (_connection = new SqlConnection(_dataBaseConnection.ConnectionString()))
+                {
+                    await _connection.ExecuteAsync
+                    (
+                        _storeProcedure.UpdateUser,
+                        param: parameters,
+                        commandType: CommandType.StoredProcedure
+                    );
+
+                    return true;
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public async Task<bool> Delete(int id)
+        {
+            try
+            {
+                var parameters = new DynamicParameters();
+
+                parameters.Add("@Id", id, DbType.Int32);
+
+                using (_connection = new SqlConnection(_dataBaseConnection.ConnectionString()))
+                {
+                    var user = await _connection.ExecuteAsync
+                    (
+                        _storeProcedure.InactivateUser,
+                        param: parameters,
+                        commandType: CommandType.StoredProcedure
+                    );
+
+                    return true;
+                }
+            }
+            catch (Exception)
+            {
+                return false;
             }
         }
 
@@ -156,7 +213,7 @@ namespace EventHub.Infraestructure.Repository
                         return true;
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return false;
             }

@@ -13,6 +13,7 @@ SET NOCOUNT ON
 
 BEGIN
     SELECT
+		Id,
         UserName,
         Email
     FROM

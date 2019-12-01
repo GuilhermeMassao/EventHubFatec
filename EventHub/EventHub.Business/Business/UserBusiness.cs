@@ -1,5 +1,5 @@
-﻿using EventHub.Domain.Entities;
-using EventHub.Domain.Exceptions;
+﻿using EventHub.Domain.DTOs.User;
+using EventHub.Domain.Entities;
 using EventHub.Domain.Input;
 using EventHub.Infraestructure.Repository;
 using EventHub.Infrastructure.Interfaces.Repository;
@@ -17,8 +17,14 @@ namespace EventHub.Business.Business
             _repository = new UserRepository();
         }
 
-        public async Task<User> CreateUser(User entity)
+        public async Task<UserDTO> CreateUser(User entity)
         {
+            var userWithSameEmail = await _repository.GetByEmail(entity.Email);
+            if (userWithSameEmail != null)
+            {
+                return default(UserDTO);
+            }
+
             var resultId = await _repository.CreateUser(entity);
             if (resultId != null)
             {
@@ -27,28 +33,41 @@ namespace EventHub.Business.Business
                 return user;
             }
 
-            return null;
+            return default(UserDTO);
         }
 
-        //public async Task<User> GetById(int id)
-        //{
-        //    return await _repository.GetById(id);
-        //}
+        public async Task<UserDTO> GetById(int id)
+        {
+            return await _repository.GetById(id);
+        }
 
-        //public async Task<IEnumerable<User>> GetAll()
-        //{
-        //    return await repository.GetAll();
-        //}
+        public async Task<bool> Update(int id, User user)
+        {
+            var userWithSameEmail = await _repository.GetByEmail(user.Email);
+            if (userWithSameEmail != null && userWithSameEmail.Id != id)
+            {
+                return false;
+            }
 
-        //public async Task<bool> Update(int id, User user)
-        //{
-        //    return await repository.Update(id, user);
-        //}
+            var UserIdNotExist = await _repository.GetById(id) == null;
+            if (UserIdNotExist)
+            {
+                return false;
+            }
 
-        //public async Task<bool> Delete(int id)
-        //{
-        //    return await repository.Delete(id);
-        //}
+            return await _repository.Update(id, user);
+        }
+
+        public async Task<bool> Delete(int id)
+        {
+            var user = await _repository.GetById(id);
+            if (user != null)
+            {
+                return await _repository.Delete(id);
+            }
+
+            return false;
+        }
 
         public async Task<User> UserLogin(UserLoginInput input)
         {
