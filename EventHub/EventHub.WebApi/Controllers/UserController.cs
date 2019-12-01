@@ -2,7 +2,6 @@
 using EventHub.Application.Services.UserApplication.Input;
 using EventHub.Domain.Input;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Threading.Tasks;
 
 namespace EventHub.WebApi.Controllers
@@ -30,59 +29,62 @@ namespace EventHub.WebApi.Controllers
 
             if (result != null)
             {
-                return Created("New user created with sucess", result);
+                return Created("Usuário criado com sucesso!", result);
             }
 
             return BadRequest();
         }
 
-        //[HttpGet]
-        //[Route("{id}")]
-        //[ProducesResponseType(200)]
-        //[ProducesResponseType(204)]
-        //[ProducesResponseType(400)]
-        //[ProducesResponseType(500)]
-        //[ProducesResponseType(503)]
-        //public virtual async Task<IActionResult> GetById([FromRoute] int id)
-        //{
-        //    var user = await userApplication.GetById(id);
-        //    if (user == null)
-        //    {
-        //        return NoContent();
-        //    }
-        //    return Ok(user);
-        //}
+        [HttpGet]
+        [Route("{id}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(500)]
+        [ProducesResponseType(503)]
+        public virtual async Task<IActionResult> GetById([FromRoute] int id)
+        {
+            var user = await userApplication.GetById(id);
+            if (user == null)
+            {
+                return NoContent();
+            }
 
-        //[HttpGet]
-        //[ProducesResponseType(200)]
-        //[ProducesResponseType(400)]
-        //[ProducesResponseType(500)]
-        //[ProducesResponseType(503)]
-        //public virtual async Task<IActionResult> GetAll()
-        //{
-        //    return Ok(userApplication.GetAll().Result);
-        //}
+            return Ok(user);
+        }
 
-        //[HttpPut]
-        //[Route("{id}")]
-        //[ProducesResponseType(typeof(bool), 202)]
-        //[ProducesResponseType(400)]
-        //[ProducesResponseType(500)]
-        //public async Task<IActionResult> Put([FromRoute] int id, [FromBody] UserInput input)
-        //{
-        //    return Accepted(await userApplication.Update(id, input));
-        //}
+        [HttpPut]
+        [Route("{id}")]
+        [ProducesResponseType(typeof(bool), 202)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> Put([FromRoute] int id, [FromBody] UserInput input)
+        {
+            var sucess = await userApplication.Update(id, input);
+            if (sucess)
+            {
+                return Accepted(sucess);
+            }
 
-        //[HttpDelete]
-        //[Route("{id}")]
-        //[ProducesResponseType(typeof(bool), 200)]
-        //[ProducesResponseType(400)]
-        //[ProducesResponseType(500)]
-        //[ProducesResponseType(503)]
-        //public async Task<IActionResult> Delete([FromRoute] int id)
-        //{
-        //    return Ok(await userApplication.Delete(id));
-        //}
+            return BadRequest();
+        }
+
+        [HttpDelete]
+        [Route("{id}")]
+        [ProducesResponseType(typeof(bool), 200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(500)]
+        [ProducesResponseType(503)]
+        public async Task<IActionResult> Delete([FromRoute] int id)
+        {
+            var sucess = await userApplication.Delete(id);
+            if (sucess)
+            {
+                return Ok("Usuário Inativado com sucesso!");
+            }
+
+            return NoContent();
+        }
 
         [HttpPost]
         [Route("/login")]
@@ -98,7 +100,7 @@ namespace EventHub.WebApi.Controllers
             {
                 return Ok(result);
             }
-            return BadRequest();
+            return BadRequest("Usuário ou senha inválidos!");
         }
 
         [HttpPut]
@@ -110,6 +112,23 @@ namespace EventHub.WebApi.Controllers
         public virtual async Task<IActionResult> UpdateTwitterToken([FromRoute] int id, [FromBody] UserTwitterTokensInput input)
         {
             var result = await userApplication.UpdateTwitterToken(id, input);
+
+            if (result)
+            {
+                return Ok();
+            }
+            return BadRequest();
+        }
+
+        [HttpPut]
+        [Route("/google/token/{id}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(500)]
+        [ProducesResponseType(503)]
+        public virtual async Task<IActionResult> UpdateGoogleToken([FromRoute] int id, [FromBody] GoogleRefreshTokenInput input)
+        {
+            var result = await userApplication.UpdateGoogleToken(id, input);
 
             if (result)
             {

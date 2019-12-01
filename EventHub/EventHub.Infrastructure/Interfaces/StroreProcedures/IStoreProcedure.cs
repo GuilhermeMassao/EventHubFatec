@@ -10,5 +10,7 @@
         string SelectUserByEmailAndPassword { get; }
         string SelectUserById { get; }
         string UpdateUserTwitterToken { get; }
+        string UpdateUserGoogleToken { get; }
+        string UpdateUser { get; }
     }
 }

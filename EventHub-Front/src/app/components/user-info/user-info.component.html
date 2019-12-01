@@ -2,3 +2,8 @@
     <p *ngIf="hasTwitterLogin" style="color: white;">Já esta logado com o Twitter</p>
     <button *ngIf="!hasTwitterLogin" type="button" (click)="twitterLogin()">Login with twitter</button>
 </div>
+
+<div>
+    <p *ngIf="hasGoogleLogin" style="color: white;">Já esta logado com o Google</p>
+    <button *ngIf="!hasGoogleLogin" type="button" (click)="googleLogin()">Login with google</button>
+</div>

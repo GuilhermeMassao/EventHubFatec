@@ -43,6 +43,9 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.3.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="FluentValidation, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7de548da2fbae0f0, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentValidation.8.5.1\lib\net45\FluentValidation.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.AspNetCore.Authentication.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNetCore.Authentication.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Authentication.Abstractions.dll</HintPath>
     </Reference>
@@ -207,6 +210,7 @@
     <Compile Include="Services\SocialApplication\SocialApplication.cs" />
     <Compile Include="Services\UserApplication\Input\UserInput.cs" />
     <Compile Include="Services\UserApplication\UserApplication.cs" />
+    <Compile Include="Services\UserApplication\Validations\UserInputValidation.cs" />
     <Compile Include="Services\UserApplication\ViewModel\UserViewModel.cs" />
     <Compile Include="Utils\PayloadValidator.cs" />
   </ItemGroup>
