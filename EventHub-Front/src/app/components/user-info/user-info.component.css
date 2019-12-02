@@ -1,0 +1,23 @@
+.label
+{
+display: block;
+text-align: left;
+width: 300px;
+white-space: normal;
+color: white;
+}
+.title{
+    padding-top: 3%;    
+}
+.row-spaced{
+padding-top: 1%;
+}
+.information{
+    padding-top: 1%;
+}
+  
+  .success {background-color: #4CAF50;} /* Green */
+  .info {background-color: #2196F3;} /* Blue */
+  .warning {background-color: #ff9800;} /* Orange */
+  .danger {background-color: #f44336;} /* Red */
+  .other {background-color: #e7e7e7; color: black;} /* Gray */

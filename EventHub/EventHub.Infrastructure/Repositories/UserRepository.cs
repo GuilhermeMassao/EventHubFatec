@@ -83,18 +83,27 @@ namespace EventHub.Infraestructure.Repository
             var parameters = new DynamicParameters();
 
             parameters.Add("@Email", email, DbType.String);
-
-            using (_connection = new SqlConnection(_dataBaseConnection.ConnectionString()))
+            try
             {
-                var user =  await _connection.QueryFirstOrDefaultAsync<UserDTO>
-                (
-                    _storeProcedure.SelectUserByEmail,
-                    param: parameters,
-                    commandType: CommandType.StoredProcedure
-                );
+                using (_connection = new SqlConnection(_dataBaseConnection.ConnectionString()))
+                {
+                    _connection.Open();
+                    var user = await _connection.QueryFirstOrDefaultAsync<UserDTO>
+                    (
+                        _storeProcedure.SelectUserByEmail,
+                        param: parameters,
+                        commandType: CommandType.StoredProcedure
+                    );
 
-                return user;
+                    return user;
+                }
             }
+            catch (Exception e)
+            {
+
+                throw e;
+            }
+            
         }
 
         public async Task<User> GetByEmailAndPassword(UserLoginInput input)

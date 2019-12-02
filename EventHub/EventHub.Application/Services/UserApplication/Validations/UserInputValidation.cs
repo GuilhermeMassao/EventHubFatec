@@ -22,7 +22,7 @@ namespace EventHub.Application.Services.UserApplication.Validations
 
             RuleFor(user => user.UserPassword)
                  .NotEmpty()
-                 .Length(5, 15)
+                 .Length(4, 15)
                  .WithMessage("Senha inválida");
 
             Result = Validate(input);

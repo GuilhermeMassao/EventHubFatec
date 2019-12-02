@@ -15,7 +15,7 @@ const routes: Routes = [
     path: 'eventhub', component: AppOverlayComponent, canActivate:[AuthGuard],
     children: [
       { path: 'home', component: HomeComponent, canActivate:[AuthGuard]},
-      { path: 'user/profile', component: UserInfoComponent, canActivate:[AuthGuard] }
+      { path: 'user/profile', component: UserInfoComponent, canActivate:[AuthGuard] },
     ]
   }
 ];
