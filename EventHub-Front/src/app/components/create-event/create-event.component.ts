@@ -15,6 +15,16 @@ export class CreateEventComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.eventService.eventForm.value);
+    this.eventService.createEvent(JSON.parse(localStorage.getItem('user')).id).subscribe(
+      (res: any) => {
+        console.log("Sucesso!");
+      },
+      err => {
+        if(err.status == 400)
+        console.log("Error 400");
+        else
+          console.log(err);
+      }
+    );
   }
 }
