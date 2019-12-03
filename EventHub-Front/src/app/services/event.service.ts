@@ -20,7 +20,8 @@ export class EventService {
     EventAdressCity: ['', Validators.required],
     EventAdressUF: ['', Validators.required],
     EventAdressCEP: ['', Validators.required],
-    EventAdressNeighborhood: ['', Validators.required]
+    EventAdressNeighborhood: ['', Validators.required],
+    EventAdresNumber: ['', Validators.required]
   });
 
   createEvent() {
