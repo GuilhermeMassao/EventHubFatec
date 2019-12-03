@@ -6,6 +6,7 @@ import { HomeComponent } from './components/home/home.component';
 import { AuthGuard } from './auth/auth.guard';
 import { UserInfoComponent } from './components/user-info/user-info.component';
 import { AppOverlayComponent } from './components/app-overlay/app-overlay.component';
+import { CreateEventComponent } from './components/create-event/create-event.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/eventhub/home', pathMatch:'full'},
@@ -16,6 +17,7 @@ const routes: Routes = [
     children: [
       { path: 'home', component: HomeComponent, canActivate:[AuthGuard]},
       { path: 'user/profile', component: UserInfoComponent, canActivate:[AuthGuard] },
+      { path: 'create-event', component: CreateEventComponent}
     ]
   }
 ];
@@ -26,4 +28,9 @@ const routes: Routes = [
 })
 export class AppRoutingModule { }
 
-export const routingComponents = [RegisterComponent, LoginComponent, HomeComponent, UserInfoComponent, AppOverlayComponent]
+export const routingComponents = [RegisterComponent,
+                                  LoginComponent,
+                                  HomeComponent,
+                                  UserInfoComponent,
+                                  AppOverlayComponent,
+                                  CreateEventComponent]

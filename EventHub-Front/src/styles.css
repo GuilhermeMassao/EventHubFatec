@@ -1,7 +1,4 @@
 body{
     background-color: #2a2a2c;
-}
-
-#toast-container > div {
-    opacity:1;
+    color: white;
 }

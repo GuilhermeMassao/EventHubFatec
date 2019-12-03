@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { HttpClient, HttpParams } from "@angular/common/http";
-import { RequestTokenResponseData } from '../interfaces/RequestTokenResponseData';
 
 @Injectable({
   providedIn: 'root'
