@@ -1,10 +1,10 @@
 ﻿using System;
 
-namespace EventHub.Application.Services.EventApplication.Input
+namespace EventHub.Domain.Input
 { 
     public class EventInput
     {
-        public int UserId { get; set; }
+        public int UserOwnerId { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public string EventName { get; set; }

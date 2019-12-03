@@ -1,4 +1,4 @@
-﻿namespace EventHub.Application.Services.EventApplication.Input
+﻿namespace EventHub.Domain.Input
 {
     public class AdressPublicPlace
     {
