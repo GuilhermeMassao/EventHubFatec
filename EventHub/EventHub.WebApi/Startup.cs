@@ -12,6 +12,7 @@ using EventHub.Domain.Entities;
 using EventHub.Infrastructure.Interfaces.Repository;
 using EventHub.Application.Services.SocialApplication;
 using EventHub.Application.Services.EventApplication;
+using EventHub.Infrastructure.Repositories;
 
 namespace EventHub.WebApi
 {
