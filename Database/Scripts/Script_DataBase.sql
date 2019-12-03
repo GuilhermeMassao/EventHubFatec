@@ -33,7 +33,7 @@ BEGIN
     BEGIN
         CREATE TABLE [dbo].[PublicPlace] (
             Id INT IDENTITY (1, 1) NOT NULL,
-            PlaceName VARCHAR(20) NOT NULL 
+            PlaceName VARCHAR(50) NOT NULL 
         )
 
         /*Primary key*/
