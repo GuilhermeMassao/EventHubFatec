@@ -9,6 +9,8 @@ namespace EventHub.Domain.Input
         public DateTime EndDate { get; set; }
         public string EventName { get; set; }
         public string EventDescription { get; set; }
+        public string EventShortDescription { get; set; }
+        public int TicketsLimit { get; set; }
         public EventAdress Adress { get; set; }
     }
 }

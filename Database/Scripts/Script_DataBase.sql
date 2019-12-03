@@ -46,6 +46,7 @@ BEGIN
         CREATE TABLE [dbo].[Adress] (
             Id INT IDENTITY (1, 1) NOT NULL,
             PublicPlaceId INT NOT NULL,  -- Logradouro
+			PlaceName VARCHAR(100) NOT NULL, -- Nome da rua
             City VARCHAR(50) NOT NULL,
             UF VARCHAR(2) NOT NULL,
             CEP VARCHAR(10) NOT NULL,

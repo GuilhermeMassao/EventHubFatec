@@ -9,6 +9,7 @@ namespace EventHub.Infrastructure.Interfaces.Repository
 {
     public interface IAdressRepository
     {
-        Task<int?> CreateEvent(Adress entity);
+        Task<int?> CreateAdress(Adress entity);
+        Task<bool> Delete(int id);
     }
 }

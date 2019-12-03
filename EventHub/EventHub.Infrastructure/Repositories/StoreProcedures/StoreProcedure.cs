@@ -16,5 +16,17 @@ namespace EventHub.Infrastructure.Repositories.StoreProcedures
         public string UpdateUserGoogleToken => "UpdateUserGoogleToken";
         public string UpdateUser => "UpdateUser";
         #endregion
+
+        #region Event
+        public string InsertEvent => "InsertEvent";
+        #endregion
+
+        #region Adress
+        public string InsertAdress => "InsertAdress";
+        #endregion
+
+        #region PublicPlace
+        public string SelectAllPublicPlaces => "SelectAllPublicPlaces";
+        #endregion
     }
 }

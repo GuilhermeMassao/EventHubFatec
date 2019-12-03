@@ -12,5 +12,11 @@
         string UpdateUserTwitterToken { get; }
         string UpdateUserGoogleToken { get; }
         string UpdateUser { get; }
+
+        string InsertEvent { get; }
+
+        string InsertAdress { get; }
+
+        string SelectAllPublicPlaces { get; }
     }
 }

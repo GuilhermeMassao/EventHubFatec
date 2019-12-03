@@ -3,7 +3,6 @@ using EventHub.Domain.Entities;
 using EventHub.Domain.Input;
 using EventHub.Infraestructure.Repository;
 using EventHub.Infrastructure.Interfaces.Repository;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace EventHub.Business.Business
