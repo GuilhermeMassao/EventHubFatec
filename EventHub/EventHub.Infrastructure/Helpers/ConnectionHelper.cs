@@ -18,7 +18,7 @@ namespace EventHub.Infrastructure.Helpers
                 //["Password"] = "123Aa321!",
 
                 //Rodrigo Connection
-                ["Data Source"] = @"DESKTOP-JF64HPR\SQLEXPRESS",
+                ["Data Source"] = @"localhost\SQLEXPRESS",
                 ["Initial Catalog"] = "EventHub",
                 ["Connect Timeout"] = "120",
                 ["Integrated Security"] = true

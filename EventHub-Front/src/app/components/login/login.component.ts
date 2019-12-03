@@ -16,10 +16,11 @@ export class LoginComponent implements OnInit {
     UserPassword: ''
   }
 
+  alert: boolean;
+
   constructor(private service: UserService, private router: Router, private toastr: ToastrService) { }
 
   ngOnInit() {
-    //console.log(localStorage.getItem('user'));
     if (localStorage.getItem('user') != null)
         this.router.navigateByUrl('eventhub/home');
   }
@@ -31,10 +32,12 @@ export class LoginComponent implements OnInit {
         this.router.navigateByUrl('eventhub/home');
       },
       err => {
-        if (err.status == 400)
-          this.toastr.error('Email ou senha incorretos');
-        else
+        if (err.status == 400) {
+           this.alert = true;
+        }
+        else {
           console.log(err);
+        }
       }
     );
   }

@@ -10,6 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
 import { MenuComponent } from './components/menu/menu.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { AlertModule } from 'ngx-bootstrap/alert';
 
 @NgModule({
   declarations: [
@@ -25,10 +26,14 @@ import { FooterComponent } from './components/footer/footer.component';
     FormsModule,
     HttpClientModule,
     ToastrModule.forRoot({
+      timeOut: 500,
+      positionClass: 'toast-top-right',
+      preventDuplicates: false,
       progressBar: true
     }),
     BrowserAnimationsModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    AlertModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]
