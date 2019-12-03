@@ -77,7 +77,7 @@ BEGIN
             StartDate DATETIME NOT NULL,
             EndDate DATETIME NOT NULL,
             EventName VARCHAR(80) NOT NULL,
-            EventShortDescription VARCHAR(50) NULL,
+            EventShortDescription VARCHAR(150) NULL,
             EventDescription VARCHAR(1000) NULL,
             TicketsLimit INT NOT NULL,
             ActiveEvent BIT NOT NULL
