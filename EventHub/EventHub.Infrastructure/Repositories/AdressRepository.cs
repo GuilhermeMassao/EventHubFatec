@@ -28,7 +28,7 @@ namespace EventHub.Infrastructure.Repositories
             var parameters = new DynamicParameters();
 
             parameters.Add("@PublicPlaceId", entity.PublicPlaceId, DbType.Int32);
-            parameters.Add("@PlaceName", entity.PlaceName, DbType.Int32);
+            parameters.Add("@PlaceName", entity.PlaceName, DbType.String);
             parameters.Add("@City", entity.City, DbType.String);
             parameters.Add("@UF", entity.UF, DbType.String);
             parameters.Add("@CEP", entity.CEP, DbType.String);
@@ -50,7 +50,7 @@ namespace EventHub.Infrastructure.Repositories
                     return createdId;
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return null;
             }

@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using EventHub.Domain.DTOs.Event;
 using EventHub.Domain.Entities;
-using EventHub.Domain.Input;
 using EventHub.Infrastructure.Interfaces.Repository;
 
 namespace EventHub.Business.Business
@@ -14,12 +10,15 @@ namespace EventHub.Business.Business
     {
         private readonly IAdressRepository _adressRepository;
         private readonly IEventRepository _eventRepository;
+        private readonly IPublicPlaceRepository _publicPlaceRepository;
 
-        public EventBusiness(IAdressRepository adressRepository, IEventRepository eventRepository)
+        public EventBusiness(IAdressRepository adressRepository, IEventRepository eventRepository, IPublicPlaceRepository publicPlaceRepository)
         {
             _adressRepository = adressRepository;
             _eventRepository = eventRepository;
+            _publicPlaceRepository = publicPlaceRepository;
         }
+
         public async Task<EventDto> CreateEvent(Event newEvent, Adress adress)
         {
             var adressResultId = await _adressRepository.CreateAdress(adress);
@@ -39,7 +38,12 @@ namespace EventHub.Business.Business
                 }
             }
             return null;
-        }   
+        }
+
+        public async Task<IEnumerable<PublicPlace>> GetPublicPlaces()
+        {
+            return await _publicPlaceRepository.GetAll();
+        }
 
     }
 }

@@ -36,5 +36,23 @@ namespace EventHub.WebApi.Controllers
 
             return BadRequest();
         }
+
+        [HttpGet]
+        [Route("/public-places")]
+        [ProducesResponseType(201)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(500)]
+        [ProducesResponseType(503)]
+        public virtual async Task<IActionResult> GetPublicPlaces()
+        {
+            var result = await eventApplication.GetPublicPlaces();
+
+            if (result != null)
+            {
+                return Ok(result);
+            }
+
+            return BadRequest();
+        }
     }
 }

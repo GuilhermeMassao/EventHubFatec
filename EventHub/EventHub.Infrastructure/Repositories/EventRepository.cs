@@ -47,7 +47,7 @@ namespace EventHub.Infrastructure.Repositories
                 {
                     var createdId = await _connection.QueryFirstOrDefaultAsync<int?>
                     (
-                        _storeProcedure.InsertAdress,
+                        _storeProcedure.InsertEvent,
                         param: parameters,
                         commandType: CommandType.StoredProcedure
                     );
@@ -55,7 +55,7 @@ namespace EventHub.Infrastructure.Repositories
                     return createdId;
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return null;
             }

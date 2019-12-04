@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using EventHub.Business.Business;
@@ -18,10 +20,16 @@ namespace EventHub.Application.Services.EventApplication
             this.eventBusiness = eventBusiness;
             _inputToEntity = inputToEntity;
         }
+
         public async Task<EventDto> CreateEvent(EventInput input)
         {
             return await eventBusiness.CreateEvent(_inputToEntity.Map<EventInput, Event>(input),
                 _inputToEntity.Map<EventAdress, Adress>(input.Adress));
+        }
+
+        public async Task<IEnumerable<PublicPlace>> GetPublicPlaces()
+        {
+            return await eventBusiness.GetPublicPlaces();
         }
     }
 }
