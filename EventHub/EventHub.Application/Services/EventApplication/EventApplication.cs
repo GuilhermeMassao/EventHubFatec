@@ -21,8 +21,7 @@ namespace EventHub.Application.Services.EventApplication
         public async Task<EventDto> CreateEvent(EventInput input)
         {
             return await eventBusiness.CreateEvent(_inputToEntity.Map<EventInput, Event>(input),
-                _inputToEntity.Map<EventAdress, Adress>(input.Adress),
-                _inputToEntity.Map<AdressPublicPlace, PublicPlace>(input.Adress.PublicPlace));
+                _inputToEntity.Map<EventAdress, Adress>(input.Adress));
         }
     }
 }

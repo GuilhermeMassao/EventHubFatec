@@ -30,7 +30,7 @@ namespace EventHub.Application.Services.UserApplication
                 return await userBusiness.CreateUser(_inputToEntity.Map<UserInput, User>(input));
             }
 
-            return default(UserDTO);
+            return null;
         }
 
         public async Task<UserDTO> GetById(int id)

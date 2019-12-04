@@ -40,7 +40,7 @@ namespace EventHub.Infraestructure.Repository
                 {
                     var createdId = await _connection.QueryFirstOrDefaultAsync<int?>
                     (
-                        _storeProcedure.InsertAdress, 
+                        _storeProcedure.InsertUser, 
                         param: parameters, 
                         commandType: CommandType.StoredProcedure
                     );

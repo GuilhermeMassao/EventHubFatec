@@ -57,7 +57,7 @@ namespace EventHub.WebApi
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IEventRepository, EventRepository>();
             services.AddScoped<IAdressRepository, AdressRepository>();
-            services.AddScoped<IPublicPlaceRepository, PublicPlaceRepository>();
+            //services.AddScoped<IPublicPlaceRepository, PublicPlaceRepository>();
 
             /* Business */
             services.AddScoped<UserBusiness>();

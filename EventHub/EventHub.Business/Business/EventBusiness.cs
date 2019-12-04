@@ -20,7 +20,7 @@ namespace EventHub.Business.Business
             _adressRepository = adressRepository;
             _eventRepository = eventRepository;
         }
-        public async Task<EventDto> CreateEvent(Event newEvent, Adress adress, PublicPlace publicPlace)
+        public async Task<EventDto> CreateEvent(Event newEvent, Adress adress)
         {
             var adressResultId = await _adressRepository.CreateAdress(adress);
 

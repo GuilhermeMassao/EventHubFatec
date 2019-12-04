@@ -14,7 +14,7 @@ BEGIN
             UserName VARCHAR(50) NOT NULL,
             Email VARCHAR(50) NOT NULL,
             UserPassword VARCHAR(15) NOT NULL,
-            TwitterAcessTokenSecret VARCHAR(10) NULL,
+            TwitterAcessTokenSecret VARCHAR(100) NULL,
             TwitterAcessToken VARCHAR(200) NULL,
             GoogleRefreshToken VARCHAR(200) NULL,
             ActiveUser BIT NOT NULL

@@ -21,7 +21,7 @@ namespace EventHub.Business.Business
             var userWithSameEmail = await _repository.GetByEmail(entity.Email);
             if (userWithSameEmail != null)
             {
-                return default(UserDTO);
+                return null;
             }
 
             var resultId = await _repository.CreateUser(entity);
@@ -32,7 +32,7 @@ namespace EventHub.Business.Business
                 return user;
             }
 
-            return default(UserDTO);
+            return null;
         }
 
         public async Task<UserDTO> GetById(int id)
