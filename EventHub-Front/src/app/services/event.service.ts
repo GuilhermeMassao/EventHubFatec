@@ -17,7 +17,8 @@ export class EventService {
     EventStartDate: ['', Validators.required],
     EventEndDate: ['', Validators.required],
     EventTicket: ['', Validators.required],
-    EventAdressPublicPlace: ['', Validators.required],
+    EventAdressPublicPlace: [''],
+    EventAdressPlaceName: ['', Validators.required],
     EventAdressCity: ['', Validators.required],
     EventAdressUF: ['', Validators.required],
     EventAdressCEP: ['', Validators.required],
@@ -36,9 +37,8 @@ export class EventService {
       EventShortDescription: this.createShortDescription(this.eventForm.value.EventDescription),
       TicketsLimit: this.eventForm.value.EventTicket,
       Adress: {
-        PublicPlace: {
-          PlaceName: this.eventForm.value.EventAdressPublicPlace
-        },
+        PublicPlaceId: this.eventForm.value.EventAdressPublicPlace,
+        PlaceName: this.eventForm.value.EventAdressPlaceName,
         City: this.eventForm.value.EventAdressCity,
         UF: this.eventForm.value.EventAdressUF,
         CEP: this.eventForm.value.EventAdressCEP,
