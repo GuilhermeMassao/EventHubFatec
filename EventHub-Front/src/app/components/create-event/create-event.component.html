@@ -43,6 +43,14 @@
     </div>
 
     <!--     ENDEREÇO       -->
+    <div class="form-group col-md-4">
+        <label for="inputState">State</label>
+        <select id="inputState" class="form-control">
+            <option *ngFor="let publicPlace of publicPlaces" value="{{ publicPlace.id }}" selected>
+                {{ publicPlace.placeName }}
+            </option>
+        </select>
+    </div>
     <div class="form-group required">
         <input class="form-control" type="text" formControlName="EventAdressPublicPlace" maxlength="50" placeholder="Endereço">
         <label class="text-danger" *ngIf="eventService.eventForm.get('EventAdressPublicPlace').touched && eventService.eventForm.get('EventAdressPublicPlace').errors?.required">

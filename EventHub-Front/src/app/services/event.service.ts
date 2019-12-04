@@ -51,6 +51,10 @@ export class EventService {
     return this.http.post(this.BaseURI + '/api/event', body);
   }
 
+  public getAllPublicPlaces() {
+    return this.http.get(this.BaseURI + '/api/event/public-places');
+  }
+
   private getFormNullableValue(formValue: any) {
     if(formValue == null) {
       return '';

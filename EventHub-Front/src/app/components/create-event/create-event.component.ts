@@ -8,10 +8,17 @@ import { EventService } from 'src/app/services/event.service';
 })
 export class CreateEventComponent implements OnInit {
 
+  publicPlaces: any;
+
   constructor(private eventService: EventService) { }
 
   ngOnInit() {
     this.eventService.eventForm.reset();
+    this.eventService.getAllPublicPlaces().subscribe(
+      (res: any) => {
+        this.publicPlaces = res
+      }
+    );
   }
 
   onSubmit() {
