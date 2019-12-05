@@ -8,8 +8,6 @@ import { EventService } from 'src/app/services/event.service';
 })
 export class CreateEventComponent implements OnInit {
 
-  public customPatterns = { '0': { pattern: new RegExp('\[0-9\]')} };
-
   publicPlaces: any;
 
   constructor(private eventService: EventService) { }

@@ -14,8 +14,10 @@ export class EventService {
   eventForm = this.fb.group({
     EventName: ['', Validators.required],
     EventDescription: [''],
-    EventStartDate: ['', Validators.required],
-    EventEndDate: ['', Validators.required],
+    EventDates: this.fb.group({
+      EventStartDate: ['', Validators.required],
+      EventEndDate: ['', Validators.required],
+    }, { validator: this.validateDates }),
     EventTicket: ['', Validators.required],
     EventAdressPublicPlace: [''],
     EventAdressPlaceName: ['', Validators.required],
@@ -31,11 +33,11 @@ export class EventService {
     var body = {
       UserOwnerId: userId,
       EventName: this.eventForm.value.EventName,
-      StartDate: this.eventForm.value.EventStartDate,
-      EndDate: this.eventForm.value.EventEndDate,
+      StartDate: this.eventForm.value.EventDates.EventStartDate,
+      EndDate: this.eventForm.value.EventDates.EventEndDate,
       EventDescription: this.getFormNullableValue(this.eventForm.value.EventDescription),
       EventShortDescription: this.createShortDescription(this.eventForm.value.EventDescription),
-      TicketsLimit: this.eventForm.value.EventTicket,
+      TicketsLimit: +this.eventForm.value.EventTicket,
       Adress: {
         PublicPlaceId: this.eventForm.value.EventAdressPublicPlace,
         PlaceName: this.eventForm.value.EventAdressPlaceName,
@@ -69,6 +71,18 @@ export class EventService {
 
     if(String(formValue).length >= 150)
     return String(formValue).substring(0, 140) + '...';
+  }
+
+  private validateDates(fb: FormGroup) {
+    let startDatefield = fb.get('EventStartDate')
+    if (startDatefield.errors == null || 'invalidDate' in startDatefield.errors) {
+      if (fb.get('EventStartDate').value > fb.get('EventEndDate').value) {
+        startDatefield.setErrors({ invalidDate: true });
+      }
+      else {
+        startDatefield.setErrors(null);
+      }
+    }
   }
 
 }

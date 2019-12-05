@@ -1,5 +1,6 @@
 ﻿using EventHub.Application.Services.UserApplication;
 using EventHub.Domain.DTOs.User;
+using EventHub.Domain.Entities;
 using EventHub.Domain.Input;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -88,7 +89,7 @@ namespace EventHub.WebApi.Controllers
 
         [HttpPost]
         [Route("/login")]
-        [ProducesResponseType(200)]
+        [ProducesResponseType(typeof(User), 200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
         [ProducesResponseType(503)]
