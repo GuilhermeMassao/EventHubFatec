@@ -95,7 +95,10 @@
             </div>
             <div class="col">
                 <div class="form-group required">
-                    <input class="form-control" type="text" [patterns]="justNumberInputPattern" mask="000000" formControlName="EventAdressNumber" maxlength="5" placeholder="Número">
+                    <input class="form-control" type="text" [patterns]="justNumberInputPattern" mask="0000" formControlName="EventAdressNumber" maxlength="5" placeholder="Número">
+                    <label class="text-danger" *ngIf="eventService.eventForm.get('EventAdressNumber').touched && eventService.eventForm.get('EventAdressNumber').errors?.required">
+                        <i class="fa fa-meh-o" aria-hidden="true"></i>Esse campo é obrigatório.
+                    </label>
                 </div>
             </div>
         </div>
