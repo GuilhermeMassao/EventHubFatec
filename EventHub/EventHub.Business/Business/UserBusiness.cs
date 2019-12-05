@@ -74,14 +74,12 @@ namespace EventHub.Business.Business
 
             if (user != null)
             {
-                var teste = _repository.GetTwitterTokenByUserId(user.Id);
-                if (!_repository.GetTwitterTokenByUserId(user.Id).CreationOptions.Equals(TaskCreationOptions.None))
+                if (_repository.GetTwitterTokenByUserId(user.Id) != null)
                 {
                     user.HasTwitterLogin = true;
                 }
 
-                var testegoogle = _repository.GetTwitterTokenByUserId(user.Id);
-                if (!_repository.GetTwitterTokenByUserId(user.Id).CreationOptions.Equals(TaskCreationOptions.None))
+                if (_repository.GetTwitterTokenByUserId(user.Id) != null)
                 {
                     user.HasGoogleLogin = true;
                 }
