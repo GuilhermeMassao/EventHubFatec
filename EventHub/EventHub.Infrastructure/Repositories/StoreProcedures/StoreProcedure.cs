@@ -23,6 +23,8 @@ namespace EventHub.Infrastructure.Repositories.StoreProcedures
 
         #region Adress
         public string InsertAdress => "InsertAdress";
+        public string InactivateAdress => "InactivateAdress";
+        public string DeleteAdress => "DeleteAdress";
         #endregion
 
         #region PublicPlace

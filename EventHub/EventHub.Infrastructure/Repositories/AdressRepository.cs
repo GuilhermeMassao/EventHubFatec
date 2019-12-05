@@ -56,9 +56,56 @@ namespace EventHub.Infrastructure.Repositories
             }
         }
 
-        public Task<bool> Delete(int id)
+        public async Task<bool> Delete(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var parameters = new DynamicParameters();
+
+                parameters.Add("@Id", id, DbType.Int32);
+
+                using (_connection = new SqlConnection(_dataBaseConnection.ConnectionString()))
+                {
+                    var user = await _connection.ExecuteAsync
+                    (
+                        _storeProcedure.DeleteAdress,
+                        param: parameters,
+                        commandType: CommandType.StoredProcedure
+                    );
+
+                    return true;
+                }
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+
+        public async Task<bool> InactivateAdress(int id)
+        {
+            try
+            {
+                var parameters = new DynamicParameters();
+
+                parameters.Add("@Id", id, DbType.Int32);
+
+                using (_connection = new SqlConnection(_dataBaseConnection.ConnectionString()))
+                {
+                    var user = await _connection.ExecuteAsync
+                    (
+                        _storeProcedure.InactivateAdress,
+                        param: parameters,
+                        commandType: CommandType.StoredProcedure
+                    );
+
+                    return true;
+                }
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
         }
     }
 }

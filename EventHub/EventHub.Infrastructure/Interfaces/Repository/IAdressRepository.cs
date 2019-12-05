@@ -11,5 +11,6 @@ namespace EventHub.Infrastructure.Interfaces.Repository
     {
         Task<int?> CreateAdress(Adress entity);
         Task<bool> Delete(int id);
+        Task<bool> InactivateAdress(int id);
     }
 }

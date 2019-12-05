@@ -16,6 +16,8 @@
         string InsertEvent { get; }
 
         string InsertAdress { get; }
+        string InactivateAdress { get; }
+        string DeleteAdress { get; }
 
         string SelectAllPublicPlaces { get; }
     }
