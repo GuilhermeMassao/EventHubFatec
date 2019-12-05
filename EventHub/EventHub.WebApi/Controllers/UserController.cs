@@ -1,5 +1,5 @@
 ﻿using EventHub.Application.Services.UserApplication;
-using EventHub.Application.Services.UserApplication.Input;
+using EventHub.Domain.DTOs.User;
 using EventHub.Domain.Input;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -19,7 +19,7 @@ namespace EventHub.WebApi.Controllers
         }
 
         [HttpPost]
-        [ProducesResponseType(201)]
+        [ProducesResponseType(typeof(UserDTO), 201)]
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
         [ProducesResponseType(503)]
@@ -29,7 +29,7 @@ namespace EventHub.WebApi.Controllers
 
             if (result != null)
             {
-                return Created("Usuário criado com sucesso!", result);
+                return Created("", result);
             }
 
             return BadRequest();

@@ -206,7 +206,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\EventApplication\EventApplication.cs" />
     <Compile Include="Services\SocialApplication\SocialApplication.cs" />
-    <Compile Include="Services\UserApplication\Input\UserInput.cs" />
     <Compile Include="Services\UserApplication\UserApplication.cs" />
     <Compile Include="Services\UserApplication\Validations\UserInputValidation.cs" />
     <Compile Include="Services\UserApplication\ViewModel\UserViewModel.cs" />

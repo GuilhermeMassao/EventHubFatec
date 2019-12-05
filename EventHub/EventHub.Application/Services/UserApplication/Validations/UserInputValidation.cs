@@ -1,4 +1,4 @@
-﻿using EventHub.Application.Services.UserApplication.Input;
+﻿using EventHub.Domain.Input;
 using FluentValidation;
 using FluentValidation.Results;
 

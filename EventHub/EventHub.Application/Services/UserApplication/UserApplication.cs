@@ -1,12 +1,10 @@
 ﻿using AutoMapper;
-using EventHub.Application.Services.UserApplication.Input;
 using EventHub.Application.Services.UserApplication.Validations;
 using EventHub.Application.Utils;
 using EventHub.Business.Business;
 using EventHub.Domain.DTOs.User;
 using EventHub.Domain.Entities;
 using EventHub.Domain.Input;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 namespace EventHub.Application.Services.UserApplication
 {
@@ -30,7 +28,7 @@ namespace EventHub.Application.Services.UserApplication
                 return await userBusiness.CreateUser(_inputToEntity.Map<UserInput, User>(input));
             }
 
-            return null;
+            return default(UserDTO);
         }
 
         public async Task<UserDTO> GetById(int id)
