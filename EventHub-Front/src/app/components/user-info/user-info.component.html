@@ -1,10 +1,16 @@
 <div class="row mt-2">
     <div class="col-md-2 ml-3">
-        <p *ngIf="hasTwitterLogin" class="float-right" style="color: white;">Já esta logado com o Twitter</p>
+        <div *ngIf="hasTwitterLogin">
+            <p class="float-right">Já esta logado com o Twitter</p>
+            <button type="button" class=" float-right btn-sm btn-danger" (click)="twitterLogout()">Remover acesso</button>
+        </div>
         <button *ngIf="!hasTwitterLogin" type="button" class=" float-right btn btn-info" (click)="twitterLogin()">Login with twitter</button>
     </div>
     <div class="col-md-2">
-        <p *ngIf="hasGoogleLogin" style="color: white;">Já esta logado com o Google</p>
+        <div *ngIf="hasGoogleLogin">
+            <p>Já esta logado com o Google</p>
+            <button type="button" class=" float-right btn-sm btn-danger" (click)="googleLogout()">Remover acesso</button>
+        </div>
         <button *ngIf="!hasGoogleLogin" class="btn btn-info" type="button" (click)="googleLogin()">Login with google</button>
     </div>
 </div>

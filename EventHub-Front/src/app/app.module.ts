@@ -26,7 +26,7 @@ import { AlertModule } from 'ngx-bootstrap/alert';
     FormsModule,
     HttpClientModule,
     ToastrModule.forRoot({
-      timeOut: 500,
+      timeOut: 2000,
       positionClass: 'toast-top-right',
       preventDuplicates: false,
       progressBar: true

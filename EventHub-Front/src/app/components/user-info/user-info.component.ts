@@ -36,10 +36,55 @@ export class UserInfoComponent implements OnInit {
     );
   }
 
+  twitterLogout() {
+    this.service.saveTwitterAccessToken({accessToken: null, accessTokenSecret: null}, JSON.parse(localStorage.getItem('user')).id).subscribe(
+      res => {
+        let actualStorage = JSON.parse(localStorage.getItem('user'))
+        actualStorage.twitterLogin = false;
+        console.log(actualStorage)
+        localStorage.setItem('user', JSON.stringify(actualStorage));
+        this.router.navigateByUrl('eventhub/user/profile');
+      },
+      err => {
+        if (err.status == 400) {
+          this.toastr.error('Erro ao tentar deslogar no Twitter!','Tente novamente mais tarde.');
+          this.router.navigateByUrl('eventhub/user/profile');
+        }
+        else {
+          console.log(err);
+          this.toastr.error('Erro ao tentar deslogar no Twitter!','Tente novamente mais tarde.');
+          this.router.navigateByUrl('eventhub/user/profile');
+        }
+      }
+    );
+  }
+
   googleLogin() {
     this.service.getGoogleAuthorizeUrl(this.router.url).subscribe(
       res => {
         document.location.href = res.toString()
+      }
+    );
+  }
+
+  googleLogout() {
+    this.service.saveGoogleAccessToken(null, JSON.parse(localStorage.getItem('user')).id).subscribe(
+      res => {
+        let actualStorage = JSON.parse(localStorage.getItem('user'))
+        actualStorage.googleLogin = false;
+        localStorage.setItem('user', JSON.stringify(actualStorage));
+        this.router.navigateByUrl('eventhub/user/profile');
+      },
+      err => {
+        if (err.status == 400) {
+          this.toastr.error('Erro ao tentar deslogar no Google!','Tente novamente mais tarde.');
+          this.router.navigateByUrl('eventhub/user/profile');
+        }
+        else {
+          console.log(err);
+          this.toastr.error('Erro ao tentar deslogar no Google!','Tente novamente mais tarde.');
+          this.router.navigateByUrl('eventhub/user/profile');
+        }
       }
     );
   }

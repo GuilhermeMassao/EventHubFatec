@@ -64,19 +64,11 @@ namespace EventHub.Application.Services.UserApplication
 
         public async Task<bool> UpdateTwitterToken(int id, UserTwitterTokensInput input)
         {
-            if (PayloadValidator.ValidateObject(input))
-            {
-                return await userBusiness.UpdateTwitterToken(id, input);
-            }
-            return false;
+            return await userBusiness.UpdateTwitterToken(id, input);
         }
         public async Task<bool> UpdateGoogleToken(int id, GoogleRefreshTokenInput input)
         {
-            if (PayloadValidator.ValidateObject(input))
-            {
-                return await userBusiness.UpdateGoogleToken(id, input);
-            }
-            return false;
+            return await userBusiness.UpdateGoogleToken(id, input);
         }
     }
 }
