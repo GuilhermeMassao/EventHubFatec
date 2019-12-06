@@ -4,6 +4,7 @@
     {
         public int Id { get; set; }
         public int PublicPlaceId { get; set; }
+        public string PlaceName { get; set; }
         public string City { get; set; }
         public string UF { get; set; }
         public string CEP { get; set; }

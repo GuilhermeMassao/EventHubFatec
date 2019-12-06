@@ -14,5 +14,16 @@
         string UpdateUser { get; }
         string UpdateUserInformation { get; }
         string UpdateUserPassword { get; }
+
+        string InsertEvent { get; }
+
+        string InsertAdress { get; }
+        string InactivateAdress { get; }
+        string DeleteAdress { get; }
+
+        string SelectAllPublicPlaces { get; }
+        string SelectPublicPlaceById { get; }
+
+        string InsertTwitterSocialMarketing { get; }
     }
 }

@@ -107,7 +107,7 @@ input:focus{
     position: fixed;
     bottom: -260px;
     left: -230px;
-    z-index: 10;
+    z-index: -1;
     width: 1920px;
   }
 

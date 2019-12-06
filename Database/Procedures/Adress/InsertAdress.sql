@@ -6,6 +6,7 @@ GO
 
 CREATE PROCEDURE [dbo].[InsertAdress]
     @PublicPlaceId INT,
+	@PlaceName VARCHAR(100),
     @City VARCHAR(50),
     @UF VARCHAR(2),
     @CEP VARCHAR(10),
@@ -21,6 +22,7 @@ BEGIN
 
     INSERT INTO [dbo].[Adress](
         PublicPlaceId,
+		PlaceName,
         City,
         UF,
         CEP,
@@ -31,6 +33,7 @@ BEGIN
 
     VALUES(
         @PublicPlaceId,
+		@PlaceName,
         @City,
         @UF,
         @CEP,

@@ -102,7 +102,7 @@ namespace SocialConnection.Connections
             {
                 // TODO Popular com as informações para salvar no banco
                 // (string)JObject.Parse(response.Content)["id"]
-                return new PostResponseData();
+                return new PostResponseData(0, "");
             }
 
             throw new CouldNotConnectException(

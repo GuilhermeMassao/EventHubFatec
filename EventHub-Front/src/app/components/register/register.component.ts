@@ -20,7 +20,6 @@ export class RegisterComponent implements OnInit {
     this.service.register().subscribe(
       (res: any) => {
           this.service.formModel.reset();
-          this.toastr.success('Novo usuário criado com sucesso');
           localStorage.setItem('user', JSON.stringify({id: res.id, userName: res.userName, email: res.email, twitterLogin: false, googleLogin: false}));
           this.router.navigateByUrl('eventhub/home');
       },

@@ -3,7 +3,6 @@ using EventHub.Domain.Entities;
 using EventHub.Domain.Input;
 using EventHub.Infraestructure.Repository;
 using EventHub.Infrastructure.Interfaces.Repository;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace EventHub.Business.Business
@@ -75,14 +74,15 @@ namespace EventHub.Business.Business
 
             if (user != null)
             {
-                var teste = _repository.GetTwitterTokenByUserId(user.Id);
-                if (!_repository.GetTwitterTokenByUserId(user.Id).CreationOptions.Equals(TaskCreationOptions.None))
+                var userTwitterTokens = await _repository.GetTwitterTokenByUserId(user.Id);
+                if (userTwitterTokens.TwitterAcessToken != null && userTwitterTokens.TwitterAcessTokenSecret != null)
                 {
                     user.HasTwitterLogin = true;
                 }
 
-                var testegoogle = _repository.GetTwitterTokenByUserId(user.Id);
-                if (!_repository.GetTwitterTokenByUserId(user.Id).CreationOptions.Equals(TaskCreationOptions.None))
+                var userGoogleToken = await _repository.GetTwitterTokenByUserId(user.Id);
+
+                if (userGoogleToken.GoogleRefreshToken != null)
                 {
                     user.HasGoogleLogin = true;
                 }

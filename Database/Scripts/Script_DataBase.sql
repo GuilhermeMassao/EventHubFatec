@@ -14,7 +14,7 @@ BEGIN
             UserName VARCHAR(50) NOT NULL,
             Email VARCHAR(50) NOT NULL,
             UserPassword VARCHAR(15) NOT NULL,
-            TwitterAcessTokenSecret VARCHAR(10) NULL,
+            TwitterAcessTokenSecret VARCHAR(100) NULL,
             TwitterAcessToken VARCHAR(200) NULL,
             GoogleRefreshToken VARCHAR(200) NULL,
             ActiveUser BIT NOT NULL
@@ -33,7 +33,7 @@ BEGIN
     BEGIN
         CREATE TABLE [dbo].[PublicPlace] (
             Id INT IDENTITY (1, 1) NOT NULL,
-            PlaceName VARCHAR(20) NOT NULL 
+            PlaceName VARCHAR(50) NOT NULL 
         )
 
         /*Primary key*/
@@ -46,6 +46,7 @@ BEGIN
         CREATE TABLE [dbo].[Adress] (
             Id INT IDENTITY (1, 1) NOT NULL,
             PublicPlaceId INT NOT NULL,  -- Logradouro
+			PlaceName VARCHAR(100) NOT NULL, -- Nome da rua
             City VARCHAR(50) NOT NULL,
             UF VARCHAR(2) NOT NULL,
             CEP VARCHAR(10) NOT NULL,
@@ -77,7 +78,7 @@ BEGIN
             StartDate DATETIME NOT NULL,
             EndDate DATETIME NOT NULL,
             EventName VARCHAR(80) NOT NULL,
-            EventShortDescription VARCHAR(50) NULL,
+            EventShortDescription VARCHAR(150) NULL,
             EventDescription VARCHAR(1000) NULL,
             TicketsLimit INT NOT NULL,
             ActiveEvent BIT NOT NULL
@@ -139,8 +140,8 @@ BEGIN
         CREATE TABLE [TwitterSocialMarketing](
             Id INT IDENTITY(1, 1) NOT NULL,
 			EventId INT NOT NULL,
-            TweetId VARCHAR(20) NOT NULL,
-            ShortUrlTweet VARCHAR(30) NULL
+            TweetId VARCHAR(30) NOT NULL,
+            ShortUrlTweet VARCHAR(100) NULL
         )
 
         /*Primary key*/

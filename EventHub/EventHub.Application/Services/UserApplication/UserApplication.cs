@@ -1,12 +1,10 @@
 ﻿using AutoMapper;
-using EventHub.Application.Services.UserApplication.Input;
 using EventHub.Application.Services.UserApplication.Validations;
 using EventHub.Application.Utils;
 using EventHub.Business.Business;
 using EventHub.Domain.DTOs.User;
 using EventHub.Domain.Entities;
 using EventHub.Domain.Input;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 namespace EventHub.Application.Services.UserApplication
 {
@@ -64,19 +62,11 @@ namespace EventHub.Application.Services.UserApplication
 
         public async Task<bool> UpdateTwitterToken(int id, UserTwitterTokensInput input)
         {
-            if (PayloadValidator.ValidateObject(input))
-            {
-                return await userBusiness.UpdateTwitterToken(id, input);
-            }
-            return false;
+            return await userBusiness.UpdateTwitterToken(id, input);
         }
         public async Task<bool> UpdateGoogleToken(int id, GoogleRefreshTokenInput input)
         {
-            if (PayloadValidator.ValidateObject(input))
-            {
-                return await userBusiness.UpdateGoogleToken(id, input);
-            }
-            return false;
+            return await userBusiness.UpdateGoogleToken(id, input);
         }
     }
 }
