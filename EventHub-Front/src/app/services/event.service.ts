@@ -19,7 +19,7 @@ export class EventService {
       EventEndDate: ['', Validators.required],
     }, { validator: this.validateDates }),
     EventTicket: ['', Validators.required],
-    EventAdressPublicPlace: ['', Validators.required],
+    EventAdressPublicPlace: [''],
     EventAdressPlaceName: ['', Validators.required],
     EventAdressCity: ['', Validators.required],
     EventAdressUF: ['', Validators.required],

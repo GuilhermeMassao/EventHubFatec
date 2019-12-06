@@ -34,10 +34,11 @@ export class LoginComponent implements OnInit {
       },
       err => {
         if (err.status == 400) {
-           this.alert = true;
+          this.toastr.error('E-mail ou senha inválidos.','Ops! Erro ao realizar login');
         }
         else {
           console.log(err);
+          this.toastr.error('Tente novamente mais tarde.','Ops! Erro ao realizar login');
         }
       }
     );
