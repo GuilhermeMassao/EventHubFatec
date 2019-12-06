@@ -75,7 +75,7 @@ namespace EventHub.Business.Business
             if (user != null)
             {
                 var userTwitterTokens = await _repository.GetTwitterTokenByUserId(user.Id);
-                if (userTwitterTokens.TwitterAcessToken != null && userTwitterTokens.TwitterAcessTokenSecret != null)
+                if (userTwitterTokens.TwitterAccessToken != null && userTwitterTokens.TwitterAccessTokenSecret != null)
                 {
                     user.HasTwitterLogin = true;
                 }

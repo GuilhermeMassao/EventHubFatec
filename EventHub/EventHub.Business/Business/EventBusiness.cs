@@ -79,10 +79,10 @@ namespace EventHub.Business.Business
             var publicPlace = await _publicPlaceRepository.SelectById(adress.PublicPlaceId);
 
             TwitterConnection twitter = new TwitterConnection();
-            var tweetResponse = twitter.PostTweet(new TwitterPostContentData(userTokens.TwitterAcessToken,
+            var tweetResponse = twitter.PostTweet(new TwitterPostContentData(userTokens.TwitterAccessToken,
                 TWITTER_APP_KEY,
                 TWITTER_APP_KEY_SECRET,
-                userTokens.TwitterAcessTokenSecret,
+                userTokens.TwitterAccessTokenSecret,
                 CreateTweetMessage(newEvent, adress, publicPlace),
                 null));
 
