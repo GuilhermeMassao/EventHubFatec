@@ -17,7 +17,7 @@ const routes: Routes = [
     children: [
       { path: 'home', component: HomeComponent, canActivate:[AuthGuard]},
       { path: 'user/profile', component: UserInfoComponent, canActivate:[AuthGuard] },
-      { path: 'create-event', component: CreateEventComponent}
+      { path: 'criar-evento', component: CreateEventComponent}
     ]
   }
 ];

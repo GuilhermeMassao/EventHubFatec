@@ -104,12 +104,3 @@ namespace EventHub.Business.Business
         }
     }
 }
-/*
- * Novo evento: EventNaem
- * Local: Logradouro + placename  Bairro: bla CEP: bla Cidade: bla
- * Horario: 
- * Limite de vagas: bla
- * 
- * Tweet gerado automaticamente por EventHub.
- */
-
