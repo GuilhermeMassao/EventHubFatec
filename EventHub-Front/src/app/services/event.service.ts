@@ -71,8 +71,11 @@ export class EventService {
       return '';
     }
 
-    if(String(formValue).length >= 150)
-    return String(formValue).substring(0, 140) + '...';
+    if(String(formValue).length >= 150) {
+      return String(formValue).substring(0, 140) + '...';
+    }
+    
+    return formValue;
   }
 
   private validateDates(fb: FormGroup) {
