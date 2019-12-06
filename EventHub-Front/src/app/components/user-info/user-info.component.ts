@@ -49,6 +49,17 @@ export class UserInfoComponent implements OnInit,AfterViewInit {
     this.service.getTwitterAuthorizeUrl(this.router.url).subscribe(
       res => {
         document.location.href = res.toString()
+      },
+      err => {
+        if (err.status == 400) {
+          this.toastr.error('Tente novamente mais tarde.','Erro ao tentar logar no Twitter!');
+          this.router.navigateByUrl('eventhub/user/profile');
+        }
+        else {
+          console.log(err);
+          this.toastr.error('Tente novamente mais tarde.','Erro ao tentar logar no Twitter!');
+          this.router.navigateByUrl('eventhub/user/profile');
+        } 
       }
     );
   }
@@ -103,6 +114,17 @@ export class UserInfoComponent implements OnInit,AfterViewInit {
     this.service.getGoogleAuthorizeUrl(this.router.url).subscribe(
       res => {
         document.location.href = res.toString()
+      },
+      err => {
+        if (err.status == 400) {
+          this.toastr.error('Tente novamente mais tarde.','Erro ao tentar logar no Google!');
+          this.router.navigateByUrl('eventhub/user/profile');
+        }
+        else {
+          console.log(err);
+          this.toastr.error('Tente novamente mais tarde.','Erro ao tentar logar no Google!');
+          this.router.navigateByUrl('eventhub/user/profile');
+        } 
       }
     );
   }
@@ -184,12 +206,12 @@ export class UserInfoComponent implements OnInit,AfterViewInit {
               },
               err => {
                 if (err.status == 400) {
-                  this.toastr.error('Erro ao tentar logar no Google!','Tente novamente mais tarde.');
+                  this.toastr.error('Tente novamente mais tarde.','Erro ao tentar logar no Google!');
                   this.router.navigateByUrl('eventhub/user/profile');
                 }
                 else {
                   console.log(err);
-                  this.toastr.error('Erro ao tentar logar no Google!','Tente novamente mais tarde.');
+                  this.toastr.error('Tente novamente mais tarde.','Erro ao tentar logar no Google!');
                   this.router.navigateByUrl('eventhub/user/profile');
                 }
               }
@@ -197,12 +219,12 @@ export class UserInfoComponent implements OnInit,AfterViewInit {
           },
           err => {
             if (err.status == 400) {
-              this.toastr.error('Erro ao tentar logar no Google!','Tente novamente mais tarde.');
+              this.toastr.error('Tente novamente mais tarde.','Erro ao tentar logar no Google!');
               this.router.navigateByUrl('eventhub/user/profile');
             }
             else {
               console.log(err);
-              this.toastr.error('Erro ao tentar logar no Google!','Tente novamente mais tarde.');
+              this.toastr.error('Tente novamente mais tarde.','Erro ao tentar logar no Google!');
                   this.router.navigateByUrl('eventhub/user/profile');
             }
           }

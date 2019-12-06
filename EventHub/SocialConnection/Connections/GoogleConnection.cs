@@ -85,6 +85,7 @@ namespace SocialConnection.Connections
             var client = new RestClient(CalendarUrl);
             var request = new RestRequest($"/v3/calendars/{contentData.CalendarId}/events", Method.POST);
             request.AddHeader("Authorization", $"Bearer {contentData.AccessToken}");
+            request.AddParameter("maxAttendees", contentData.AdditionalGuests, ParameterType.HttpHeader);
             request.AddJsonBody(
                 new
                 {
@@ -93,6 +94,8 @@ namespace SocialConnection.Connections
                     summary = contentData.Summary,
                     description = contentData.Description,
                     location = contentData.Location,
+                    visibility = "public",
+                    anyoneCanAddSelf = true,
                     organizer = contentData.Organizer
                 });
             var response = client.Execute(request);
@@ -102,7 +105,7 @@ namespace SocialConnection.Connections
             {
                 // TODO Popular com as informações para salvar no banco
                 // (string)JObject.Parse(response.Content)["id"]
-                return new PostResponseData(0, "");
+                return new PostResponseData(queryString["id"].ToString(), queryString["htmlLink"].ToString());
             }
 
             throw new CouldNotConnectException(
@@ -138,6 +141,51 @@ namespace SocialConnection.Connections
             }
             throw new CouldNotConnectException(
                 $"Error while connecting to Google Api when get user calendar list. Google Calendar EndPoint: {CalendarUrl}/v3/users/me/calendarList.\n {response.Content}", response.StatusCode);;
+        }
+
+        public string CreateAgenda(string accessToken, string agendaName)
+        {
+            var client = new RestClient(CalendarUrl);
+            var request = new RestRequest("/v3/calendars", Method.POST);
+            request.AddHeader("Authorization", $"Bearer {accessToken}");
+            request.AddJsonBody(
+                new
+                {
+                    summary = agendaName
+                });
+
+            var response = client.Execute(request);
+
+            if (response.IsSuccessful)
+            {
+                return JObject.Parse(response.Content)["id"].ToString();
+            }
+            throw new CouldNotConnectException(
+                $"Error while connecting to Google Api when create new user calendar. Google Calendar EndPoint: {CalendarUrl}/v3/calendars.\n {response.Content}", response.StatusCode); ;
+        }
+
+        public PostResponseData SubscribeAgenda(string accessToken, string agendaId)
+        {
+            var client = new RestClient(CalendarUrl);
+            var request = new RestRequest("/v3/users/me/calendarList", Method.POST);
+            request.AddHeader("Authorization", $"Bearer {accessToken}");
+            request.AddJsonBody(
+                new
+                {
+                    id  = agendaId
+                });
+            var response = client.Execute(request);
+            var queryString = JObject.Parse(response.Content);
+
+            if (response.IsSuccessful)
+            {
+                // TODO Popular com as informações para salvar no banco
+                // (string)JObject.Parse(response.Content)["id"]
+                return new PostResponseData(queryString["id"].ToString(), queryString[""].ToString());
+            }
+
+            throw new CouldNotConnectException(
+                $"Error while connecting to Google Api when subscribe in an event. Google Calendar EndPoint: {AuthUrl}/v3/users/me/calendarList.\n {response.Content}", response.StatusCode);
         }
 
         private static string GetAuthenticationEndPoint(string appId, string redirectUri)

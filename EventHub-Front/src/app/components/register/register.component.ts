@@ -24,10 +24,13 @@ export class RegisterComponent implements OnInit {
           this.router.navigateByUrl('eventhub/home');
       },
       err => {
-        if(err.status == 400)
-        this.toastr.error('Erro usuário já está na base');
-        else
+        if(err.status == 400) {
+          this.toastr.error('Ops! Erro ao realizar cadastro', 'Esse e-mail já foi cadastrado.');
+        }
+        else {
           console.log(err);
+          this.toastr.error('Tente novamente mais tarde.', 'Ops! Erro ao realizar cadastro.');
+        }
       }
     );
   }
