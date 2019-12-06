@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using EventHub.Domain.DTOs.Event;
 using EventHub.Domain.Entities;
@@ -20,13 +21,19 @@ namespace EventHub.Business.Business
         private readonly IEventRepository _eventRepository;
         private readonly IPublicPlaceRepository _publicPlaceRepository;
         private readonly IUserRepository _userRepository;
+        private readonly ITwitterSocialMarketingRepository _twitterSocialMarketingRepository;
 
-        public EventBusiness(IUserRepository userRepository, IAdressRepository adressRepository, IEventRepository eventRepository, IPublicPlaceRepository publicPlaceRepository)
+        public EventBusiness(IUserRepository userRepository,
+            IAdressRepository adressRepository,
+            IEventRepository eventRepository,
+            IPublicPlaceRepository publicPlaceRepository,
+            ITwitterSocialMarketingRepository twitterSocialMarketingRepository)
         {
             _adressRepository = adressRepository;
             _eventRepository = eventRepository;
             _publicPlaceRepository = publicPlaceRepository;
             _userRepository = userRepository;
+            _twitterSocialMarketingRepository = twitterSocialMarketingRepository;
         }
 
         public async Task<EventDto> CreateEvent(Event newEvent, Adress adress, bool twitterLogin, bool googleLogin)
@@ -46,12 +53,25 @@ namespace EventHub.Business.Business
                         var userTokens = await _userRepository.GetTwitterTokenByUserId(newEvent.UserOwnerId);
 
                         TwitterConnection twitter = new TwitterConnection();
-                        twitter.PostTweet(new TwitterPostContentData(userTokens.TwitterAcessToken,
-                            TWITTER_APP_KEY,
-                            TWITTER_APP_KEY_SECRET,
-                            userTokens.TwitterAcessTokenSecret,
-                            newEvent.EventDescription,
-                            null));
+                        try
+                        {
+                            var tweetResponse = twitter.PostTweet(new TwitterPostContentData(userTokens.TwitterAcessToken,
+                                TWITTER_APP_KEY,
+                                TWITTER_APP_KEY_SECRET,
+                                userTokens.TwitterAcessTokenSecret,
+                                newEvent.EventDescription,
+                                null));
+
+                            if (tweetResponse != null)
+                            {
+                                await _twitterSocialMarketingRepository.CreateTwitterSocialMarketing(new TwitterSocialMarketing(eventResultId.GetValueOrDefault(),
+                                                                                                                                tweetResponse.Id.ToString(),
+                                                                                                                                tweetResponse.ShortUrlTweet));
+                            }
+                        } catch(Exception e)
+                        {
+
+                        }
                     }
                     return new EventDto(eventResultId.GetValueOrDefault(), newEvent.EventName);
 

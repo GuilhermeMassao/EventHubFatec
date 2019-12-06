@@ -6,7 +6,7 @@ GO
 
 CREATE PROCEDURE [dbo].[InsertTwitterSocialMarketing]
 	@EventId INT,
-    @TweetId VARCHAR(20),
+    @TweetId VARCHAR(30),
     @ShortUrlTweet VARCHAR(100)
 AS
 

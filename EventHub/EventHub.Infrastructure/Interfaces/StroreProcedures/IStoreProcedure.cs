@@ -20,5 +20,7 @@
         string DeleteAdress { get; }
 
         string SelectAllPublicPlaces { get; }
+
+        string InsertTwitterSocialMarketing { get; }
     }
 }
