@@ -99,6 +99,7 @@ namespace SocialConnection.Connections
                 contentRequestData.AppSecret,
                 contentRequestData.AccessToken,
                 contentRequestData.AccessTokenSecret);
+
             var response = PublishTweet(contentRequestData);
             
             if (response != null)
@@ -110,6 +111,17 @@ namespace SocialConnection.Connections
             throw new CouldNotConnectException(
                 $"Error while connecting to Twitter Api when posting a new Tweet. Twitter EndPoint:{GetPostTweetEndPoint(contentRequestData)}.", HttpStatusCode.BadRequest);
         }
+
+        /*private string Header(TwitterPostContentData contentRequestData)
+        {
+            return "OAuth " + string.Join(
+                ", ",
+                data
+                    .Where(kvp => kvp.Key.StartsWith("oauth_"))
+                    .Select(kvp => string.Format("{0}=\"{1}\"", Uri.EscapeDataString(kvp.Key), Uri.EscapeDataString(kvp.Value)))
+                    .OrderBy(s => s)
+            );
+        }*/
 
         /// <summary>
         /// Delete previous created Tweet

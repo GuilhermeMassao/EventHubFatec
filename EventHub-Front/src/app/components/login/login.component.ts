@@ -28,6 +28,7 @@ export class LoginComponent implements OnInit {
   onSubmit(form: NgForm) {
     this.service.login(form.value).subscribe(
       (res: any) => {
+        console.log(res);
         localStorage.setItem('user', JSON.stringify({id: res.id, userName: res.userName, email: res.email, twitterLogin: res.hasTwitterLogin, googleLogin: res.hasGoogleLogin}));
         this.router.navigateByUrl('eventhub/home');
       },

@@ -12,5 +12,7 @@ namespace EventHub.Domain.Input
         public string EventShortDescription { get; set; }
         public int TicketsLimit { get; set; }
         public EventAdress Adress { get; set; }
+        public bool TwitterLogin { get; set; }
+        public bool GoogleLogin { get; set; }
     }
 }

@@ -29,7 +29,7 @@ export class EventService {
     EventAdressNumber: ['', Validators.required]
   });
 
-  createEvent(userId: number) {
+  createEvent(userId: number, twitterLogin: boolean, googleLogin: boolean) {
     var body = {
       UserOwnerId: userId,
       EventName: this.eventForm.value.EventName,
@@ -47,7 +47,9 @@ export class EventService {
         Neighborhood: this.eventForm.value.EventAdressNeighborhood,
         AdressComplement: this.getFormNullableValue(this.eventForm.value.EventAdressComplement),
         AdressNumber: this.eventForm.value.EventAdressNumber
-      }
+      },
+      TwitterLogin: twitterLogin,
+      GoogleLogin: googleLogin
     };
     console.log(body);
     return this.http.post(this.BaseURI + '/api/event', body);

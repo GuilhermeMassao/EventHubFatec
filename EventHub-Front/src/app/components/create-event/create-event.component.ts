@@ -22,7 +22,9 @@ export class CreateEventComponent implements OnInit {
   }
 
   onSubmit() {
-    this.eventService.createEvent(JSON.parse(localStorage.getItem('user')).id).subscribe(
+    this.eventService.createEvent(JSON.parse(localStorage.getItem('user')).id,
+                                  JSON.parse(localStorage.getItem('user')).twitterLogin,
+                                  JSON.parse(localStorage.getItem('user')).googleLogin).subscribe(
       (res: any) => {
         console.log("Sucesso!");
       },

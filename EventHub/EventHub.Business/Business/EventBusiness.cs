@@ -3,23 +3,33 @@ using System.Threading.Tasks;
 using EventHub.Domain.DTOs.Event;
 using EventHub.Domain.Entities;
 using EventHub.Infrastructure.Interfaces.Repository;
+using SocialConnection.Connections;
+using SocialConnection.Data.Request;
 
 namespace EventHub.Business.Business
 {
     public class EventBusiness
     {
+        private readonly string TWITTER_APP_KEY = "QZ3bVW2dy0fqi2kQ4XynqOJXO";
+        private readonly string TWITTER_APP_KEY_SECRET = "Wj9pf4xSRa0lxzcMLS0IU3iSD86GBaquSM3lUpI8FaZHBerueA";
+
+        private readonly string GOOGLE_APP_ID = "1096581191116-5ee78kmkthcahuhjr6bifpaooq34icct.apps.googleusercontent.com";
+        private readonly string GOOGLE_APP_SECRET = "9ojQerHg5M3zdXkZ_fVBFXpr";
+
         private readonly IAdressRepository _adressRepository;
         private readonly IEventRepository _eventRepository;
         private readonly IPublicPlaceRepository _publicPlaceRepository;
+        private readonly IUserRepository _userRepository;
 
-        public EventBusiness(IAdressRepository adressRepository, IEventRepository eventRepository, IPublicPlaceRepository publicPlaceRepository)
+        public EventBusiness(IUserRepository userRepository, IAdressRepository adressRepository, IEventRepository eventRepository, IPublicPlaceRepository publicPlaceRepository)
         {
             _adressRepository = adressRepository;
             _eventRepository = eventRepository;
             _publicPlaceRepository = publicPlaceRepository;
+            _userRepository = userRepository;
         }
 
-        public async Task<EventDto> CreateEvent(Event newEvent, Adress adress)
+        public async Task<EventDto> CreateEvent(Event newEvent, Adress adress, bool twitterLogin, bool googleLogin)
         {
             var adressResultId = await _adressRepository.CreateAdress(adress);
 
@@ -31,10 +41,23 @@ namespace EventHub.Business.Business
 
                 if(eventResultId != null)
                 {
+                    if (twitterLogin)
+                    {
+                        var userTokens = await _userRepository.GetTwitterTokenByUserId(newEvent.UserOwnerId);
+
+                        TwitterConnection twitter = new TwitterConnection();
+                        twitter.PostTweet(new TwitterPostContentData(userTokens.TwitterAcessToken,
+                            TWITTER_APP_KEY,
+                            TWITTER_APP_KEY_SECRET,
+                            userTokens.TwitterAcessTokenSecret,
+                            newEvent.EventDescription,
+                            null));
+                    }
                     return new EventDto(eventResultId.GetValueOrDefault(), newEvent.EventName);
+
                 } else
                 {
-                    _adressRepository.Delete(adressResultId.GetValueOrDefault());
+                    await _adressRepository.Delete(adressResultId.GetValueOrDefault());
                 }
             }
             return null;
