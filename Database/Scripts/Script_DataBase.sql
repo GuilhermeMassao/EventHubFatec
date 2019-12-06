@@ -141,7 +141,7 @@ BEGIN
             Id INT IDENTITY(1, 1) NOT NULL,
 			EventId INT NOT NULL,
             TweetId VARCHAR(20) NOT NULL,
-            ShortUrlTweet VARCHAR(30) NULL
+            ShortUrlTweet VARCHAR(100) NULL
         )
 
         /*Primary key*/
