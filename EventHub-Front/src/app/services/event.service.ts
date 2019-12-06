@@ -19,7 +19,7 @@ export class EventService {
       EventEndDate: ['', Validators.required],
     }, { validator: this.validateDates }),
     EventTicket: ['', Validators.required],
-    EventAdressPublicPlace: [''],
+    EventAdressPublicPlace: ['', Validators.required],
     EventAdressPlaceName: ['', Validators.required],
     EventAdressCity: ['', Validators.required],
     EventAdressUF: ['', Validators.required],
@@ -42,7 +42,7 @@ export class EventService {
         PublicPlaceId: this.eventForm.value.EventAdressPublicPlace,
         PlaceName: this.eventForm.value.EventAdressPlaceName,
         City: this.eventForm.value.EventAdressCity,
-        UF: this.eventForm.value.EventAdressUF,
+        UF: this.formatUF(this.eventForm.value.EventAdressUF),
         CEP: this.eventForm.value.EventAdressCEP,
         Neighborhood: this.eventForm.value.EventAdressNeighborhood,
         AdressComplement: this.getFormNullableValue(this.eventForm.value.EventAdressComplement),
@@ -88,6 +88,10 @@ export class EventService {
         startDatefield.setErrors(null);
       }
     }
+  }
+
+  private formatUF(uf: string) {
+    return uf.toUpperCase();
   }
 
 }

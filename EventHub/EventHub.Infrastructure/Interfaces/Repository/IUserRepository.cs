@@ -12,6 +12,7 @@ namespace EventHub.Infrastructure.Interfaces.Repository
         Task<UserDTO> GetByEmail(string email);
         Task<User> GetByEmailAndPassword(UserLoginInput user);
         Task<User> GetTwitterTokenByUserId(int id);
+        Task<User> GetGoogleTokenByUserId(int id);
         Task<bool> UpdateTwitterToken(int id, UserTwitterTokensInput input);
         Task<bool> UpdateGoogleToken(int id, GoogleRefreshTokenInput input);
         Task<bool> Update(int id, User entity);

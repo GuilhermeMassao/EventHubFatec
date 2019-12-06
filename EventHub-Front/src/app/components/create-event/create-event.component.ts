@@ -37,7 +37,7 @@ export class CreateEventComponent implements OnInit {
           this.toastr.error('Tente novamente mais tarde.','Erro ao tentar criar evento!');
         }
         else {
-          console.log(err);
+          console.log("err");
           this.toastr.error('Tente novamente mais tarde.','Erro ao tentar criar evento!');
         }
       }

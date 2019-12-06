@@ -73,7 +73,7 @@
         <div class="row">
             <div class="col">
                 <div class="form-group required">
-                    <input class="form-control" type="text" formControlName="EventAdressUF" maxlength="2" placeholder="Estado">
+                    <input class="form-control" type="text" formControlName="EventAdressUF" maxlength="2" mask="SS" placeholder="Estado">
                     <label class="text-danger" *ngIf="eventService.eventForm.get('EventAdressUF').touched && eventService.eventForm.get('EventAdressUF').errors?.required">
                         <i class="fa fa-meh-o" aria-hidden="true"></i>Esse campo é obrigatório.
                     </label>

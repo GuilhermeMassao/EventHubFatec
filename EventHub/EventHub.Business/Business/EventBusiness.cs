@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using EventHub.Domain.DTOs.Event;
+using EventHub.Domain.DTOs.User;
 using EventHub.Domain.Entities;
 using EventHub.Infrastructure.Interfaces.Repository;
 using SocialConnection.Connections;
 using SocialConnection.Data.Request;
+using SocialConnection.Data.Response;
+using SocialConnection.Models;
 
 namespace EventHub.Business.Business
 {
@@ -48,6 +51,17 @@ namespace EventHub.Business.Business
 
                 if(eventResultId != null)
                 {
+                    if (googleLogin)
+                    {
+                        var userGoogleToken = await _userRepository.GetGoogleTokenByUserId(newEvent.UserOwnerId);
+                        try
+                        {
+                            await CreateGoogleEvent(userGoogleToken.GoogleRefreshToken, newEvent, adress);
+                        } catch(Exception e)
+                        {
+
+                        }
+                    }
                     if (twitterLogin)
                     {
                         var userTokens = await _userRepository.GetTwitterTokenByUserId(newEvent.UserOwnerId);
@@ -94,9 +108,35 @@ namespace EventHub.Business.Business
             }
         }
 
+        private async Task<PostResponseData> CreateGoogleEvent(string refreshToken, Event newEvent, Adress adress)
+        {
+            var publicPlace = await _publicPlaceRepository.SelectById(adress.PublicPlaceId);
+            var user = await _userRepository.GetById(newEvent.UserOwnerId);
+
+            GoogleConnection google = new GoogleConnection();
+            var accessToken = google.RefreshAccessToken(GOOGLE_APP_ID, GOOGLE_APP_SECRET, refreshToken).AccessToken;
+            var agendaId = google.CreateAgenda(accessToken, newEvent.EventName);
+            var googleEvent = google.CreateEvent(CreateGoogleCalendarPostContentData(accessToken, agendaId, user, newEvent, adress, publicPlace));
+            // salvar o evento na base
+            return null;
+        }
+
+        private GoogleCalendarPostContentData CreateGoogleCalendarPostContentData(string accessToken, string agendaId, UserDTO user, Event newEvent, Adress adress, PublicPlace publicPlace)
+        {
+            return new GoogleCalendarPostContentData(accessToken,
+                agendaId,
+                newEvent.StartDate.ToString("yyyy-MM-dd'T'HH:mm:ss-03:00"),
+                newEvent.EndDate.ToString("yyyy-MM-dd'T'HH:mm:ss-03:00"),
+                newEvent.EventName,
+                newEvent.EventDescription,
+                $"{publicPlace.PlaceName} {adress.PlaceName}, {adress.Neighborhood}, {adress.CEP}, {adress.City} {adress.UF}",
+                newEvent.TicketsLimit,
+                new GoogleCalendarOrganizer(user.UserName, user.Email));
+        }
+
         private string CreateTweetMessage(Event newEvent, Adress adress, PublicPlace publicPlace)
         {
-            return $"Novo vento: {newEvent.EventName}\n"+
+            return $"Novo evento: {newEvent.EventName}\n"+
                 $"{newEvent.EventDescription}\n" +
                 $"Local: {publicPlace.PlaceName} {adress.PlaceName}, Bairro: {adress.Neighborhood}, CEP: {adress.CEP}, Cidade {adress.City} {adress.UF}\n" +
                 $"Limite de vagas: {newEvent.TicketsLimit}\n\n" +

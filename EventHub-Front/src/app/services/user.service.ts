@@ -66,8 +66,8 @@ export class UserService {
 
   saveTwitterAccessToken(data: any, id: string) {
     var body = {
-      TwitterAcessToken: data.accessToken,
-      TwitterAcessTokenSecret: data.accessTokenSecret
+      TwitterAccessToken: data.accessToken,
+      TwitterAccessTokenSecret: data.accessTokenSecret
     };
     return this.http.put(this.BaseURI + '/twitter/token/' + id, body);
   }
