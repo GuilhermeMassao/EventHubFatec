@@ -29,6 +29,7 @@ namespace EventHub.Infrastructure.Repositories.StoreProcedures
 
         #region PublicPlace
         public string SelectAllPublicPlaces => "SelectAllPublicPlaces";
+        public string SelectPublicPlaceById => "SelectPublicPlaceById";
         #endregion
 
         #region TwitterSocialMarketing

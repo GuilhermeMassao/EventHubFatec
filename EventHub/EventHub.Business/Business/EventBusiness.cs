@@ -52,22 +52,9 @@ namespace EventHub.Business.Business
                     {
                         var userTokens = await _userRepository.GetTwitterTokenByUserId(newEvent.UserOwnerId);
 
-                        TwitterConnection twitter = new TwitterConnection();
                         try
                         {
-                            var tweetResponse = twitter.PostTweet(new TwitterPostContentData(userTokens.TwitterAcessToken,
-                                TWITTER_APP_KEY,
-                                TWITTER_APP_KEY_SECRET,
-                                userTokens.TwitterAcessTokenSecret,
-                                newEvent.EventDescription,
-                                null));
-
-                            if (tweetResponse != null)
-                            {
-                                await _twitterSocialMarketingRepository.CreateTwitterSocialMarketing(new TwitterSocialMarketing(eventResultId.GetValueOrDefault(),
-                                                                                                                                tweetResponse.Id.ToString(),
-                                                                                                                                tweetResponse.ShortUrlTweet));
-                            }
+                            PostTweet(userTokens, eventResultId, newEvent, adress);
                         } catch(Exception e)
                         {
 
@@ -87,7 +74,42 @@ namespace EventHub.Business.Business
         {
             return await _publicPlaceRepository.GetAll();
         }
+        private async void PostTweet(User userTokens, int? eventResultId, Event newEvent, Adress adress)
+        {
+            var publicPlace = await _publicPlaceRepository.SelectById(adress.PublicPlaceId);
 
+            TwitterConnection twitter = new TwitterConnection();
+            var tweetResponse = twitter.PostTweet(new TwitterPostContentData(userTokens.TwitterAcessToken,
+                TWITTER_APP_KEY,
+                TWITTER_APP_KEY_SECRET,
+                userTokens.TwitterAcessTokenSecret,
+                CreateTweetMessage(newEvent, adress, publicPlace),
+                null));
+
+            if (tweetResponse != null)
+            {
+                await _twitterSocialMarketingRepository.CreateTwitterSocialMarketing(new TwitterSocialMarketing(eventResultId.GetValueOrDefault(),
+                                                                                                                tweetResponse.Id.ToString(),
+                                                                                                                tweetResponse.ShortUrlTweet));
+            }
+        }
+
+        private string CreateTweetMessage(Event newEvent, Adress adress, PublicPlace publicPlace)
+        {
+            return $"Novo vento: {newEvent.EventName}\n"+
+                $"{newEvent.EventDescription}\n" +
+                $"Local: {publicPlace.PlaceName} {adress.PlaceName}, Bairro: {adress.Neighborhood}, CEP: {adress.CEP}, Cidade {adress.City} {adress.UF}\n" +
+                $"Limite de vagas: {newEvent.TicketsLimit}\n\n" +
+                "Tweet gerado automaticamente por EventHub.";
+        }
     }
 }
+/*
+ * Novo evento: EventNaem
+ * Local: Logradouro + placename  Bairro: bla CEP: bla Cidade: bla
+ * Horario: 
+ * Limite de vagas: bla
+ * 
+ * Tweet gerado automaticamente por EventHub.
+ */
 

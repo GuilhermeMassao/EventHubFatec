@@ -51,5 +51,31 @@ namespace EventHub.Infrastructure.Repositories
                 return new List<PublicPlace>();
             }
         }
+
+        public async Task<PublicPlace> SelectById(int id)
+        {
+            var parameters = new DynamicParameters();
+
+            parameters.Add("@Id", id, DbType.Int32);
+
+            try
+            {
+                using (_connection = new SqlConnection(_dataBaseConnection.ConnectionString()))
+                {
+                    var publicPlace = await _connection.QueryFirstOrDefaultAsync<PublicPlace>
+                (
+                    _storeProcedure.SelectPublicPlaceById,
+                    param: parameters,
+                    commandType: CommandType.StoredProcedure
+                );
+
+                return publicPlace;
+                }
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
     }
 }
