@@ -1,41 +1,41 @@
+<div class="mt-4">
+    <h1 style="margin-bottom: 20px; border-bottom: 1px solid white;">Informações pessoais</h1>
+    <div class="row">
+        <div class="col-md-3">
+            <label class="label" for="input-nome">Nome:</label>
+            <input [(ngModel)]="usuario" class="form-control" id="input-nome" name="input-nome" type="text" style="width: inherit;">
+        </div>
+        <div class="col-md-3 ml-5">
+            <label class="label" for="input-email">Email:</label>
+            <input [(ngModel)]="email" class="form-control" id="input-email" name="input-email" type="text" style="width: inherit;">
+        </div>
+        <div class="col-md-2">
+                <button id="btn-save-inf" (click)="saveUserInformation()" class="btn btn-success">Salvar Informações</button>                
+            </div>
+    </div>
+    <div style="padding-top: 20px;">
+        <button id="btn-save-inf" (click)="redirectChangePassword()" class="btn btn-info">Alterar Senha</button>                
+    </div>
+</div>
+
+<h1 style="margin-top: 50px; margin-bottom: 20px; border-bottom: 1px solid white;">Redes sociais</h1>
 <div class="row mt-2">
     <div class="col-md-2 ml-3">
         <div *ngIf="hasTwitterLogin">
             <p class="float-right">Já esta logado com o Twitter</p>
             <button type="button" class=" float-right btn-sm btn-danger" (click)="twitterLogout()">Remover acesso</button>
         </div>
-        <button *ngIf="!hasTwitterLogin" type="button" class=" float-right btn btn-info" (click)="twitterLogin()">Login with twitter</button>
+        <button *ngIf="!hasTwitterLogin" type="button" class=" float-right btn btn-info" (click)="twitterLogin()">
+                <i class="fab fa-twitter"></i> Vincular conta com o Twitter
+        </button>
     </div>
     <div class="col-md-2">
         <div *ngIf="hasGoogleLogin">
             <p>Já esta logado com o Google</p>
             <button type="button" class=" float-right btn-sm btn-danger" (click)="googleLogout()">Remover acesso</button>
         </div>
-        <button *ngIf="!hasGoogleLogin" class="btn btn-info" type="button" (click)="googleLogin()">Login with google</button>
+        <button *ngIf="!hasGoogleLogin" class="btn btn-info" type="button" (click)="googleLogin()">
+            <i class="fab fa-google"></i> Vincular conta com o Google
+        </button>
     </div>
 </div>
-
-<div class="mt-4">
-        <div class="row">
-            <div class="col-md-1">
-            </div>
-            <div class="col-md-3" style="">
-                <label  class="label" for="input-nome">Nome:</label>
-                <input  [(ngModel)] = "usuario" class="form-control" id="input-nome" name="input-nome" type="text" style="width: inherit;">
-            </div>
-            <div class="col-md-3 ml-5" >
-                <label class="label" for="input-email">Email:</label>
-                <input [(ngModel)] = "email" class="form-control" id="input-email" name="input-email" type="text" style="width: inherit;">
-            </div>
-        </div>
-        <div class="float-right row mt-5" style="padding-left:575px; padding-top:10%;">
-            <div class="col-md-8">
-                <button id="btn-save-inf" (click) ="redirectChangePassword()" class="btn btn-info">Alterar Senha</button>                
-            </div>
-            <div class="col-md-2">
-                    <button id="btn-save-inf" (click) ="saveUserInformation()" class="btn btn-success">Salvar Informações</button>                
-            </div>
-        </div>
-</div>
-
-
