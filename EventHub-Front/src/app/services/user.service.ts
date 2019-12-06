@@ -21,6 +21,13 @@ export class UserService {
     }, { validator: this.comparePasswords })
   });
 
+  //Form Usuario
+  formUsuario = this.fb.group({
+    UserName: ['', Validators.required],
+    Email: ['', Validators.email],
+  });
+  
+
   comparePasswords(fb: FormGroup) {
     let confirmPswrdCtrl = fb.get('ConfirmPassword');
     if (confirmPswrdCtrl.errors == null || 'passwordMismatch' in confirmPswrdCtrl.errors) {
@@ -77,6 +84,34 @@ export class UserService {
     };
     return this.http.post(this.BaseURI + '/google/access', body);
   }
+
+  getUserInformation(id:BigInteger){
+    return this.http.get(this.BaseURI + '/api/user/' + id);
+  }
+  
+  
+updateUserInformation(nome:string,email:string,id:BigInteger){
+  var body = {
+    UserName:nome,
+    Email:email,
+  };
+  return this.http.put(this.BaseURI + '/api/user/' + id,body);
+}
+updateUserPasword(id:BigInteger,oldPass:string,newPass:string,confNewPass:string){
+  debugger;
+  this.getUserInformation(id).subscribe(
+  (res:any)=>{
+    console.log(res);
+    if(res.userPassword == oldPass && newPass == confNewPass){
+      var input = {
+        UserName: "string",
+        Email: "string",
+        UserPassword: newPass,
+      };
+      return this.http.put(this.BaseURI + '/api/user/password/' + id,input);
+    }
+  });
+}
 
   saveGoogleAccessToken(refreshToken: any, id: string) {
     var body = {

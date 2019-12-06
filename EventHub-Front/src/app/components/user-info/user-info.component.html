@@ -9,68 +9,27 @@
     </div>
 </div>
 
-
 <div class="mt-4">
         <div class="row">
             <div class="col-md-1">
             </div>
             <div class="col-md-3" style="">
-                <label class="label" for="input-nome">Nome:</label>
-                <input type="text" class="form-control" id="input-nome" name="input-nome" type="text" style="width: inherit;">
+                <label  class="label" for="input-nome">Nome:</label>
+                <input  [(ngModel)] = "usuario" class="form-control" id="input-nome" name="input-nome" type="text" style="width: inherit;">
             </div>
             <div class="col-md-3 ml-5" >
                 <label class="label" for="input-email">Email:</label>
-                <input type="text" class="form-control" id="input-email" name="input-email" type="text" style="width: inherit;">
-            </div>
-            <div class="col-md-3 ml-5" >
-                <label class="label" for="input-nome">Senha:</label>
-                <input type="text"  class="form-control" id="input-nome" name="input-nome" type="text" style="width: inherit;">
+                <input [(ngModel)] = "email" class="form-control" id="input-email" name="input-email" type="text" style="width: inherit;">
             </div>
         </div>
-        <div class="row mt-4">
-                <div class="col-md-1">
-                    </div>
-                <div class="col-md-1 label col-md-11">
-                        ENDEREÇO:
-                    </div>
-        </div>
-        <div class="row information">
-            <div class="col-md-1">
-                </div>
-            <div class="col-md-3" style="">
-                <label class="label" for="input-pais">País:</label>
-                <input type="text" class="form-control" id="input-cidade" name="input-nome" type="text" style="width: inherit;">
+        <div class="row  mt-5" style="padding-left:575px; padding-top:10%;">
+            <div class="col-md-8">
+                <button id="btn-save-inf" (click) ="redirectChangePassword()" class=" float-right btn btn-info">Alterar Senha</button>                
             </div>
-            <div class="col-md-3 ml-5" >
-                <label class="label" for="input-estado">Estado:</label>
-                <input type="text" class="form-control" id="input-rua" name="input-email" type="text" style="width: inherit;">
-            </div>
-            <div class="col-md-3 ml-5" >
-                <label class="label" for="input-Cidade">Cidade:</label>
-                <input type="text"  class="form-control" id="input-rua" name="input-nome" type="text" style="width: inherit;">
+            <div class="col-md-2">
+                    <button id="btn-save-inf" (click) ="saveUserInformation()" class=" float-right btn btn-success">Salvar Informações</button>                
             </div>
         </div>
-        <div class="row information">
-                <div class="col-md-1">
-                    </div>
-                <div class="col-md-3" style="">
-                    <label class="label" for="input-bairro">Bairro:</label>
-                    <input type="text" class="form-control" id="input-cidade" name="input-nome" type="text" style="width: inherit;">
-                </div>
-                <div class="col-md-3 ml-5" >
-                    <label class="label" for="input-rua">Rua:</label>
-                    <input type="text" class="form-control" id="input-rua" name="input-email" type="text" style="width: inherit;">
-                </div>
-                <div class="col-md-3 ml-5" >
-                    <label class="label" for="input-numero">Numero:</label>
-                    <input type="text"  class="form-control" id="input-rua" name="input-nome" type="text" style="width: inherit;">
-                </div>
-            </div>
-        <div class="row mt-4" style="padding-left:575px;">
-            <div class="col-md-10">
-                    <button id="btn-save-inf" class=" float-right btn btn-success">Salvar Informações</button>                
-            </div>
-        </div>
-        
-
 </div>
+
+

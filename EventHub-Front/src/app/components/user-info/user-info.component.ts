@@ -1,19 +1,36 @@
-import { Component, OnInit, ApplicationRef, SimpleChanges } from '@angular/core';
+import { Component, OnInit, ApplicationRef, SimpleChanges, ViewChild } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { Subject } from 'rxjs';
-import { NgForm } from '@angular/forms';
+import { NgForm, NgModel } from '@angular/forms';
+import { $ } from 'protractor';
+import { AfterViewInit,ElementRef } from '@angular/core';
+import { userInfo } from 'os';
+
+
+
+
+
+
 
 @Component({
   selector: 'app-user-info',
   templateUrl: './user-info.component.html',
-  styleUrls: ['./user-info.component.css']
+  styleUrls: ['./user-info.component.css'],
 })
-export class UserInfoComponent implements OnInit {
-
+export class UserInfoComponent implements OnInit,AfterViewInit {
+  @ViewChild('searchFor',null) someInput: ElementRef;
+  ngAfterViewInit(): void {
+    this.someInput.nativeElement.value = "update input value";
+  }
   public hasTwitterLogin: boolean;
   public hasGoogleLogin: boolean;
+  public userId: BigInteger;
+  public nameInput: NgModel;
+  public usuario: string;
+  public email: string;
+  public senha: string;
   mySubscription: any;
 
   constructor(private service: UserService, private router: Router, private toastr: ToastrService, private activatedRoute: ActivatedRoute) { }
@@ -21,11 +38,11 @@ export class UserInfoComponent implements OnInit {
   ngOnInit() {
     this.hasTwitterLogin = JSON.parse(localStorage.getItem('user')).twitterLogin;
     this.hasGoogleLogin = JSON.parse(localStorage.getItem('user')).googleLogin;
-    
+    this.userId = JSON.parse(localStorage.getItem('user')).id;
     this.verifyTwitterCallback();
     this.verifyGoogleCallback();
-
     this.updateLayout()
+    this.setField();
   }
   
   twitterLogin() {
@@ -35,7 +52,30 @@ export class UserInfoComponent implements OnInit {
       }
     );
   }
+  redirectChangePassword(){
+    this.router.navigateByUrl('/eventhub/user/editPassword');
+  }
 
+  saveUserInformation(){
+      this.service.updateUserInformation(this.usuario,this.email,this.userId).subscribe(
+        res =>{
+          alert('deu certo');
+        }
+      )
+  }
+
+  setField() {
+    ///your code
+     let user = this.service.getUserInformation(this.userId).subscribe(
+       (res:any) => {
+         console.log(res); 
+         this.usuario = res.userName;
+         this.email = res.email;
+         this.senha = res.senha;
+       }
+     );
+
+    }
   googleLogin() {
     this.service.getGoogleAuthorizeUrl(this.router.url).subscribe(
       res => {
@@ -85,7 +125,6 @@ export class UserInfoComponent implements OnInit {
       }
     })
   }
-
   verifyGoogleCallback() {
     this.activatedRoute.queryParams.subscribe(params => {
       if(params.code != null && params.scope != null) {

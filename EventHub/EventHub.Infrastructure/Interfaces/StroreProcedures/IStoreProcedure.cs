@@ -12,5 +12,7 @@
         string UpdateUserTwitterToken { get; }
         string UpdateUserGoogleToken { get; }
         string UpdateUser { get; }
+        string UpdateUserInformation { get; }
+        string UpdateUserPassword { get; }
     }
 }

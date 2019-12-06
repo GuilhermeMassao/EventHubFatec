@@ -15,6 +15,8 @@ namespace EventHub.Infrastructure.Repositories.StoreProcedures
         public string UpdateUserTwitterToken => "UpdateUserTwitterToken";
         public string UpdateUserGoogleToken => "UpdateUserGoogleToken";
         public string UpdateUser => "UpdateUser";
+        public string UpdateUserInformation => "UpdateUserInformation";
+        public string UpdateUserPassword => "UpdateUserPassword";
         #endregion
     }
 }

@@ -15,6 +15,7 @@ namespace EventHub.Infrastructure.Interfaces.Repository
         Task<bool> UpdateTwitterToken(int id, UserTwitterTokensInput input);
         Task<bool> UpdateGoogleToken(int id, GoogleRefreshTokenInput input);
         Task<bool> Update(int id, User entity);
+        Task<bool> UpdatePassword(int id, User entity);
         Task<bool> Delete(int id);
     }
 }

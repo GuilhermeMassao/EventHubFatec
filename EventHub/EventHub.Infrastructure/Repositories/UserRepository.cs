@@ -123,18 +123,18 @@ namespace EventHub.Infraestructure.Repository
                 );
 
                 return user;
-            }
+            } 
         }
 
         public async Task<bool> Update(int id, User entity)
         {
-            
+            var oldUser = GetById(id);
+
             var parameters = new DynamicParameters();
 
-            parameters.Add("@Id", entity.Id, DbType.String);
+            parameters.Add("@Id", id, DbType.String);
             parameters.Add("@UserName", entity.UserName, DbType.String);
             parameters.Add("@Email", entity.Email, DbType.String);
-            parameters.Add("@UserPassword", entity.UserPassword, DbType.String);
 
             try
             {
@@ -142,7 +142,7 @@ namespace EventHub.Infraestructure.Repository
                 {
                     await _connection.ExecuteAsync
                     (
-                        _storeProcedure.UpdateUser,
+                        _storeProcedure.UpdateUserInformation,
                         param: parameters,
                         commandType: CommandType.StoredProcedure
                     );
@@ -264,6 +264,36 @@ namespace EventHub.Infraestructure.Repository
                         param: parameters,
                         commandType: CommandType.StoredProcedure
                     );
+                    return true;
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public async Task<bool> UpdatePassword(int id, User entity)
+        {
+            var oldUser = GetById(id);
+
+            var parameters = new DynamicParameters();
+
+            parameters.Add("@Id", id, DbType.String);
+            parameters.Add("@UserPassword", entity.UserPassword, DbType.String);
+            
+
+            try
+            {
+                using (_connection = new SqlConnection(_dataBaseConnection.ConnectionString()))
+                {
+                    await _connection.ExecuteAsync
+                    (
+                        _storeProcedure.UpdateUserPassword,
+                        param: parameters,
+                        commandType: CommandType.StoredProcedure
+                    );
+
                     return true;
                 }
             }

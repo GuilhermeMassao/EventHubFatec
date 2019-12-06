@@ -29,5 +29,22 @@ namespace EventHub.Application.Services.UserApplication.Validations
 
             return Result.IsValid;
         }
+
+        public bool isValidUserUpdate(UserInput input)
+        {
+            RuleFor(user => user.UserName)
+                 .NotEmpty()
+                 .MaximumLength(50)
+                 .WithMessage("Nome inválido");
+
+            RuleFor(user => user.Email)
+                 .NotEmpty()
+                 .MaximumLength(50)
+                 .WithMessage("Email inválido");
+            RuleFor(user => user.UserPassword).Empty();
+            Result = Validate(input);
+
+            return Result.IsValid;
+        }
     }
 }

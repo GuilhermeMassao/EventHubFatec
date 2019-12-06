@@ -40,7 +40,7 @@ namespace EventHub.Application.Services.UserApplication
 
         public async Task<bool> Update(int id, UserInput input)
         {
-            if (_validator.IsValid(input))
+            if (_validator.isValidUserUpdate(input))
             {
                 return await userBusiness.Update(id, _inputToEntity.Map<UserInput, User>(input));
             }
