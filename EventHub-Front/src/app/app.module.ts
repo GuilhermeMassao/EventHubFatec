@@ -10,13 +10,15 @@ import { HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
 import { MenuComponent } from './components/menu/menu.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { EventInfoComponent } from './components/event-info/event-info.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     routingComponents,
     MenuComponent,
-    FooterComponent
+    FooterComponent,
+    EventInfoComponent
   ],
   imports: [
     BrowserModule,
