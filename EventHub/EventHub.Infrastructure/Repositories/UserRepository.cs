@@ -225,8 +225,8 @@ namespace EventHub.Infraestructure.Repository
             var parameters = new DynamicParameters();
 
             parameters.Add("@Id", id, DbType.Int32);
-            parameters.Add("@TwitterAcessToken", input.TwitterAcessToken, DbType.String);
-            parameters.Add("@TwitterAcessTokenSecret", input.TwitterAcessTokenSecret, DbType.String);
+            parameters.Add("@TwitterAccessToken", input.TwitterAccessToken, DbType.String);
+            parameters.Add("@TwitterAccessTokenSecret", input.TwitterAccessTokenSecret, DbType.String);
 
             try
             {

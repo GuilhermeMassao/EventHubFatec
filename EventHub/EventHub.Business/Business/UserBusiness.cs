@@ -94,12 +94,24 @@ namespace EventHub.Business.Business
 
         public async Task<bool> UpdateTwitterToken(int id, UserTwitterTokensInput input)
         {
-            return await _repository.UpdateTwitterToken(id, input);
+            var user = await _repository.GetById(id);
+            if (user != null)
+            {
+                return await _repository.UpdateTwitterToken(id, input);
+            }
+
+            return false;
         }
         
         public async Task<bool> UpdateGoogleToken(int id, GoogleRefreshTokenInput input)
         {
-            return await _repository.UpdateGoogleToken(id, input);
+            var user = await _repository.GetById(id);
+            if (user != null)
+            {
+                return await _repository.UpdateGoogleToken(id, input);
+            }
+
+            return false;
         }
     }
 }

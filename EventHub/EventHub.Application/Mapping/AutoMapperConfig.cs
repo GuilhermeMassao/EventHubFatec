@@ -9,7 +9,6 @@ namespace EventHub.Application.Mapping
             return new MapperConfiguration(
                 config => {
                     config.AddProfile<InputToEntity>();
-                    config.AddProfile<DtoToViewModel>();
                 }
             );
         }

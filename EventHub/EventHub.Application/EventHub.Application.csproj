@@ -204,14 +204,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Mapping\AutoMapperConfig.cs" />
-    <Compile Include="Mapping\DtoToViewModel.cs" />
     <Compile Include="Mapping\InputToEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\EventApplication\EventApplication.cs" />
     <Compile Include="Services\SocialApplication\SocialApplication.cs" />
     <Compile Include="Services\UserApplication\UserApplication.cs" />
+    <Compile Include="Services\UserApplication\Validations\GoogleRefreshTokenInputValidation.cs" />
     <Compile Include="Services\UserApplication\Validations\UserInputValidation.cs" />
-    <Compile Include="Services\UserApplication\ViewModel\UserViewModel.cs" />
+    <Compile Include="Services\UserApplication\Validations\UserLoginInputValidation.cs" />
+    <Compile Include="Services\UserApplication\Validations\UserTwitterTokensInputValidation.cs" />
     <Compile Include="Utils\PayloadValidator.cs" />
   </ItemGroup>
   <ItemGroup>

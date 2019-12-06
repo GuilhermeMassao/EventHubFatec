@@ -13,8 +13,8 @@ SET NOCOUNT ON
 
 BEGIN
     SELECT
-        TwitterAcessTokenSecret,
-        TwitterAcessToken
+        TwitterAccessTokenSecret,
+        TwitterAccessToken
     FROM
         [dbo].[User]
     WHERE
