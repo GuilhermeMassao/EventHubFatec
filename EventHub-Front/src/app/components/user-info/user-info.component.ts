@@ -1,29 +1,130 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ApplicationRef, SimpleChanges, ViewChild } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
 import { ToastrService } from 'ngx-toastr';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
+import { Subject } from 'rxjs';
+import { NgForm, NgModel } from '@angular/forms';
+import { $ } from 'protractor';
+import { AfterViewInit,ElementRef } from '@angular/core';
+import { userInfo } from 'os';
+
+
+
+
+
+
 
 @Component({
   selector: 'app-user-info',
   templateUrl: './user-info.component.html',
-  styleUrls: ['./user-info.component.css']
+  styleUrls: ['./user-info.component.css'],
 })
-export class UserInfoComponent implements OnInit {
-
-  hasTwitterLogin = JSON.parse(localStorage.getItem('user')).twitterLogin;
+export class UserInfoComponent implements OnInit,AfterViewInit {
+  @ViewChild('searchFor',null) someInput: ElementRef;
+  ngAfterViewInit(): void {
+    this.someInput.nativeElement.value = "update input value";
+  }
+  public hasTwitterLogin: boolean;
+  public hasGoogleLogin: boolean;
+  public userId: BigInteger;
+  public nameInput: NgModel;
+  public usuario: string;
+  public email: string;
+  public senha: string;
+  mySubscription: any;
 
   constructor(private service: UserService, private router: Router, private toastr: ToastrService, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
-    this.verifyTwitterCallback()
+    this.hasTwitterLogin = JSON.parse(localStorage.getItem('user')).twitterLogin;
+    this.hasGoogleLogin = JSON.parse(localStorage.getItem('user')).googleLogin;
+    this.userId = JSON.parse(localStorage.getItem('user')).id;
+    this.verifyTwitterCallback();
+    this.verifyGoogleCallback();
+    this.updateLayout()
+    this.setField();
   }
-
   
   twitterLogin() {
     this.service.getTwitterAuthorizeUrl(this.router.url).subscribe(
       res => {
-        console.log(res.toString())
         document.location.href = res.toString()
+      }
+    );
+  }
+  redirectChangePassword(){
+    this.router.navigateByUrl('/eventhub/user/editPassword');
+  }
+
+  saveUserInformation(){
+      this.service.updateUserInformation(this.usuario,this.email,this.userId).subscribe(
+        res =>{
+          alert('deu certo');
+        }
+      )
+  }
+
+  setField() {
+    ///your code
+     let user = this.service.getUserInformation(this.userId).subscribe(
+       (res:any) => {
+         console.log(res); 
+         this.usuario = res.userName;
+         this.email = res.email;
+         this.senha = res.senha;
+       }
+     );
+
+    }
+  twitterLogout() {
+    this.service.saveTwitterAccessToken({accessToken: null, accessTokenSecret: null}, JSON.parse(localStorage.getItem('user')).id).subscribe(
+      res => {
+        let actualStorage = JSON.parse(localStorage.getItem('user'))
+        actualStorage.twitterLogin = false;
+        console.log(actualStorage)
+        localStorage.setItem('user', JSON.stringify(actualStorage));
+        this.router.navigateByUrl('eventhub/user/profile');
+      },
+      err => {
+        if (err.status == 400) {
+          this.toastr.error('Erro ao tentar deslogar no Twitter!','Tente novamente mais tarde.');
+          this.router.navigateByUrl('eventhub/user/profile');
+        }
+        else {
+          console.log(err);
+          this.toastr.error('Erro ao tentar deslogar no Twitter!','Tente novamente mais tarde.');
+          this.router.navigateByUrl('eventhub/user/profile');
+        }
+      }
+    );
+  }
+
+  googleLogin() {
+    this.service.getGoogleAuthorizeUrl(this.router.url).subscribe(
+      res => {
+        document.location.href = res.toString()
+      }
+    );
+  }
+
+  googleLogout() {
+    this.service.saveGoogleAccessToken(null, JSON.parse(localStorage.getItem('user')).id).subscribe(
+      res => {
+        let actualStorage = JSON.parse(localStorage.getItem('user'))
+        actualStorage.googleLogin = false;
+        localStorage.setItem('user', JSON.stringify(actualStorage));
+        this.router.navigateByUrl('eventhub/user/profile');
+      },
+      err => {
+        if (err.status == 400) {
+          this.toastr.error('Erro ao tentar deslogar no Google!','Tente novamente mais tarde.');
+          this.router.navigateByUrl('eventhub/user/profile');
+        }
+        else {
+          console.log(err);
+          this.toastr.error('Erro ao tentar deslogar no Google!','Tente novamente mais tarde.');
+          this.router.navigateByUrl('eventhub/user/profile');
+        }
       }
     );
   }
@@ -35,6 +136,10 @@ export class UserInfoComponent implements OnInit {
           res => {
             this.service.saveTwitterAccessToken(res, JSON.parse(localStorage.getItem('user')).id).subscribe(
               res => {
+                let actualStorage = JSON.parse(localStorage.getItem('user'))
+                actualStorage.twitterLogin = true;
+                console.log(actualStorage)
+                localStorage.setItem('user', JSON.stringify(actualStorage));
                 this.router.navigateByUrl('eventhub/user/profile');
               },
               err => {
@@ -44,6 +149,8 @@ export class UserInfoComponent implements OnInit {
                 }
                 else {
                   console.log(err);
+                  this.toastr.error('Erro ao tentar logar no Twitter!','Tente novamente mais tarde.');
+                  this.router.navigateByUrl('eventhub/user/profile');
                 }
               }
             )
@@ -55,10 +162,70 @@ export class UserInfoComponent implements OnInit {
             }
             else {
               console.log(err);
+              this.toastr.error('Erro ao tentar logar no Twitter!','Tente novamente mais tarde.');
+              this.router.navigateByUrl('eventhub/user/profile');
             }
           }
         )
       }
     })
+  }
+  verifyGoogleCallback() {
+    this.activatedRoute.queryParams.subscribe(params => {
+      if(params.code != null && params.scope != null) {
+        this.service.getGoogleAccessToken(params.code, this.router.url.split('?')[0]).subscribe(
+          (res :any) => {
+            this.service.saveGoogleAccessToken(res.refreshToken, JSON.parse(localStorage.getItem('user')).id).subscribe(
+              res => {
+                let actualStorage = JSON.parse(localStorage.getItem('user'))
+                actualStorage.googleLogin = true;
+                localStorage.setItem('user', JSON.stringify(actualStorage));
+                this.router.navigateByUrl('eventhub/user/profile');
+              },
+              err => {
+                if (err.status == 400) {
+                  this.toastr.error('Erro ao tentar logar no Google!','Tente novamente mais tarde.');
+                  this.router.navigateByUrl('eventhub/user/profile');
+                }
+                else {
+                  console.log(err);
+                  this.toastr.error('Erro ao tentar logar no Google!','Tente novamente mais tarde.');
+                  this.router.navigateByUrl('eventhub/user/profile');
+                }
+              }
+            )
+          },
+          err => {
+            if (err.status == 400) {
+              this.toastr.error('Erro ao tentar logar no Google!','Tente novamente mais tarde.');
+              this.router.navigateByUrl('eventhub/user/profile');
+            }
+            else {
+              console.log(err);
+              this.toastr.error('Erro ao tentar logar no Google!','Tente novamente mais tarde.');
+                  this.router.navigateByUrl('eventhub/user/profile');
+            }
+          }
+        )
+      }
+    })
+  }
+
+  updateLayout() {
+    this.router.routeReuseStrategy.shouldReuseRoute = function () {
+      return false;
+    };
+
+    this.mySubscription = this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.router.navigated = false;
+      }
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.mySubscription) {
+      this.mySubscription.unsubscribe();
+    }
   }
 }

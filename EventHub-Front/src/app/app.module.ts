@@ -11,6 +11,8 @@ import { ToastrModule } from 'ngx-toastr';
 import { MenuComponent } from './components/menu/menu.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { EventInfoComponent } from './components/event-info/event-info.component';
+import { AlertModule } from 'ngx-bootstrap/alert';
+import { NgxMaskModule, IConfig } from 'ngx-mask';
 
 @NgModule({
   declarations: [
@@ -27,10 +29,15 @@ import { EventInfoComponent } from './components/event-info/event-info.component
     FormsModule,
     HttpClientModule,
     ToastrModule.forRoot({
+      timeOut: 2000,
+      positionClass: 'toast-top-right',
+      preventDuplicates: false,
       progressBar: true
     }),
     BrowserAnimationsModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    AlertModule.forRoot(),
+    NgxMaskModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

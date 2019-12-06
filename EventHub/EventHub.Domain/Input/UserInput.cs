@@ -1,4 +1,4 @@
-﻿namespace EventHub.Application.Services.UserApplication.Input
+﻿namespace EventHub.Domain.Input
 {
     public class UserInput
     {

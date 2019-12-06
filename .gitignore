@@ -342,3 +342,10 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
+EventHub/EventHub.Domain/App.config
+EventHub/EventHub.WebApi/App.config
+EventHub/EventHub.Domain/App.config
+EventHub/EventHub.WebApi/App.config
+EventHub/EventHub.Domain/App.config
+EventHub/EventHub.WebApi/App.config
+EventHub/EventHub.Infrastructure/Helpers/ConnectionHelper.cs

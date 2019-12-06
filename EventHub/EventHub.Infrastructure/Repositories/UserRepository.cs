@@ -83,18 +83,27 @@ namespace EventHub.Infraestructure.Repository
             var parameters = new DynamicParameters();
 
             parameters.Add("@Email", email, DbType.String);
-
-            using (_connection = new SqlConnection(_dataBaseConnection.ConnectionString()))
+            try
             {
-                var user =  await _connection.QueryFirstOrDefaultAsync<UserDTO>
-                (
-                    _storeProcedure.SelectUserByEmail,
-                    param: parameters,
-                    commandType: CommandType.StoredProcedure
-                );
+                using (_connection = new SqlConnection(_dataBaseConnection.ConnectionString()))
+                {
+                    _connection.Open();
+                    var user = await _connection.QueryFirstOrDefaultAsync<UserDTO>
+                    (
+                        _storeProcedure.SelectUserByEmail,
+                        param: parameters,
+                        commandType: CommandType.StoredProcedure
+                    );
 
-                return user;
+                    return user;
+                }
             }
+            catch (Exception e)
+            {
+
+                throw e;
+            }
+            
         }
 
         public async Task<User> GetByEmailAndPassword(UserLoginInput input)
@@ -114,18 +123,18 @@ namespace EventHub.Infraestructure.Repository
                 );
 
                 return user;
-            }
+            } 
         }
 
         public async Task<bool> Update(int id, User entity)
         {
-            
+            var oldUser = GetById(id);
+
             var parameters = new DynamicParameters();
 
-            parameters.Add("@Id", entity.Id, DbType.String);
+            parameters.Add("@Id", id, DbType.String);
             parameters.Add("@UserName", entity.UserName, DbType.String);
             parameters.Add("@Email", entity.Email, DbType.String);
-            parameters.Add("@UserPassword", entity.UserPassword, DbType.String);
 
             try
             {
@@ -133,7 +142,7 @@ namespace EventHub.Infraestructure.Repository
                 {
                     await _connection.ExecuteAsync
                     (
-                        _storeProcedure.UpdateUser,
+                        _storeProcedure.UpdateUserInformation,
                         param: parameters,
                         commandType: CommandType.StoredProcedure
                     );
@@ -192,13 +201,32 @@ namespace EventHub.Infraestructure.Repository
             }
         }
 
+        public async Task<User> GetGoogleTokenByUserId(int id)
+        {
+            var parameters = new DynamicParameters();
+
+            parameters.Add("@Id", id, DbType.Int32);
+
+            using (_connection = new SqlConnection(_dataBaseConnection.ConnectionString()))
+            {
+                var user = await _connection.QueryFirstOrDefaultAsync<User>
+                (
+                    _storeProcedure.SelectGoogleTokenByUserId,
+                    param: parameters,
+                    commandType: CommandType.StoredProcedure
+                );
+
+                return user;
+            }
+        }
+
         public async Task<bool> UpdateTwitterToken(int id, UserTwitterTokensInput input)
         {
             var parameters = new DynamicParameters();
 
             parameters.Add("@Id", id, DbType.Int32);
-            parameters.Add("@TwitterAcessToken", input.TwitterAcessToken, DbType.String);
-            parameters.Add("@TwitterAcessTokenSecret", input.TwitterAcessTokenSecret, DbType.String);
+            parameters.Add("@TwitterAccessToken", input.TwitterAccessToken, DbType.String);
+            parameters.Add("@TwitterAccessTokenSecret", input.TwitterAccessTokenSecret, DbType.String);
 
             try
             {
@@ -210,7 +238,63 @@ namespace EventHub.Infraestructure.Repository
                         param: parameters,
                         commandType: CommandType.StoredProcedure
                     );
-                        return true;
+                    return true;
+                }
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+        
+        public async Task<bool> UpdateGoogleToken(int id, GoogleRefreshTokenInput input)
+        {
+            var parameters = new DynamicParameters();
+
+            parameters.Add("@Id", id, DbType.Int32);
+            parameters.Add("@GoogleRefreshToken", input.RefreshToken, DbType.String);
+
+            try
+            {
+                using (_connection = new SqlConnection(_dataBaseConnection.ConnectionString()))
+                {
+                    await _connection.QueryFirstOrDefaultAsync<int?>
+                    (
+                        _storeProcedure.UpdateUserGoogleToken,
+                        param: parameters,
+                        commandType: CommandType.StoredProcedure
+                    );
+                    return true;
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public async Task<bool> UpdatePassword(int id, User entity)
+        {
+            var oldUser = GetById(id);
+
+            var parameters = new DynamicParameters();
+
+            parameters.Add("@Id", id, DbType.String);
+            parameters.Add("@UserPassword", entity.UserPassword, DbType.String);
+            
+
+            try
+            {
+                using (_connection = new SqlConnection(_dataBaseConnection.ConnectionString()))
+                {
+                    await _connection.ExecuteAsync
+                    (
+                        _storeProcedure.UpdateUserPassword,
+                        param: parameters,
+                        commandType: CommandType.StoredProcedure
+                    );
+
+                    return true;
                 }
             }
             catch (Exception)

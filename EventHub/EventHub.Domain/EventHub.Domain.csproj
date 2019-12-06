@@ -34,6 +34,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac, Version=4.9.4.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.4.9.4\lib\net45\Autofac.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -133,8 +136,8 @@
     <Reference Include="Microsoft.Net.Http.Headers, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Net.Http.Headers.2.2.0\lib\netstandard2.0\Microsoft.Net.Http.Headers.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
@@ -198,6 +201,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DTOs\Event\EventDto.cs" />
     <Compile Include="DTOs\User\UserDto.cs" />
     <Compile Include="DTOs\User\UserTokensDTO.cs" />
     <Compile Include="Entities\Adress.cs" />
@@ -209,6 +213,11 @@
     <Compile Include="Entities\TwitterSocialMarketing.cs" />
     <Compile Include="Entities\User.cs" />
     <Compile Include="Exceptions\EntityAlreadyExistsException.cs" />
+    <Compile Include="Input\EventAdress.cs" />
+    <Compile Include="Input\EventInput.cs" />
+    <Compile Include="Input\GoogleAccessTokenInput.cs" />
+    <Compile Include="Input\GoogleRefreshTokenInput.cs" />
+    <Compile Include="Input\UserInput.cs" />
     <Compile Include="Input\UserLoginInput.cs" />
     <Compile Include="Input\UserTwitterTokensInput.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

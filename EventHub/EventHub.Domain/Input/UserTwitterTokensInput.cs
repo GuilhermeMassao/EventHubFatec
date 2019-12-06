@@ -2,7 +2,7 @@
 {
     public class UserTwitterTokensInput
     {
-        public string TwitterAcessTokenSecret { get; set; }
-        public string TwitterAcessToken { get; set; }
+        public string TwitterAccessTokenSecret { get; set; }
+        public string TwitterAccessToken { get; set; }
     }
 }

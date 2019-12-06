@@ -13,7 +13,29 @@ namespace EventHub.Infrastructure.Repositories.StoreProcedures
         public string SelectGoogleTokenByUserId => "SelectGoogleTokenByUserId";
         public string SelectTwitterTokensByUserId => "SelectTwitterTokensByUserId";
         public string UpdateUserTwitterToken => "UpdateUserTwitterToken";
+        public string UpdateUserGoogleToken => "UpdateUserGoogleToken";
         public string UpdateUser => "UpdateUser";
+        public string UpdateUserInformation => "UpdateUserInformation";
+        public string UpdateUserPassword => "UpdateUserPassword";
+        #endregion
+
+        #region Event
+        public string InsertEvent => "InsertEvent";
+        #endregion
+
+        #region Adress
+        public string InsertAdress => "InsertAdress";
+        public string InactivateAdress => "InactivateAdress";
+        public string DeleteAdress => "DeleteAdress";
+        #endregion
+
+        #region PublicPlace
+        public string SelectAllPublicPlaces => "SelectAllPublicPlaces";
+        public string SelectPublicPlaceById => "SelectPublicPlaceById";
+        #endregion
+
+        #region TwitterSocialMarketing
+        public string InsertTwitterSocialMarketing => "InsertTwitterSocialMarketing";
         #endregion
     }
 }

@@ -1,5 +1,6 @@
 ﻿using EventHub.Application.Services.UserApplication;
-using EventHub.Application.Services.UserApplication.Input;
+using EventHub.Domain.DTOs.User;
+using EventHub.Domain.Entities;
 using EventHub.Domain.Input;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -19,7 +20,7 @@ namespace EventHub.WebApi.Controllers
         }
 
         [HttpPost]
-        [ProducesResponseType(201)]
+        [ProducesResponseType(typeof(UserDTO), 201)]
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
         [ProducesResponseType(503)]
@@ -29,7 +30,7 @@ namespace EventHub.WebApi.Controllers
 
             if (result != null)
             {
-                return Created("Usuário criado com sucesso!", result);
+                return Created("", result);
             }
 
             return BadRequest();
@@ -54,7 +55,7 @@ namespace EventHub.WebApi.Controllers
         }
 
         [HttpPut]
-        [Route("{id}")]
+        [Route("/api/user/{id}")]
         [ProducesResponseType(typeof(bool), 202)]
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
@@ -67,6 +68,16 @@ namespace EventHub.WebApi.Controllers
             }
 
             return BadRequest();
+        }
+
+        [HttpPut]
+        [Route("/api/user/password/{id}")]
+        [ProducesResponseType(typeof(bool), 202)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> UpdatePassword([FromRoute] int id, [FromBody] UserInput input)
+        {
+            return Accepted(true);
         }
 
         [HttpDelete]
@@ -88,7 +99,7 @@ namespace EventHub.WebApi.Controllers
 
         [HttpPost]
         [Route("/login")]
-        [ProducesResponseType(200)]
+        [ProducesResponseType(typeof(User), 200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
         [ProducesResponseType(503)]
@@ -112,6 +123,40 @@ namespace EventHub.WebApi.Controllers
         public virtual async Task<IActionResult> UpdateTwitterToken([FromRoute] int id, [FromBody] UserTwitterTokensInput input)
         {
             var result = await userApplication.UpdateTwitterToken(id, input);
+
+            if (result)
+            {
+                return Ok();
+            }
+            return BadRequest();
+        }
+
+        [HttpPut]
+        [Route("/User/Cadastro/{id}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(500)]
+        [ProducesResponseType(503)]
+        public virtual async Task<IActionResult> UpdateUser([FromRoute] int id, [FromBody] UserInput input)
+        {
+            var result = await userApplication.Update(id, input);
+
+            if (result)
+            {
+                return Ok();
+            }
+            return BadRequest();
+        }
+
+        [HttpPut]
+        [Route("/google/token/{id}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(500)]
+        [ProducesResponseType(503)]
+        public virtual async Task<IActionResult> UpdateGoogleToken([FromRoute] int id, [FromBody] GoogleRefreshTokenInput input)
+        {
+            var result = await userApplication.UpdateGoogleToken(id, input);
 
             if (result)
             {

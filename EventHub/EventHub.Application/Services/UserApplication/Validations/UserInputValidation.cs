@@ -1,4 +1,4 @@
-﻿using EventHub.Application.Services.UserApplication.Input;
+﻿using EventHub.Domain.Input;
 using FluentValidation;
 using FluentValidation.Results;
 
@@ -22,9 +22,26 @@ namespace EventHub.Application.Services.UserApplication.Validations
 
             RuleFor(user => user.UserPassword)
                  .NotEmpty()
-                 .Length(5, 15)
+                 .Length(4, 15)
                  .WithMessage("Senha inválida");
 
+            Result = Validate(input);
+
+            return Result.IsValid;
+        }
+
+        public bool isValidUserUpdate(UserInput input)
+        {
+            RuleFor(user => user.UserName)
+                 .NotEmpty()
+                 .MaximumLength(50)
+                 .WithMessage("Nome inválido");
+
+            RuleFor(user => user.Email)
+                 .NotEmpty()
+                 .MaximumLength(50)
+                 .WithMessage("Email inválido");
+            RuleFor(user => user.UserPassword).Empty();
             Result = Validate(input);
 
             return Result.IsValid;
