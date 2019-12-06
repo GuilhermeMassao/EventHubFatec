@@ -11,6 +11,7 @@ export class UserService {
   readonly BaseURI = 'http://localhost:61096';
   readonly BaseFrontURI = "http://localhost:4200";
 
+  //Form de login
   formModel = this.fb.group({
     UserName: ['', Validators.required],
     Email: ['', Validators.email],
@@ -20,7 +21,7 @@ export class UserService {
     }, { validator: this.comparePasswords })
   });
 
-  //Form Usuario
+  //Form edição das informações do Usuario
   formUsuario = this.fb.group({
     UserName: ['', Validators.required],
     Email: ['', Validators.email],
