@@ -10,19 +10,15 @@ import { HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
 import { MenuComponent } from './components/menu/menu.component';
 import { FooterComponent } from './components/footer/footer.component';
-import { EventInfoComponent } from './components/event-info/event-info.component';
 import { AlertModule } from 'ngx-bootstrap/alert';
 import { NgxMaskModule, IConfig } from 'ngx-mask';
-import { EventEditComponent } from './components/event-edit/event-edit.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     routingComponents,
     MenuComponent,
-    FooterComponent,
-    EventInfoComponent,
-    EventEditComponent
+    FooterComponent
   ],
   imports: [
     BrowserModule,

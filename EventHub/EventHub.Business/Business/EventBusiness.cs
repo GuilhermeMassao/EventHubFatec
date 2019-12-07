@@ -83,6 +83,10 @@ namespace EventHub.Business.Business
             }
             return false;
         }
+        public Task<CompleteEventDto> GetById(int id)
+        {
+            return _eventRepository.GetById(id);
+        }
 
         public async Task<IEnumerable<PublicPlace>> GetPublicPlaces()
         {

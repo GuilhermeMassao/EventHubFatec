@@ -34,6 +34,11 @@ namespace EventHub.Application.Services.EventApplication
             return await eventBusiness.EditEvent(id, _inputToEntity.Map<EventEditInput, Event>(input), input.Adress);
         }
 
+        public async Task<CompleteEventDto> GetById(int id)
+        {
+            return await eventBusiness.GetById(id);
+        }
+
         public async Task<IEnumerable<PublicPlace>> GetPublicPlaces()
         {
             return await eventBusiness.GetPublicPlaces();

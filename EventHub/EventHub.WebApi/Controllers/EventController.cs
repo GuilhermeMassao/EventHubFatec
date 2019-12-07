@@ -57,6 +57,24 @@ namespace EventHub.WebApi.Controllers
         }
 
         [HttpGet]
+        [Route("/api/event/{id}")]
+        [ProducesResponseType(typeof(CompleteEventDto), 200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(500)]
+        [ProducesResponseType(503)]
+        public virtual async Task<IActionResult> GetById([FromRoute] int id)
+        {
+            var result = await eventApplication.GetById(id);
+
+            if (result != null)
+            {
+                return Ok(result);
+            }
+
+            return BadRequest();
+        }
+
+        [HttpGet]
         [Route("/public-places")]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]

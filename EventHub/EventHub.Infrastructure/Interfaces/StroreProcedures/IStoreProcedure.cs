@@ -17,6 +17,7 @@
 
         string InsertEvent { get; }
         string UpdateEvent { get; }
+        string SelectEventsById { get; }
 
         string InsertAdress { get; }
         string UpdateAdress { get; }

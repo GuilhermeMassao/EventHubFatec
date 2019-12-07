@@ -14,6 +14,7 @@ SET NOCOUNT ON
 BEGIN
     SELECT
         EV.Id AS EventId,
+		EV.UserOwnerId,
         EV.EventName,
         EV.StartDate,
         EV.EndDate,
@@ -22,9 +23,9 @@ BEGIN
         EV.TicketsLimit,
         US.UserName AS EventOwnerName,
         US.Email AS EventOwnerEmail,
-        PP.Id AS PublicPlaceId,
-        PP.PlaceName PlaceName,
+		AD.PublicPlaceId,
         AD.Id AS AdressId,
+		AD.PlaceName,
         AD.City,
         AD.UF,
         AD.CEP,
@@ -43,11 +44,6 @@ BEGIN
         [dbo].[Adress] AD
     ON
         EV.AdressId = AD.Id
-
-    INNER JOIN
-        [dbo].[PublicPlace] PP
-    ON
-        AD.PublicPlaceId = PP.Id
 
     WHERE
         EV.Id = @Id

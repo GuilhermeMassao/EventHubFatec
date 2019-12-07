@@ -14,6 +14,7 @@ SET NOCOUNT ON
 BEGIN
     SELECT
         PP.PlaceName,
+		AD.PlaceName,
         AD.City,
         AD.UF,
         AD.CEP,

@@ -90,6 +90,11 @@ namespace EventHub.Infrastructure.Repositories
             }
         }
 
+        public async Task<Adress> GetById(int id)
+        {
+            return null;
+        }
+
         public async Task<bool> Delete(int id)
         {
             try
@@ -141,5 +146,6 @@ namespace EventHub.Infrastructure.Repositories
                 return false;
             }
         }
+
     }
 }

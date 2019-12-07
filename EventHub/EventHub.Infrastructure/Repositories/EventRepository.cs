@@ -95,9 +95,30 @@ namespace EventHub.Infrastructure.Repositories
             }
         }
 
-        public async Task<EventDto> GetById(int id)
+        public async Task<CompleteEventDto> GetById(int id)
         {
-            throw new NotImplementedException();
+            var parameters = new DynamicParameters();
+
+            parameters.Add("@Id", id, DbType.Int32);
+
+            try
+            {
+                using (_connection = new SqlConnection(_dataBaseConnection.ConnectionString()))
+                {
+                    var createdId = await _connection.QueryFirstOrDefaultAsync<CompleteEventDto>
+                    (
+                        _storeProcedure.SelectEventsById,
+                        param: parameters,
+                        commandType: CommandType.StoredProcedure
+                    );
+
+                    return createdId;
+                }
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
         }
     }
 }

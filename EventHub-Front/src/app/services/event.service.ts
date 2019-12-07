@@ -29,6 +29,24 @@ export class EventService {
     EventAdressNumber: ['', Validators.required]
   });
 
+  EditeventForm = this.fb.group({
+    EventName: ['', Validators.required],
+    EventDescription: [''],
+    EventDates: this.fb.group({
+      EventStartDate: ['', Validators.required],
+      EventEndDate: ['', Validators.required],
+    }, { validator: this.validateDates }),
+    EventTicket: ['', Validators.required],
+    EventAdressPublicPlace: ['', Validators.required],
+    EventAdressPlaceName: ['', Validators.required],
+    EventAdressCity: ['', Validators.required],
+    EventAdressUF: ['', Validators.required],
+    EventAdressCEP: ['', Validators.required],
+    EventAdressNeighborhood: ['', Validators.required],
+    EventAdressComplement: [''],
+    EventAdressNumber: ['', Validators.required]
+  });
+
   createEvent(userId: number, twitterLogin: boolean, googleLogin: boolean) {
     var body = {
       UserOwnerId: userId,
@@ -53,6 +71,10 @@ export class EventService {
     };
     console.log(body);
     return this.http.post(this.BaseURI + '/api/event', body);
+  }
+
+  public getEventById(id: number) {
+    return this.http.get(this.BaseURI + '/public-places');
   }
 
   public getAllPublicPlaces() {
