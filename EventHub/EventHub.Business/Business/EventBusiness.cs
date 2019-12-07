@@ -25,18 +25,21 @@ namespace EventHub.Business.Business
         private readonly IPublicPlaceRepository _publicPlaceRepository;
         private readonly IUserRepository _userRepository;
         private readonly ITwitterSocialMarketingRepository _twitterSocialMarketingRepository;
+        private readonly IGoogleCalendarSocialMarketingRepository _googleCalendarSocialMarketingRepository;
 
         public EventBusiness(IUserRepository userRepository,
             IAdressRepository adressRepository,
             IEventRepository eventRepository,
             IPublicPlaceRepository publicPlaceRepository,
-            ITwitterSocialMarketingRepository twitterSocialMarketingRepository)
+            ITwitterSocialMarketingRepository twitterSocialMarketingRepository,
+            IGoogleCalendarSocialMarketingRepository googleCalendarSocialMarketingRepository)
         {
             _adressRepository = adressRepository;
             _eventRepository = eventRepository;
             _publicPlaceRepository = publicPlaceRepository;
             _userRepository = userRepository;
             _twitterSocialMarketingRepository = twitterSocialMarketingRepository;
+            _googleCalendarSocialMarketingRepository = googleCalendarSocialMarketingRepository;
         }
 
         public async Task<EventDto> CreateEvent(Event newEvent, Adress adress, bool twitterLogin, bool googleLogin)
@@ -51,29 +54,8 @@ namespace EventHub.Business.Business
 
                 if(eventResultId != null)
                 {
-                    if (googleLogin)
-                    {
-                        var userGoogleToken = await _userRepository.GetGoogleTokenByUserId(newEvent.UserOwnerId);
-                        try
-                        {
-                            await CreateGoogleEvent(userGoogleToken.GoogleRefreshToken, newEvent, adress);
-                        } catch(Exception e)
-                        {
-
-                        }
-                    }
-                    if (twitterLogin)
-                    {
-                        var userTokens = await _userRepository.GetTwitterTokenByUserId(newEvent.UserOwnerId);
-
-                        try
-                        {
-                            PostTweet(userTokens, eventResultId, newEvent, adress);
-                        } catch(Exception e)
-                        {
-
-                        }
-                    }
+                    ShareEvent(eventResultId.GetValueOrDefault(), newEvent, adress, googleLogin, twitterLogin);
+                    
                     return new EventDto(eventResultId.GetValueOrDefault(), newEvent.EventName);
 
                 } else
@@ -84,11 +66,36 @@ namespace EventHub.Business.Business
             return null;
         }
 
+        private async void ShareEvent(int eventResultId, Event newEvent, Adress adress, bool googleLogin, bool twitterLogin)
+        {
+            PostResponseData googleAgendaResult = null;
+            if (googleLogin)
+            {
+                var userGoogleToken = await _userRepository.GetGoogleTokenByUserId(newEvent.UserOwnerId);
+                try
+                {
+                    googleAgendaResult = await CreateGoogleEvent(userGoogleToken.GoogleRefreshToken, eventResultId, newEvent, adress);
+                }
+                catch (Exception e) { }
+            }
+
+            if (twitterLogin)
+            {
+                var userTokens = await _userRepository.GetTwitterTokenByUserId(newEvent.UserOwnerId);
+
+                try
+                {
+                    PostTweet(userTokens, eventResultId, newEvent, adress, googleAgendaResult);
+                }
+                catch (Exception e) { }
+            }
+        }
+
         public async Task<IEnumerable<PublicPlace>> GetPublicPlaces()
         {
             return await _publicPlaceRepository.GetAll();
         }
-        private async void PostTweet(User userTokens, int? eventResultId, Event newEvent, Adress adress)
+        private async void PostTweet(User userTokens, int? eventResultId, Event newEvent, Adress adress, PostResponseData googleEvent)
         {
             var publicPlace = await _publicPlaceRepository.SelectById(adress.PublicPlaceId);
 
@@ -97,7 +104,7 @@ namespace EventHub.Business.Business
                 TWITTER_APP_KEY,
                 TWITTER_APP_KEY_SECRET,
                 userTokens.TwitterAccessTokenSecret,
-                CreateTweetMessage(newEvent, adress, publicPlace),
+                CreateTweetMessage(newEvent, adress, publicPlace, googleEvent),
                 null));
 
             if (tweetResponse != null)
@@ -108,17 +115,21 @@ namespace EventHub.Business.Business
             }
         }
 
-        private async Task<PostResponseData> CreateGoogleEvent(string refreshToken, Event newEvent, Adress adress)
+        private async Task<PostResponseData> CreateGoogleEvent(string refreshToken, int newEventId, Event newEvent, Adress adress)
         {
             var publicPlace = await _publicPlaceRepository.SelectById(adress.PublicPlaceId);
             var user = await _userRepository.GetById(newEvent.UserOwnerId);
 
             GoogleConnection google = new GoogleConnection();
             var accessToken = google.RefreshAccessToken(GOOGLE_APP_ID, GOOGLE_APP_SECRET, refreshToken).AccessToken;
+
             var agendaId = google.CreateAgenda(accessToken, newEvent.EventName);
+
             var googleEvent = google.CreateEvent(CreateGoogleCalendarPostContentData(accessToken, agendaId, user, newEvent, adress, publicPlace));
-            // salvar o evento na base
-            return null;
+
+            await _googleCalendarSocialMarketingRepository.CreateGoogleCalendarSocialMarketing(new GoogleCalendarSocialMarketing(newEventId, agendaId, googleEvent.ShortUrlGoogle));
+
+            return googleEvent;
         }
 
         private GoogleCalendarPostContentData CreateGoogleCalendarPostContentData(string accessToken, string agendaId, UserDTO user, Event newEvent, Adress adress, PublicPlace publicPlace)
@@ -134,12 +145,14 @@ namespace EventHub.Business.Business
                 new GoogleCalendarOrganizer(user.UserName, user.Email));
         }
 
-        private string CreateTweetMessage(Event newEvent, Adress adress, PublicPlace publicPlace)
+        private string CreateTweetMessage(Event newEvent, Adress adress, PublicPlace publicPlace, PostResponseData googleEvent)
         {
+            var googleEventUrl = (googleEvent != null) ? googleEvent.ShortUrlGoogle : "";
             return $"Novo evento: {newEvent.EventName}\n"+
                 $"{newEvent.EventDescription}\n" +
-                $"Local: {publicPlace.PlaceName} {adress.PlaceName}, Bairro: {adress.Neighborhood}, CEP: {adress.CEP}, Cidade {adress.City} {adress.UF}\n" +
-                $"Limite de vagas: {newEvent.TicketsLimit}\n\n" +
+                $"Local: {publicPlace.PlaceName} {adress.PlaceName} - {adress.AdressNumber}, Bairro: {adress.Neighborhood}, CEP: {adress.CEP}, Cidade {adress.City} {adress.UF}\n" +
+                $"Limite de vagas: {newEvent.TicketsLimit}\n" +
+                $"{googleEventUrl}\n\n" +
                 "Tweet gerado automaticamente por EventHub.";
         }
     }

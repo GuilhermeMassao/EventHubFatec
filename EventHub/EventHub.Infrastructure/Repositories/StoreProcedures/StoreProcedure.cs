@@ -37,5 +37,9 @@ namespace EventHub.Infrastructure.Repositories.StoreProcedures
         #region TwitterSocialMarketing
         public string InsertTwitterSocialMarketing => "InsertTwitterSocialMarketing";
         #endregion
+
+        #region GoogleCalendarSocialMarketing
+        public string InsertGoogleCalendarSocialMarketing => "InsertGoogleCalendarSocialMarketing";
+        #endregion
     }
 }
