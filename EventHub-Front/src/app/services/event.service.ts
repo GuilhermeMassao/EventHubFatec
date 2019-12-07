@@ -29,7 +29,7 @@ export class EventService {
     EventAdressNumber: ['', Validators.required]
   });
 
-  EditeventForm = this.fb.group({
+  editEventForm = this.fb.group({
     EventName: ['', Validators.required],
     EventDescription: [''],
     EventDates: this.fb.group({
@@ -73,8 +73,54 @@ export class EventService {
     return this.http.post(this.BaseURI + '/api/event', body);
   }
 
+  editEvent(userId: number, eventId: number, adressId: number, twitterLogin: boolean, googleLogin: boolean) {
+    var body = {
+      UserOwnerId: userId,
+      EventName: this.editEventForm.value.EventName,
+      StartDate: this.editEventForm.value.EventDates.EventStartDate,
+      EndDate: this.editEventForm.value.EventDates.EventEndDate,
+      EventDescription: this.getFormNullableValue(this.editEventForm.value.EventDescription),
+      EventShortDescription: this.createShortDescription(this.editEventForm.value.EventDescription),
+      TicketsLimit: +this.editEventForm.value.EventTicket,
+      Adress: {
+        Id: adressId,
+        PublicPlaceId: this.editEventForm.value.EventAdressPublicPlace,
+        PlaceName: this.editEventForm.value.EventAdressPlaceName,
+        City: this.editEventForm.value.EventAdressCity,
+        UF: this.formatUF(this.editEventForm.value.EventAdressUF),
+        CEP: this.editEventForm.value.EventAdressCEP,
+        Neighborhood: this.editEventForm.value.EventAdressNeighborhood,
+        AdressComplement: this.getFormNullableValue(this.editEventForm.value.EventAdressComplement),
+        AdressNumber: this.editEventForm.value.EventAdressNumber
+      },
+      TwitterLogin: twitterLogin,
+      GoogleLogin: googleLogin
+    };
+    return this.http.put(this.BaseURI + '/api/event/' + eventId, body);
+  }
+
+  buildEventEditForm(eventInfo: any, adressInfo: any) {
+    this.editEventForm = this.fb.group({
+      EventName: [eventInfo.eventName, Validators.required],
+      EventDescription: [eventInfo.eventDescription],
+      EventDates: this.fb.group({
+        EventStartDate: [eventInfo.startDate, Validators.required],
+        EventEndDate: [eventInfo.endDate, Validators.required],
+      }, { validator: this.validateDates }),
+      EventTicket: [eventInfo.ticketsLimit, Validators.required],
+      EventAdressPublicPlace: [adressInfo.publicPlaceId, Validators.required],
+      EventAdressPlaceName: [adressInfo.placeName, Validators.required],
+      EventAdressCity: [adressInfo.city, Validators.required],
+      EventAdressUF: [adressInfo.uf, Validators.required],
+      EventAdressCEP: [adressInfo.cep, Validators.required],
+      EventAdressNeighborhood: [adressInfo.neighborhood, Validators.required],
+      EventAdressComplement: [adressInfo.adressComplement],
+      EventAdressNumber: [adressInfo.adressNumber, Validators.required]
+    });
+  }
+
   public getEventById(id: number) {
-    return this.http.get(this.BaseURI + '/public-places');
+    return this.http.get(this.BaseURI + '/api/event/' + id);
   }
 
   public getAllPublicPlaces() {

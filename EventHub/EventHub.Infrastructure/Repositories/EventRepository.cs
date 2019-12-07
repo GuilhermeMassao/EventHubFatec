@@ -61,7 +61,7 @@ namespace EventHub.Infrastructure.Repositories
             }
         }
 
-        public async Task<int?> UpdateEvent(int id, Event entity)
+        public async Task<bool> UpdateEvent(int id, Event entity)
         {
             var parameters = new DynamicParameters();
 
@@ -79,19 +79,19 @@ namespace EventHub.Infrastructure.Repositories
             {
                 using (_connection = new SqlConnection(_dataBaseConnection.ConnectionString()))
                 {
-                    var createdId = await _connection.QueryFirstOrDefaultAsync<int?>
+                    await _connection.ExecuteAsync
                     (
                         _storeProcedure.UpdateEvent,
                         param: parameters,
                         commandType: CommandType.StoredProcedure
                     );
 
-                    return createdId;
+                    return true;
                 }
             }
             catch (Exception e)
             {
-                return null;
+                return false;
             }
         }
 
@@ -105,14 +105,14 @@ namespace EventHub.Infrastructure.Repositories
             {
                 using (_connection = new SqlConnection(_dataBaseConnection.ConnectionString()))
                 {
-                    var createdId = await _connection.QueryFirstOrDefaultAsync<CompleteEventDto>
+                    var eventDto = await _connection.QueryFirstOrDefaultAsync<CompleteEventDto>
                     (
                         _storeProcedure.SelectEventsById,
                         param: parameters,
                         commandType: CommandType.StoredProcedure
                     );
 
-                    return createdId;
+                    return eventDto;
                 }
             }
             catch (Exception e)

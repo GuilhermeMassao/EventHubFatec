@@ -1,26 +1,28 @@
 <h1 class="text-center" style="margin-bottom: 20px;">Crie um novo evento!</h1>
-<form [formGroup]="eventService.eventForm" (submit)="onSubmit()">
+<form [formGroup]="eventService.editEventForm" (submit)="onSubmit()">
     <!--        EVENTO         -->
     <div style="margin-bottom: 50px;">
         <h3 class="register-form-section mb-3" style="border-bottom: 1px solid white;">INFORMAÇÕES DO EVENTO</h3>
         <div class="form-group required">
-        <input class="form-control" formControlName="EventName" placeholder="Nome do evento">
-        <label class="text-danger" *ngIf="eventService.eventForm.get('EventName').touched && eventService.eventForm.get('EventName').errors?.required">
-            <i class="fa fa-meh-o" aria-hidden="true"></i>Esse campo é obrigatório.
-        </label>
+          <label>Nome do evento</label>
+          <input class="form-control" formControlName="EventName" [value]="eventInfo.eventName" placeholder="Nome do evento">
+          <label class="text-danger" *ngIf="eventService.editEventForm.get('EventName').touched && eventService.editEventForm.get('EventName').errors?.required">
+              <i class="fa fa-meh-o" aria-hidden="true"></i>Esse campo é obrigatório.
+          </label>
         </div>
         <div class="form-group">
-        <textarea class="form-control" formControlName="EventDescription" placeholder="Descrição detalhada do evento" rows="3" maxlength="1000"></textarea>
+          <label>Descrição do evento</label>
+          <textarea class="form-control" [value]="eventInfo.eventDescription" formControlName="EventDescription" placeholder="Descrição detalhada do evento" rows="3" maxlength="1000"></textarea>
         </div>
         <div formGroupName="EventDates" class="row">
             <div class="col">
                 <div class="form-group required">
                     <label>Data de início</label>
-                    <input class="form-control" type="datetime-local" min="2019-01-01T00:00" max="2030-01-01T00:00" formControlName="EventStartDate">
-                    <label class="text-danger" *ngIf="eventService.eventForm.get('EventDates.EventStartDate').touched && eventService.eventForm.get('EventDates.EventStartDate').errors?.required">
+                    <input class="form-control" type="datetime-local" [value]="eventInfo.startDate" min="2019-01-01T00:00" max="2030-01-01T00:00" formControlName="EventStartDate">
+                    <label class="text-danger" *ngIf="eventService.editEventForm.get('EventDates.EventStartDate').touched && eventService.editEventForm.get('EventDates.EventStartDate').errors?.required">
                         <i class="fa fa-meh-o" aria-hidden="true"></i>Esse campo é obrigatório.
                     </label>
-                    <label class="text-danger" *ngIf="eventService.eventForm.get('EventDates.EventStartDate').touched && eventService.eventForm.get('EventDates.EventStartDate').errors?.invalidDate">
+                    <label class="text-danger" *ngIf="eventService.editEventForm.get('EventDates.EventStartDate').touched && eventService.editEventForm.get('EventDates.EventStartDate').errors?.invalidDate">
                         <i class="fa fa-meh-o" aria-hidden="true"></i>Data de início não pode ser maior que a data final.
                     </label>
                 </div>
@@ -28,16 +30,17 @@
             <div class="col">
                 <div class="form-group required">
                     <label>Data de termino</label>
-                    <input class="form-control" type="datetime-local" min="2019-01-01T00:00" max="2030-01-01T00:00" formControlName="EventEndDate">
-                    <label class="text-danger" *ngIf="eventService.eventForm.get('EventDates.EventEndDate').touched && eventService.eventForm.get('EventDates.EventEndDate').errors?.required">
+                    <input class="form-control" type="datetime-local" [value]="eventInfo.endDate" min="2019-01-01T00:00" max="2030-01-01T00:00" formControlName="EventEndDate">
+                    <label class="text-danger" *ngIf="eventService.editEventForm.get('EventDates.EventEndDate').touched && eventService.editEventForm.get('EventDates.EventEndDate').errors?.required">
                         <i class="fa fa-meh-o" aria-hidden="true"></i>Esse campo é obrigatório.
                     </label>
                 </div>
             </div>
         </div>
         <div class="form-group required">
-            <input class="form-control" type="text" mask="00000"  formControlName="EventTicket" [validation]="false" placeholder="Quantidade de pessoas">
-            <label class="text-danger" *ngIf="eventService.eventForm.get('EventTicket').touched && eventService.eventForm.get('EventTicket').errors?.required">
+            <label>Limite de pessoas</label>
+            <input class="form-control" type="text" mask="00000" [value]="eventInfo.ticketsLimit" formControlName="EventTicket" [validation]="false" placeholder="Quantidade de pessoas">
+            <label class="text-danger" *ngIf="eventService.editEventForm.get('EventTicket').touched && eventService.editEventForm.get('EventTicket').errors?.required">
                 <i class="fa fa-meh-o" aria-hidden="true"></i>Esse campo é obrigatório.
             </label>
         </div>
@@ -48,62 +51,70 @@
         <h3 class="register-form-section mb-3" style="border-bottom: 1px solid white;">ENDEREÇO DO EVENTO</h3>
         <div class="row">
             <div class="form-group col-md-2">
+                <label>Logradouro</label>
                 <select formControlName="EventAdressPublicPlace" class="form-control">
-                    <option *ngFor="let publicPlace of publicPlaces" value="{{ publicPlace.id }}" selected>
-                        {{ publicPlace.placeName }}
+                    <option *ngFor="let publicPlace of publicPlaces" value="{{ publicPlace.id }}" [selected]="publicPlace.id == adressInfo.publicPlaceId">
+                      {{ publicPlace.placeName }}
                     </option>
                 </select>
-                <label class="text-danger" *ngIf="eventService.eventForm.get('EventAdressPublicPlace').touched && eventService.eventForm.get('EventAdressPublicPlace').errors?.required">
-                        <i class="fa fa-meh-o" aria-hidden="true"></i>Esse campo é obrigatório.
-                    </label>
+                <label class="text-danger" *ngIf="eventService.editEventForm.get('EventAdressPublicPlace').touched && eventService.editEventForm.get('EventAdressPublicPlace').errors?.required">
+                    <i class="fa fa-meh-o" aria-hidden="true"></i>Esse campo é obrigatório.
+                </label>
             </div>
             <div class="form-group required col-md-10">
-                    <input class="form-control" type="text" formControlName="EventAdressPlaceName" maxlength="50" placeholder="Endereço">
-                    <label class="text-danger" *ngIf="eventService.eventForm.get('EventAdressPlaceName').touched && eventService.eventForm.get('EventAdressPlaceName').errors?.required">
-                        <i class="fa fa-meh-o" aria-hidden="true"></i>Esse campo é obrigatório.
-                    </label>
-                </div>
+                <label>Endereço</label>
+                  <input class="form-control" type="text" [value]="adressInfo.placeName" formControlName="EventAdressPlaceName" maxlength="50" placeholder="Endereço">
+                  <label class="text-danger" *ngIf="eventService.editEventForm.get('EventAdressPlaceName').touched && eventService.editEventForm.get('EventAdressPlaceName').errors?.required">
+                      <i class="fa fa-meh-o" aria-hidden="true"></i>Esse campo é obrigatório.
+                  </label>
+              </div>
         </div>
         <div class="form-group required">
-            <input class="form-control" type="text" formControlName="EventAdressCity" maxlength="50" placeholder="Cidade">
-            <label class="text-danger" *ngIf="eventService.eventForm.get('EventAdressCity').touched && eventService.eventForm.get('EventAdressCity').errors?.required">
+            <label>Cidade</label>
+            <input class="form-control" type="text" formControlName="EventAdressCity" [value]="adressInfo.city" maxlength="50" placeholder="Cidade">
+            <label class="text-danger" *ngIf="eventService.editEventForm.get('EventAdressCity').touched && eventService.editEventForm.get('EventAdressCity').errors?.required">
                 <i class="fa fa-meh-o" aria-hidden="true"></i>Esse campo é obrigatório.
             </label>
         </div>
         <div class="row">
             <div class="col">
                 <div class="form-group required">
-                    <input class="form-control" type="text" formControlName="EventAdressUF" maxlength="2" mask="SS" placeholder="Estado">
-                    <label class="text-danger" *ngIf="eventService.eventForm.get('EventAdressUF').touched && eventService.eventForm.get('EventAdressUF').errors?.required">
+                    <label>UF</label>
+                    <input class="form-control" type="text" formControlName="EventAdressUF" [value]="adressInfo.uf" maxlength="2" mask="SS" placeholder="Estado">
+                    <label class="text-danger" *ngIf="eventService.editEventForm.get('EventAdressUF').touched && eventService.editEventForm.get('EventAdressUF').errors?.required">
                         <i class="fa fa-meh-o" aria-hidden="true"></i>Esse campo é obrigatório.
                     </label>
                 </div>
             </div>
             <div class="col">
-                <div class="form-group required">
-                    <input class="form-control" type="text" formControlName="EventAdressCEP" mask="0000000000" [validation]="false" placeholder="CEP">
-                    <label class="text-danger" *ngIf="eventService.eventForm.get('EventAdressCEP').touched && eventService.eventForm.get('EventAdressCEP').errors?.required">
-                        <i class="fa fa-meh-o" aria-hidden="true"></i>Esse campo é obrigatório.
-                    </label>
-                </div>
+              <div class="form-group required">
+                  <label>CEP</label>
+                <input class="form-control" type="text" formControlName="EventAdressCEP" mask="0000000000" [value]="adressInfo.cep" [validation]="false" placeholder="CEP">
+                <label class="text-danger" *ngIf="eventService.editEventForm.get('EventAdressCEP').touched && eventService.editEventForm.get('EventAdressCEP').errors?.required">
+                    <i class="fa fa-meh-o" aria-hidden="true"></i>Esse campo é obrigatório.
+                </label>
+              </div>
             </div>
         </div>
         <div class="form-group required">
-            <input class="form-control" type="text" formControlName="EventAdressNeighborhood" maxlength="50" placeholder="Bairro">
-            <label class="text-danger" *ngIf="eventService.eventForm.get('EventAdressNeighborhood').touched && eventService.eventForm.get('EventAdressNeighborhood').errors?.required">
+            <label>Bairro</label>
+            <input class="form-control" type="text" formControlName="EventAdressNeighborhood" [value]="adressInfo.neighborhood" maxlength="50" placeholder="Bairro">
+            <label class="text-danger" *ngIf="eventService.editEventForm.get('EventAdressNeighborhood').touched && eventService.editEventForm.get('EventAdressNeighborhood').errors?.required">
                 <i class="fa fa-meh-o" aria-hidden="true"></i>Esse campo é obrigatório.
             </label>
         </div>
         <div class="row">
             <div class="col">
                 <div class="form-group required">
-                    <input class="form-control" type="text" formControlName="EventAdressComplement" maxlength="50" placeholder="Complemento">
+                    <label>Complemento</label>
+                    <input class="form-control" type="text" formControlName="EventAdressComplement" [value]="adressInfo.adressComplement" maxlength="50" placeholder="Complemento">
                 </div>
             </div>
             <div class="col">
                 <div class="form-group required">
-                    <input class="form-control" type="text" mask="00000" formControlName="EventAdressNumber" [validation]="false" placeholder="Número">
-                    <label class="text-danger" *ngIf="eventService.eventForm.get('EventAdressNumber').touched && eventService.eventForm.get('EventAdressNumber').errors?.required">
+                    <label>Número</label>
+                    <input class="form-control" type="text" mask="00000" formControlName="EventAdressNumber" [value]="adressInfo.adressNumber" [validation]="false" placeholder="Número">
+                    <label class="text-danger" *ngIf="eventService.editEventForm.get('EventAdressNumber').touched && eventService.editEventForm.get('EventAdressNumber').errors?.required">
                         <i class="fa fa-meh-o" aria-hidden="true"></i>Esse campo é obrigatório.
                     </label>
                 </div>
@@ -114,12 +125,12 @@
     <!--     SUBMIT       -->
     <div class="form-row">
       <div class="form-group col-md-8 offset-md-2">
-        <button type="submit" class="btn btn-primary btn-block" [disabled]="!eventService.eventForm.valid">Criar</button>
+        <button type="submit" class="btn btn-primary btn-block"  >Editar</button>
       </div>
     </div>
   </form>
 
-
+<!--[disabled]="!eventService.editEventForm.valid"-->
 
 
 

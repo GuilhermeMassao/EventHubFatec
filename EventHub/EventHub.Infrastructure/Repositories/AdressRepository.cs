@@ -56,7 +56,7 @@ namespace EventHub.Infrastructure.Repositories
             }
         }
 
-        public async Task<int?> EditAdress(int id, Adress entity)
+        public async Task<bool> EditAdress(int id, Adress entity)
         {
             var parameters = new DynamicParameters();
 
@@ -74,19 +74,19 @@ namespace EventHub.Infrastructure.Repositories
             {
                 using (_connection = new SqlConnection(_dataBaseConnection.ConnectionString()))
                 {
-                    var createdId = await _connection.QueryFirstOrDefaultAsync<int?>
+                    await _connection.ExecuteAsync
                     (
                         _storeProcedure.UpdateAdress,
                         param: parameters,
                         commandType: CommandType.StoredProcedure
                     );
 
-                    return createdId;
+                    return true;
                 }
             }
             catch (Exception e)
             {
-                return null;
+                return false;
             }
         }
 

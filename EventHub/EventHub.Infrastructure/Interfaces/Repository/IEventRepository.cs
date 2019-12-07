@@ -7,7 +7,7 @@ namespace EventHub.Infrastructure.Interfaces.Repository
     public interface IEventRepository
     {
         Task<int?> CreateEvent(Event entity);
-        Task<int?> UpdateEvent(int id, Event entity);
+        Task<bool> UpdateEvent(int id, Event entity);
         Task<CompleteEventDto> GetById(int id);
     }
 }

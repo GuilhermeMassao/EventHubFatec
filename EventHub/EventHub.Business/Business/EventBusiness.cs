@@ -72,7 +72,7 @@ namespace EventHub.Business.Business
         {
             var adressEditId = await _adressRepository.EditAdress(adress.Id, adress);
 
-            if(adressEditId != null)
+            if(adressEditId)
             {
                 var eventEditId = await _eventRepository.UpdateEvent(id, eventInput);
 
