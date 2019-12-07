@@ -2,31 +2,30 @@
   <div class="card-header">
     <ul class="nav nav-pills card-header-pills">
       <li class="nav-item">
-        <a class="nav-link" href="#" title="Editar"><i class="fas fa-pen-alt"></i></a>
+        <button class="nav-link" href="#" title="Editar" (click)="toEditEvent()"><i class="fas fa-pen-alt"></i></button>
       </li>
       <li class="nav-item">
-          <a class="nav-link" href="#" title="Excluir"><i class="fas fa-trash"></i></a>
+          <button class="nav-link" href="#" title="Excluir" (click)="toEditEvent()"><i class="fas fa-trash"></i></button>
         </li>
         <li class="nav-item">
-          <h3 class="card-title"> <i class="fab fa-rocketchat"></i> Nome do Evento</h3>
+          <h3 class="card-title"> <i class="fab fa-rocketchat"></i> {{eventInfo.eventName}}</h3>
         </li>
     </ul>
   </div>
   <div class="card-body">
     <h4><i class="fas fa-calendar-alt"></i> Informações Evento</h4>
-    <p class="card-text"> Data Inicial: 10/06/2019 e Data Final 10/06/2019</p>
-    <p class="card-text"> Descrição Curta:</p>
-    <p class="card-text"> Descrição Longa:</p>
-    <p class="card-text"> Quantidade de pessoas:</p>
+    <p class="card-text"> Data Inicial: {{eventInfo.startDate}} e Data Final {{eventInfo.endDate}}</p>
+    <p class="card-text"> Descrição: {{eventInfo.eventDescription}}</p>
+    <p class="card-text"> Quantidade de pessoas: {{eventInfo.ticketsLimit}}</p>
     <br>
     <h4><i class="fas fa-map-marked-alt"></i> Informações Endereço</h4>
-    <p class="card-text"> Rua:</p>
-    <p class="card-text"> Número:</p>
-    <p class="card-text"> Bairro:</p>
-    <p class="card-text"> Complemento:</p>
-    <p class="card-text"> Cidade:</p>
-    <p class="card-text"> Estado:</p>
-    <p class="card-text"> CEP:</p>
+    <p class="card-text"> Rua: {{adressInfo.placeName}}</p>
+    <p class="card-text"> Número: {{adressInfo.adressNumber}}</p>
+    <p class="card-text"> Bairro: {{adressInfo.neighborhood}}</p>
+    <p class="card-text"> Complemento: {{adressInfo.adressComplement}}</p>
+    <p class="card-text"> Cidade: {{adressInfo.city}}</p>
+    <p class="card-text"> Estado: {{adressInfo.uf}}</p>
+    <p class="card-text"> CEP: {{adressInfo.cep}}</p>
 
     <br>
   </div>
