@@ -1,0 +1,118 @@
+
+<form class="was-validated">
+
+  <h1> Eventos <i class="fab fa-rocketchat"></i>EventHub</h1><br><br>
+  <h2>Informações evento</h2><br>
+    <div class="form-row">
+      <div class="col-md-3 mb-3">
+        <label for="data-inicial">Data Inicial</label>
+        <input type="date" class="form-control" id="data-inicial" placeholder="Data Inicial" required>
+        <div class="invalid-feedback">
+          Por favor preencher a data inicial.
+        </div>
+      </div>
+      <div class="col-md-3 mb-3">
+        <label for="data-final">Data Final</label>
+        <input type="date" class="form-control" id="data-final" placeholder="Data Final" required>
+        <div class="invalid-feedback">
+          Por favor preencher a data Final.
+        </div>
+      </div>
+    </div>
+    <br>
+  <h2>Informações Endereço</h2><br><hr>
+    <div class="form-row">
+              <div class="form-group col-md-9">
+                <label for="Email">Email</label>
+                <input type="email" class="form-control" id="Email" required placeholder="Email">
+              </div>
+              <div class="form-group col-md-3">
+                <label for="numero">Número</label>
+                <input type="number" class="form-control" id="numero" required placeholder="Número">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="endereco">Endereço</label>
+              <input type="text" class="form-control" id="endereco" required placeholder="Peencher Endereço">
+            </div>
+            <div class="form-group">
+              <label for="bairro">Bairro</label>
+              <input type="text" class="form-control" id="bairro" required placeholder="Peencher Bairro">
+            </div>
+            <div class="form-group">
+              <label for="complemento">Complemento</label>
+              <input type="text" class="form-control" id="complemento" placeholder="Preencher Complemento">
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="inputCity">Cidade</label>
+                <input type="text" class="form-control" id="inputCity" required>
+              </div>
+              <div class="form-group col-md-4">
+                <label for="inputState">UF</label>
+                <select id="inputState" class="form-control" required>
+                  <option value="AC">Acre</option>
+                  <option value="AL">Alagoas</option>
+                  <option value="AP">Amapá</option>
+                  <option value="AM">Amazonas</option>
+                  <option value="BA">Bahia</option>
+                  <option value="CE">Ceará</option>
+                  <option value="DF">Distrito Federal</option>
+                  <option value="ES">Espírito Santo</option>
+                  <option value="GO">Goiás</option>
+                  <option value="MA">Maranhão</option>
+                  <option value="MT">Mato Grosso</option>
+                  <option value="MS">Mato Grosso do Sul</option>
+                  <option value="MG">Minas Gerais</option>
+                  <option value="PA">Pará</option>
+                  <option value="PB">Paraíba</option>
+                  <option value="PR">Paraná</option>
+                  <option value="PE">Pernambuco</option>
+                  <option value="PI">Piauí</option>
+                  <option value="RJ">Rio de Janeiro</option>
+                  <option value="RN">Rio Grande do Norte</option>
+                  <option value="RS">Rio Grande do Sul</option>
+                  <option value="RO">Rondônia</option>
+                  <option value="RR">Roraima</option>
+                  <option value="SC">Santa Catarina</option>
+                  <option value="SP">São Paulo</option>
+                  <option value="SE">Sergipe</option>
+                  <option value="TO">Tocantins</option>
+                  <option value="EX">Estrangeiro</option>
+                </select>
+              </div>
+              <div class="form-group col-md-2">
+                <label for="inputZip">CEP</label>
+                <input type="text" class="form-control" id="inputZip" required pattern= "\d{5}-?\d{3}" maxlength="9">
+              </div>
+                <div class="form-group col-md-9">
+                  <label for="nome">Nome Evento</label>
+                  <input type="text" class="form-control" id="nome" required placeholder="Peencher Nome">
+                </div>
+                <div class="form-group col-md-3">
+                  <label for="nome">Quantidade de ingreços</label>
+                  <input type="number" class="form-control" id="nome" required placeholder="Peencher Nome">
+                </div>
+    </div>
+    <h2>Detalhes Eventos</h2><hr><br>
+    <div class="mb-3">
+      <label for="descricao-curta">Descrição Curta</label>
+      <textarea class="form-control" id="descricao-curta" placeholder=" Por favor preencha a descrição curta" required></textarea>
+      <div class="invalid-feedback">
+        Por favor preencha a descrição Curta.
+      </div>
+    </div>
+
+    <div class="mb-3">
+        <label for="descricao-longa">Descrição Longa</label>
+        <textarea class="form-control" id="descricao-longa" placeholder=" Por favor preencha a descrição longa" required></textarea>
+        <div class="invalid-feedback">
+          Por favor preencha a descrição Longa.
+        </div>
+    </div>
+
+    <div class="form-row">
+        <button type="reset" class="btn btn-info">Limpar</button>
+        <button type="submit" class="btn btn-danger">Excluir</button>
+    </div>
+  </form>

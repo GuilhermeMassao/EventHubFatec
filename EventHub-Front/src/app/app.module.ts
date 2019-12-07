@@ -13,6 +13,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { EventInfoComponent } from './components/event-info/event-info.component';
 import { AlertModule } from 'ngx-bootstrap/alert';
 import { NgxMaskModule, IConfig } from 'ngx-mask';
+import { EventEditComponent } from './components/event-edit/event-edit.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { NgxMaskModule, IConfig } from 'ngx-mask';
     routingComponents,
     MenuComponent,
     FooterComponent,
-    EventInfoComponent
+    EventInfoComponent,
+    EventEditComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,33 @@
+form{
+    align-items: center;
+    margin: 7%;
+}
+
+button{
+    margin: 10px;
+}
+
+input{
+    background-color: transparent;
+    color: white;
+}
+
+select{
+    background-color: transparent;
+    color: white;
+}
+
+textarea{
+    background-color: transparent;
+    color: white;
+}
+
+input:enabled{
+    background-color: transparent;
+    color: white;
+}
+
+textarea:enabled{
+    background-color: transparent;
+    color: white;
+}

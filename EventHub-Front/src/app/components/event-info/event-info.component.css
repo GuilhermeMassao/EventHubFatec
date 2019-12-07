@@ -1,33 +1,30 @@
-form{
-    align-items: center;
+.card{
+    color: #2a2a2c;
     margin: 7%;
 }
 
-button{
-    margin: 10px;
+.card h1,h2,h3,h4{
+    color: #5f27cd;
+    margin: 5px;
+}
+.card h1,h2,h3,h4{
+    color: #5f27cd;
+    margin: 5px;
 }
 
-input{
-    background-color: transparent;
+.nav-link{
+    background-color: #5f27cd;
     color: white;
+    border: 1px solid #5f27cd;
+    margin: 5px;
+}
+.nav-link:hover{
+    background-color: transparent;
+    color: #5f27cd;
+    border: 1px solid #5f27cd;
+    margin: 5px;
 }
 
-select{
-    background-color: transparent;
-    color: white;
-}
-
-textarea{
-    background-color: transparent;
-    color: white;
-}
-
-input:enabled{
-    background-color: transparent;
-    color: white;
-}
-
-textarea:enabled{
-    background-color: transparent;
-    color: white;
+.card-title{
+text-align: center;
 }
