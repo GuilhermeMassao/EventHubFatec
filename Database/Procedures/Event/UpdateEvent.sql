@@ -11,7 +11,7 @@ CREATE PROCEDURE [dbo].[UpdateEvent]
     @StartDate DATETIME,
     @EndDate DATETIME,
     @EventName VARCHAR(80),
-    @EventShortDescription VARCHAR(50),
+    @EventShortDescription VARCHAR(150),
     @EventDescription VARCHAR(1000),
     @TicketsLimit INT
 AS

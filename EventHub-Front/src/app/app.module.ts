@@ -31,7 +31,7 @@ import { EventEditComponent } from './components/event-edit/event-edit.component
     FormsModule,
     HttpClientModule,
     ToastrModule.forRoot({
-      timeOut: 2000,
+      timeOut: 3000,
       positionClass: 'toast-top-right',
       preventDuplicates: false,
       progressBar: true

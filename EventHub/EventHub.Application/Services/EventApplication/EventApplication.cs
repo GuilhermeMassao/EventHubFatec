@@ -29,6 +29,11 @@ namespace EventHub.Application.Services.EventApplication
                 input.GoogleLogin);
         }
 
+        public async Task<bool> EditEvent(int id, EventEditInput input)
+        {
+            return await eventBusiness.EditEvent(id, _inputToEntity.Map<EventEditInput, Event>(input), input.Adress);
+        }
+
         public async Task<IEnumerable<PublicPlace>> GetPublicPlaces()
         {
             return await eventBusiness.GetPublicPlaces();

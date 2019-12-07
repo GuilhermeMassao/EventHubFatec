@@ -21,10 +21,12 @@ namespace EventHub.Infrastructure.Repositories.StoreProcedures
 
         #region Event
         public string InsertEvent => "InsertEvent";
+        public string UpdateEvent => "UpdateEvent";
         #endregion
 
         #region Adress
         public string InsertAdress => "InsertAdress";
+        public string UpdateAdress => "UpdateAdress";
         public string InactivateAdress => "InactivateAdress";
         public string DeleteAdress => "DeleteAdress";
         #endregion

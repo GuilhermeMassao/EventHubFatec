@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using EventHub.Domain.DTOs.Event;
 using EventHub.Domain.DTOs.User;
 using EventHub.Domain.Entities;
+using EventHub.Domain.Input;
 using EventHub.Infrastructure.Interfaces.Repository;
 using SocialConnection.Connections;
 using SocialConnection.Data.Request;
@@ -25,6 +26,7 @@ namespace EventHub.Business.Business
         private readonly IPublicPlaceRepository _publicPlaceRepository;
         private readonly IUserRepository _userRepository;
         private readonly ITwitterSocialMarketingRepository _twitterSocialMarketingRepository;
+
         private readonly IGoogleCalendarSocialMarketingRepository _googleCalendarSocialMarketingRepository;
 
         public EventBusiness(IUserRepository userRepository,
@@ -66,6 +68,27 @@ namespace EventHub.Business.Business
             return null;
         }
 
+        public async Task<bool> EditEvent(int id, Event eventInput, Adress adress)
+        {
+            var adressEditId = await _adressRepository.EditAdress(adress.Id, adress);
+
+            if(adressEditId != null)
+            {
+                var eventEditId = await _eventRepository.UpdateEvent(id, eventInput);
+
+                if (eventEditId != null)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public async Task<IEnumerable<PublicPlace>> GetPublicPlaces()
+        {
+            return await _publicPlaceRepository.GetAll();
+        }
+
         private async void ShareEvent(int eventResultId, Event newEvent, Adress adress, bool googleLogin, bool twitterLogin)
         {
             PostResponseData googleAgendaResult = null;
@@ -91,10 +114,6 @@ namespace EventHub.Business.Business
             }
         }
 
-        public async Task<IEnumerable<PublicPlace>> GetPublicPlaces()
-        {
-            return await _publicPlaceRepository.GetAll();
-        }
         private async void PostTweet(User userTokens, int? eventResultId, Event newEvent, Adress adress, PostResponseData googleEvent)
         {
             var publicPlace = await _publicPlaceRepository.SelectById(adress.PublicPlaceId);

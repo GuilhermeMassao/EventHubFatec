@@ -1,4 +1,5 @@
 ﻿using EventHub.Application.Services.EventApplication;
+using EventHub.Domain.DTOs.Event;
 using EventHub.Domain.Input;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -32,6 +33,24 @@ namespace EventHub.WebApi.Controllers
             if (result != null)
             {
                 return Created("Evento criado com sucesso!", result);
+            }
+
+            return BadRequest();
+        }
+
+        [HttpPut]
+        [Route("/api/event/{id}")]
+        [ProducesResponseType(typeof(bool), 200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(500)]
+        [ProducesResponseType(503)]
+        public virtual async Task<IActionResult> EditEvent([FromRoute] int id, [FromBody] EventEditInput input)
+        {
+            var result = await eventApplication.EditEvent(id, input);
+
+            if (result)
+            {
+                return Ok(result);
             }
 
             return BadRequest();

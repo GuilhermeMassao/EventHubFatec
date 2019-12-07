@@ -7,6 +7,7 @@ GO
 CREATE PROCEDURE [dbo].[UpdateAdress]
     @Id INT,
     @PublicPlaceId INT,
+	@PlaceName VARCHAR(100),
     @City VARCHAR(50),
     @UF VARCHAR(2),
     @CEP VARCHAR(10),
@@ -22,6 +23,7 @@ BEGIN
         [dbo].[Adress]
     SET
         PublicPlaceId = @PublicPlaceId,
+		PlaceName = @PlaceName,
         City = @City,
         UF = @UF,
         CEP = @CEP,

@@ -56,6 +56,40 @@ namespace EventHub.Infrastructure.Repositories
             }
         }
 
+        public async Task<int?> EditAdress(int id, Adress entity)
+        {
+            var parameters = new DynamicParameters();
+
+            parameters.Add("@Id", id, DbType.Int32);
+            parameters.Add("@PublicPlaceId", entity.PublicPlaceId, DbType.Int32);
+            parameters.Add("@PlaceName", entity.PlaceName, DbType.String);
+            parameters.Add("@City", entity.City, DbType.String);
+            parameters.Add("@UF", entity.UF, DbType.String);
+            parameters.Add("@CEP", entity.CEP, DbType.String);
+            parameters.Add("@Neighborhood", entity.Neighborhood, DbType.String);
+            parameters.Add("@AdressComplement", entity.AdressComplement, DbType.String);
+            parameters.Add("@AdressNumber", entity.AdressNumber, DbType.String);
+
+            try
+            {
+                using (_connection = new SqlConnection(_dataBaseConnection.ConnectionString()))
+                {
+                    var createdId = await _connection.QueryFirstOrDefaultAsync<int?>
+                    (
+                        _storeProcedure.UpdateAdress,
+                        param: parameters,
+                        commandType: CommandType.StoredProcedure
+                    );
+
+                    return createdId;
+                }
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
+
         public async Task<bool> Delete(int id)
         {
             try

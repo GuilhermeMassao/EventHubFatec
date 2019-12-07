@@ -14,6 +14,7 @@ namespace EventHub.Application.Mapping
 
             // event
             CreateMap<EventInput, Event>();
+            CreateMap<EventEditInput, Event>();
             CreateMap<EventAdress, Adress>();
         }
     }

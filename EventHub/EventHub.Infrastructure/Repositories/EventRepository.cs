@@ -32,7 +32,7 @@ namespace EventHub.Infrastructure.Repositories
         {
             var parameters = new DynamicParameters();
 
-            parameters.Add("@UserOwnerId", entity.UserOwnerId, DbType.String);
+            parameters.Add("@UserOwnerId", entity.UserOwnerId, DbType.Int32);
             parameters.Add("@AdressId", entity.AdressId, DbType.String);
             parameters.Add("@StartDate", entity.StartDate, DbType.DateTime);
             parameters.Add("@EndDate", entity.EndDate, DbType.DateTime);
@@ -48,6 +48,40 @@ namespace EventHub.Infrastructure.Repositories
                     var createdId = await _connection.QueryFirstOrDefaultAsync<int?>
                     (
                         _storeProcedure.InsertEvent,
+                        param: parameters,
+                        commandType: CommandType.StoredProcedure
+                    );
+
+                    return createdId;
+                }
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
+
+        public async Task<int?> UpdateEvent(int id, Event entity)
+        {
+            var parameters = new DynamicParameters();
+
+            parameters.Add("@Id", id, DbType.Int32);
+            parameters.Add("@UserOwnerId", entity.UserOwnerId, DbType.Int32);
+            parameters.Add("@AdressId", entity.AdressId, DbType.String);
+            parameters.Add("@StartDate", entity.StartDate, DbType.DateTime);
+            parameters.Add("@EndDate", entity.EndDate, DbType.DateTime);
+            parameters.Add("@EventName", entity.EventName, DbType.String);
+            parameters.Add("@EventShortDescription", entity.EventShortDescription, DbType.String);
+            parameters.Add("@EventDescription", entity.EventDescription, DbType.String);
+            parameters.Add("@TicketsLimit", entity.TicketsLimit, DbType.Int32);
+
+            try
+            {
+                using (_connection = new SqlConnection(_dataBaseConnection.ConnectionString()))
+                {
+                    var createdId = await _connection.QueryFirstOrDefaultAsync<int?>
+                    (
+                        _storeProcedure.UpdateEvent,
                         param: parameters,
                         commandType: CommandType.StoredProcedure
                     );

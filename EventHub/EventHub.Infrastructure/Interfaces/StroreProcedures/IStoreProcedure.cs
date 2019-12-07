@@ -16,8 +16,10 @@
         string UpdateUserPassword { get; }
 
         string InsertEvent { get; }
+        string UpdateEvent { get; }
 
         string InsertAdress { get; }
+        string UpdateAdress { get; }
         string InactivateAdress { get; }
         string DeleteAdress { get; }
 
