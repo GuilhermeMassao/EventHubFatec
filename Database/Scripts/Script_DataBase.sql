@@ -122,7 +122,8 @@ BEGIN
         CREATE TABLE [GoogleCalendarSocialMarketing] (
             Id INT IDENTITY(1, 1) NOT NULL,
             EventId INT NOT NULL,
-            HashCalendar VARCHAR(50) NOT NULL,
+            HashCalendar VARCHAR(100) NOT NULL,
+			HashEvent VARCHAR(100) NOT NULL,
             CalendarLink VARCHAR(100) NOT NULL
         )
 

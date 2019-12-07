@@ -43,6 +43,7 @@ namespace EventHub.Infrastructure.Repositories.StoreProcedures
 
         #region GoogleCalendarSocialMarketing
         public string InsertGoogleCalendarSocialMarketing => "InsertGoogleCalendarSocialMarketing";
+        public string SelectGoogleCalendarSocialMarketingByEventId => "SelectGoogleCalendarSocialMarketingByEventId";
         #endregion
     }
 }

@@ -31,7 +31,7 @@ namespace EventHub.Application.Services.EventApplication
 
         public async Task<bool> EditEvent(int id, EventEditInput input)
         {
-            return await eventBusiness.EditEvent(id, _inputToEntity.Map<EventEditInput, Event>(input), input.Adress);
+            return await eventBusiness.EditEvent(id, _inputToEntity.Map<EventEditInput, Event>(input), input.Adress, input.TwitterLogin, input.GoogleLogin);
         }
 
         public async Task<CompleteEventDto> GetById(int id)

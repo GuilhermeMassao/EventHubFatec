@@ -33,6 +33,7 @@ namespace EventHub.Infrastructure.Repositories
 
             parameters.Add("@EventId", entity.EventId, DbType.Int32);
             parameters.Add("@HashCalendar", entity.HashCalendar, DbType.String);
+            parameters.Add("@HashEvent", entity.HashEvent, DbType.String);
             parameters.Add("@CalendarLink", entity.CalendarLink, DbType.String);
 
             try

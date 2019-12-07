@@ -30,5 +30,6 @@
         string InsertTwitterSocialMarketing { get; }
 
         string InsertGoogleCalendarSocialMarketing { get; }
+        string SelectGoogleCalendarSocialMarketingByEventId { get; }
     }
 }

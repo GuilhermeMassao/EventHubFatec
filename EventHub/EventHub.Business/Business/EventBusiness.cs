@@ -68,21 +68,23 @@ namespace EventHub.Business.Business
             return null;
         }
 
-        public async Task<bool> EditEvent(int id, Event eventInput, Adress adress)
+        public async Task<bool> EditEvent(int id, Event eventInput, Adress adress, bool twitterLogin, bool googleLogin)
         {
-            var adressEditId = await _adressRepository.EditAdress(adress.Id, adress);
+            var adressEditResult = await _adressRepository.EditAdress(adress.Id, adress);
 
-            if(adressEditId)
+            if(adressEditResult)
             {
-                var eventEditId = await _eventRepository.UpdateEvent(id, eventInput);
+                var eventEditResult = await _eventRepository.UpdateEvent(id, eventInput);
 
-                if (eventEditId != null)
+                if (eventEditResult != null)
                 {
+                    EditShareEvent(id, eventInput, adress, twitterLogin, googleLogin);
                     return true;
                 }
             }
             return false;
         }
+
         public Task<CompleteEventDto> GetById(int id)
         {
             return _eventRepository.GetById(id);
@@ -91,6 +93,14 @@ namespace EventHub.Business.Business
         public async Task<IEnumerable<PublicPlace>> GetPublicPlaces()
         {
             return await _publicPlaceRepository.GetAll();
+        }
+
+        private void EditShareEvent(int id, Event eventInput, Adress adress, bool twitterLogin, bool googleLogin)
+        {
+            if(googleLogin)
+            {
+                GoogleConnection google = new GoogleConnection();
+            }
         }
 
         private async void ShareEvent(int eventResultId, Event newEvent, Adress adress, bool googleLogin, bool twitterLogin)
@@ -150,7 +160,7 @@ namespace EventHub.Business.Business
 
             var googleEvent = google.CreateEvent(CreateGoogleCalendarPostContentData(accessToken, agendaId, user, newEvent, adress, publicPlace));
 
-            await _googleCalendarSocialMarketingRepository.CreateGoogleCalendarSocialMarketing(new GoogleCalendarSocialMarketing(newEventId, agendaId, googleEvent.ShortUrlGoogle));
+            await _googleCalendarSocialMarketingRepository.CreateGoogleCalendarSocialMarketing(new GoogleCalendarSocialMarketing(newEventId, agendaId, googleEvent.GoogleId, googleEvent.ShortUrlGoogle));
 
             return googleEvent;
         }
