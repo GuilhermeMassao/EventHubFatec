@@ -214,6 +214,7 @@
     <Compile Include="Entities\TwitterSocialMarketing.cs" />
     <Compile Include="Entities\User.cs" />
     <Compile Include="Exceptions\EntityAlreadyExistsException.cs" />
+    <Compile Include="Input\DeleteEventInput.cs" />
     <Compile Include="Input\EventAdress.cs" />
     <Compile Include="Input\EventEditInput.cs" />
     <Compile Include="Input\EventInput.cs" />

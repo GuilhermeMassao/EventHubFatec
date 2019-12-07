@@ -23,6 +23,7 @@ namespace EventHub.Infrastructure.Repositories.StoreProcedures
         public string InsertEvent => "InsertEvent";
         public string UpdateEvent => "UpdateEvent";
         public string SelectEventsById => "SelectEventsById";
+        public string CancelEvent => "CancelEvent";
         #endregion
 
         #region Adress

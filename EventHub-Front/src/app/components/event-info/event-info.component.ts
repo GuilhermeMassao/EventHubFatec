@@ -13,25 +13,8 @@ export class EventInfoComponent implements OnInit {
 
   eventId: any;
 
-  eventInfo = {
-    eventName: '',
-    eventDescription: '',
-    startDate: '',
-    endDate: '',
-    ticketsLimit: ''
-  };
-
-  adressInfo = {
-    adressId: '',
-    publicPlaceId: '',
-    placeName: '',
-    city: '',
-    uf: '',
-    cep: '',
-    neighborhood: '',
-    adressComplement: '',
-    adressNumber: ''
-  };
+  eventInfo: any;
+  adressInfo: any;
 
   constructor(private eventService: EventService, private router: Router, private toastr: ToastrService,  private activatedRoute: ActivatedRoute) { }
 
@@ -41,18 +24,19 @@ export class EventInfoComponent implements OnInit {
         this.eventId = params.id;
         this.eventService.getEventById(params.id).subscribe(
           (res: any) => {
-            this.fillInfoEvent(res);          },
+            this.fillInfoEvent(res);          
+          },
           err => {
             if(err.status == 400) {
               console.log("Error 400");
               this.toastr.error('Tente novamente mais tarde.','Erro ao preencher informações do evento!').onHidden.subscribe(() => {
-                // this.router.navigateByUrl("/eventhub/home");
+                this.router.navigateByUrl("/eventhub/home");
               });
             }
             else {
               console.log("err");
               this.toastr.error('Tente novamente mais tarde.','Erro ao preencher informações do evento!').onHidden.subscribe(() => {
-                // this.router.navigateByUrl("/eventhub/home");
+                this.router.navigateByUrl("/eventhub/home");
               });
             }
           }
@@ -67,8 +51,8 @@ export class EventInfoComponent implements OnInit {
     this.eventInfo = {
       eventName: data.eventName,
       eventDescription: data.eventDescription,
-      startDate: data.startDate,
-      endDate: data.endDate,
+      startDate: new Date(data.startDate).toUTCString(),
+      endDate: new Date(data.endDate).toUTCString(),
       ticketsLimit: data.ticketsLimit
     };
 
@@ -90,7 +74,21 @@ export class EventInfoComponent implements OnInit {
   }
 
   toDeleteEvent() {
-
+    this.eventService.inactiveEvent(this.eventId, this.adressInfo.adressId).subscribe(
+      (res: any) => {
+        this.fillInfoEvent(res);     
+        this.router.navigateByUrl("/eventhub/home");    
+      },
+      err => {
+        if(err.status == 400) {
+          console.log("Error 400");
+          this.toastr.error('Tente novamente mais tarde.','Erro ao tentar excluir o evento!');
+        }
+        else {
+          console.log("err");
+          this.toastr.error('Tente novamente mais tarde.','Erro ao tentar excluir o evento!');
+        }
+    });
   }
 
   ngOnInit() {
