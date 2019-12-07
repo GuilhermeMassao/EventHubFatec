@@ -25,5 +25,7 @@
         string SelectPublicPlaceById { get; }
 
         string InsertTwitterSocialMarketing { get; }
+
+        string InsertGoogleCalendarSocialMarketing { get; }
     }
 }

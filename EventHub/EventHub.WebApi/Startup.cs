@@ -59,6 +59,7 @@ namespace EventHub.WebApi
             services.AddScoped<IAdressRepository, AdressRepository>();
             services.AddScoped<IPublicPlaceRepository, PublicPlaceRepository>();
             services.AddScoped<ITwitterSocialMarketingRepository, TwitterSocialMarketingRepository>();
+            services.AddScoped<IGoogleCalendarSocialMarketingRepository, GoogleCalendarSocialMarketingRepository>();
 
             /* Business */
             services.AddScoped<UserBusiness>();

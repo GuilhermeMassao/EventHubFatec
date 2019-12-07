@@ -8,6 +8,7 @@ import { UserInfoComponent } from './components/user-info/user-info.component';
 import { AppOverlayComponent } from './components/app-overlay/app-overlay.component';
 import {ChangePasswordComponent} from './components/change-password/change-password.component'
 import { CreateEventComponent } from './components/create-event/create-event.component';
+import { EventInfoComponent } from './components/event-info/event-info.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/eventhub/home', pathMatch:'full'},
@@ -19,7 +20,8 @@ const routes: Routes = [
       { path: 'home', component: HomeComponent, canActivate:[AuthGuard]},
       { path: 'user/profile', component: UserInfoComponent, canActivate:[AuthGuard] },
       { path: 'user/editPassword', component: ChangePasswordComponent, canActivate:[AuthGuard] },
-      { path: 'criar-evento', component: CreateEventComponent}
+      { path: 'criar-evento', component: CreateEventComponent},
+      { path: 'evento', component: EventInfoComponent}
     ]
   }
 ];
@@ -36,4 +38,5 @@ export const routingComponents = [RegisterComponent,
                                   UserInfoComponent,
                                   AppOverlayComponent,
                                   CreateEventComponent,
-                                  ChangePasswordComponent]
+                                  ChangePasswordComponent,
+                                  EventInfoComponent]
