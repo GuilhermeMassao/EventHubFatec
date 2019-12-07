@@ -14,23 +14,23 @@ export class EventInfoComponent implements OnInit {
   eventId: any;
 
   eventInfo = {
-    eventName: 'Nome do Evento',
-    eventDescription: 'Descrição longa aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd',
-    startDate: '12/12/12',
-    endDate: '13/12/12',
-    ticketsLimit: '10'
+    eventName: '',
+    eventDescription: '',
+    startDate: '',
+    endDate: '',
+    ticketsLimit: ''
   };
 
   adressInfo = {
     adressId: '',
     publicPlaceId: '',
-    placeName: 'rua lala',
-    city: 'Toronto',
-    uf: 'Ontario',
-    cep: '13215-472',
-    neighborhood: 'Victorias Park',
-    adressComplement: 'Rua sem saida',
-    adressNumber: '234'
+    placeName: '',
+    city: '',
+    uf: '',
+    cep: '',
+    neighborhood: '',
+    adressComplement: '',
+    adressNumber: ''
   };
 
   constructor(private eventService: EventService, private router: Router, private toastr: ToastrService,  private activatedRoute: ActivatedRoute) { }
