@@ -95,11 +95,41 @@ namespace EventHub.Business.Business
             return await _publicPlaceRepository.GetAll();
         }
 
-        private void EditShareEvent(int id, Event eventInput, Adress adress, bool twitterLogin, bool googleLogin)
+        private async void EditShareEvent(int eventId, Event eventInput, Adress adress, bool twitterLogin, bool googleLogin)
         {
-            if(googleLogin)
+            string googleEventUrl = "";
+            var user = await _userRepository.GetById(eventInput.UserOwnerId);
+            var userGoogleToken = await _userRepository.GetGoogleTokenByUserId(eventInput.UserOwnerId);
+            var userTwitterTokens = await _userRepository.GetTwitterTokenByUserId(eventInput.UserOwnerId);
+            var publicPlace = await _publicPlaceRepository.SelectById(adress.PublicPlaceId);
+
+            if (googleLogin)
             {
                 GoogleConnection google = new GoogleConnection();
+
+                var accessToken = google.RefreshAccessToken(GOOGLE_APP_ID, GOOGLE_APP_SECRET, userGoogleToken.GoogleRefreshToken).AccessToken;
+                var googleEventInfo = await _googleCalendarSocialMarketingRepository.GetByEventId(eventId);
+                googleEventUrl = googleEventInfo.CalendarLink;
+
+                google.EditEvent(googleEventInfo.HashCalendar, googleEventInfo.HashEvent, CreateGoogleCalendarPostContentData(accessToken, googleEventInfo.HashCalendar, user, eventInput, adress, publicPlace));
+            }
+
+            if(twitterLogin)
+            {
+                TwitterConnection twitter = new TwitterConnection();
+                var tweetResponse = twitter.PostTweet(new TwitterPostContentData(userTwitterTokens.TwitterAccessToken,
+                    TWITTER_APP_KEY,
+                    TWITTER_APP_KEY_SECRET,
+                    userTwitterTokens.TwitterAccessTokenSecret,
+                    CreateEditTweetMessage(eventInput, adress, publicPlace, googleEventUrl),
+                    null));
+
+                if (tweetResponse != null)
+                {
+                    await _twitterSocialMarketingRepository.CreateTwitterSocialMarketing(new TwitterSocialMarketing(eventId,
+                                                                                                                    tweetResponse.Id.ToString(),
+                                                                                                                    tweetResponse.ShortUrlTweet));
+                }
             }
         }
 
@@ -182,6 +212,16 @@ namespace EventHub.Business.Business
         {
             var googleEventUrl = (googleEvent != null) ? googleEvent.ShortUrlGoogle : "";
             return $"Novo evento: {newEvent.EventName}\n"+
+                $"{newEvent.EventDescription}\n" +
+                $"Local: {publicPlace.PlaceName} {adress.PlaceName} - {adress.AdressNumber}, Bairro: {adress.Neighborhood}, CEP: {adress.CEP}, Cidade {adress.City} {adress.UF}\n" +
+                $"Limite de vagas: {newEvent.TicketsLimit}\n" +
+                $"{googleEventUrl}\n\n" +
+                "Tweet gerado automaticamente por EventHub.";
+        }
+
+        private string CreateEditTweetMessage(Event newEvent, Adress adress, PublicPlace publicPlace, string googleEventUrl)
+        {
+            return $"Atualização das informações do evento: {newEvent.EventName}\n" +
                 $"{newEvent.EventDescription}\n" +
                 $"Local: {publicPlace.PlaceName} {adress.PlaceName} - {adress.AdressNumber}, Bairro: {adress.Neighborhood}, CEP: {adress.CEP}, Cidade {adress.City} {adress.UF}\n" +
                 $"Limite de vagas: {newEvent.TicketsLimit}\n" +

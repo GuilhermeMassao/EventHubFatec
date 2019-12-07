@@ -20,5 +20,5 @@ BEGIN
     FROM
         [dbo].[GoogleCalendarSocialMarketing]
     WHERE
-		Id = @Id
+		EventId = @Id
 END

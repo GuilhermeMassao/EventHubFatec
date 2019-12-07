@@ -117,11 +117,33 @@ namespace SocialConnection.Connections
             var client = new RestClient(CalendarUrl);
             var request = new RestRequest($"/v3/calendars/{calendarId}/events/{eventId}", Method.DELETE);
             request.AddHeader("Authorization", $"Bearer {accessToken}");
-            
+
             var response = client.Execute(request);
 
             return response.IsSuccessful ? true : throw new CouldNotConnectException(
                 $"Error while connecting to Google Api when creating new event. Google Calendar EndPoint: {CalendarUrl}/v3/calendars/{calendarId}/events/{eventId}.\n {response.Content}", response.StatusCode);;
+        }
+
+        public bool EditEvent(string calendarId, string eventId, GoogleCalendarPostContentData contentData)
+        {
+            var client = new RestClient(CalendarUrl);
+            var request = new RestRequest($"/v3/calendars/{calendarId}/events/{eventId}", Method.PUT);
+            request.AddHeader("Authorization", $"Bearer {contentData.AccessToken}");
+            request.AddJsonBody(
+                new
+                {
+                    start = new { dateTime = contentData.Start },
+                    end = new { dateTime = contentData.End },
+                    summary = contentData.Summary,
+                    description = contentData.Description,
+                    location = contentData.Location,
+                    organizer = contentData.Organizer
+                });
+
+            var response = client.Execute(request);
+
+            return response.IsSuccessful ? true : throw new CouldNotConnectException(
+                $"Error while connecting to Google Api when creating new event. Google Calendar EndPoint: {CalendarUrl}/v3/calendars/{calendarId}/events/{eventId}.\n {response.Content}", response.StatusCode); ;
         }
 
         public IEnumerable<GoogleAgendaResponseData> GetAgendaList(string accessToken)

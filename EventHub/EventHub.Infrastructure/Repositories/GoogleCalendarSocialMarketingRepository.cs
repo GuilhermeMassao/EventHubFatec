@@ -55,5 +55,31 @@ namespace EventHub.Infrastructure.Repositories
                 return null;
             }
         }
+
+        public async Task<GoogleCalendarSocialMarketing> GetByEventId(int id)
+        {
+            var parameters = new DynamicParameters();
+
+            parameters.Add("@Id", id, DbType.Int32);
+
+            try
+            {
+                using (_connection = new SqlConnection(_dataBaseConnection.ConnectionString()))
+                {
+                    var data = await _connection.QueryFirstOrDefaultAsync<GoogleCalendarSocialMarketing>
+                    (
+                        _storeProcedure.SelectGoogleCalendarSocialMarketingByEventId,
+                        param: parameters,
+                        commandType: CommandType.StoredProcedure
+                    );
+
+                    return data;
+                }
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
     }
 }
