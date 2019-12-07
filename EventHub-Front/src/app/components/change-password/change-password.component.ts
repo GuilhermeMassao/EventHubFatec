@@ -1,14 +1,7 @@
-import { Component, OnInit, ApplicationRef, SimpleChanges, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
 import { ToastrService } from 'ngx-toastr';
-import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
-import { Subject } from 'rxjs';
-import { NgForm, NgModel } from '@angular/forms';
-import { $ } from 'protractor';
-import { AfterViewInit,ElementRef } from '@angular/core';
-import { userInfo } from 'os';
-
-
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'app-change-password',
@@ -18,23 +11,31 @@ import { userInfo } from 'os';
 
 export class ChangePasswordComponent  {
 
-public hasTwitterLogin: boolean;
-public hasGoogleLogin: boolean;
-public userId: BigInteger;
-public senhaAntinga: string;
-public senhaNova: string;
-public senhaNovaConf: string;
-mySubscription: any;
 
-constructor(private service: UserService, private router: Router, private toastr: ToastrService, private activatedRoute: ActivatedRoute) { }
-ngOnInit() {
-  this.userId = JSON.parse(localStorage.getItem('user')).id;
-}
-Voltar(){
-  this.router.navigateByUrl('/eventhub/user/profile');
-}
-AlterarSenha(){
-this.service.updateUserPasword(this.userId,this.senhaAntinga,this.senhaNova,this.senhaNovaConf);
-}
+  constructor(private service: UserService, private router: Router, private toastr: ToastrService, private activatedRoute: ActivatedRoute) { }
+    ngOnInit() {}
+
+    voltar(){
+      this.router.navigateByUrl('/eventhub/user/profile');
+    }
+
+    changePassword(){
+      this.service.updateUserPasword(JSON.parse(localStorage.getItem('user')).id).subscribe(
+        res => {
+          this.toastr.success('Senha alterada com sucesso.','Sucesso!').onHidden.subscribe(() => {
+              window.location.reload();
+          });
+        },
+        err => {
+          if (err.status == 400) {
+            this.toastr.error('Senha atual inválida.','Ops! Erro ao tentar alterar seus dados!');
+          }
+          else {
+            console.log(err);
+            this.toastr.error('Tente novamente mais tarde.','Ops! Erro ao tentar alterar seus dados!');
+          } 
+        }
+      );
+    }
 
 }

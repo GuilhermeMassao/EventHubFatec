@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
 using EventHub.Application.Services.UserApplication.Validations;
-using EventHub.Application.Utils;
 using EventHub.Business.Business;
 using EventHub.Domain.DTOs.User;
 using EventHub.Domain.Entities;
 using EventHub.Domain.Input;
+using System;
 using System.Threading.Tasks;
 namespace EventHub.Application.Services.UserApplication
 {
@@ -13,6 +13,7 @@ namespace EventHub.Application.Services.UserApplication
         private readonly UserBusiness _userBusiness;
         private readonly IMapper _inputToEntity;
         private readonly UserInputValidation _userInputValidator;
+        private readonly UserPasswordInputValidation _userPasswordInputValidation;
         private readonly UserTwitterTokensInputValidation _twitterInputValidator;
         private readonly GoogleRefreshTokenInputValidation _googleInputValidation;
         private readonly UserLoginInputValidation _loginValidation;
@@ -22,6 +23,7 @@ namespace EventHub.Application.Services.UserApplication
             _userBusiness = userBusiness;
             _inputToEntity = inputToEntity;
             _userInputValidator = new UserInputValidation();
+            _userPasswordInputValidation = new UserPasswordInputValidation();
             _twitterInputValidator = new UserTwitterTokensInputValidation();
             _googleInputValidation = new GoogleRefreshTokenInputValidation();
             _loginValidation = new UserLoginInputValidation();
@@ -47,6 +49,16 @@ namespace EventHub.Application.Services.UserApplication
             if (_userInputValidator.IsValid(input))
             {
                 return await _userBusiness.Update(id, _inputToEntity.Map<UserInput, User>(input));
+            }
+
+            return false;
+        }
+
+        public async Task<bool> UpdatePassword(int id, UserPasswordInput input)
+        {
+            if (_userPasswordInputValidation.IsValid(input))
+            {
+                return await _userBusiness.UpdatePassword(id, input);
             }
 
             return false;

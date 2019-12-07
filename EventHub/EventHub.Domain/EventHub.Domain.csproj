@@ -219,6 +219,7 @@
     <Compile Include="Input\GoogleRefreshTokenInput.cs" />
     <Compile Include="Input\UserInput.cs" />
     <Compile Include="Input\UserLoginInput.cs" />
+    <Compile Include="Input\UserPasswordInput.cs" />
     <Compile Include="Input\UserTwitterTokensInput.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

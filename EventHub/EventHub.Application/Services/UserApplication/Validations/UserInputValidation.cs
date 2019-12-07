@@ -11,17 +11,14 @@ namespace EventHub.Application.Services.UserApplication.Validations
         public bool IsValid(UserInput input)
         {
             RuleFor(user => user.UserName)
-                 .NotEmpty()
                  .MaximumLength(50)
                  .WithMessage("Nome inválido");
 
             RuleFor(user => user.Email)
-                 .NotEmpty()
                  .MaximumLength(50)
                  .WithMessage("Email inválido");
 
             RuleFor(user => user.UserPassword)
-                 .NotEmpty()
                  .Length(4, 15)
                  .WithMessage("Senha inválida");
 

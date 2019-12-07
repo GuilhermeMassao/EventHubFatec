@@ -57,6 +57,17 @@ namespace EventHub.Business.Business
             return await _repository.Update(id, user);
         }
 
+        public async Task<bool> UpdatePassword(int id, UserPasswordInput input)
+        {
+            var user = await _repository.GetById(id);
+            if (user.UserPassword == input.OldPassword)
+            {
+                return await _repository.UpdatePassword(id, input);
+            }
+
+            return false;
+        }
+
         public async Task<bool> Delete(int id)
         {
             var user = await _repository.GetById(id);
@@ -80,7 +91,7 @@ namespace EventHub.Business.Business
                     user.HasTwitterLogin = true;
                 }
 
-                var userGoogleToken = await _repository.GetTwitterTokenByUserId(user.Id);
+                var userGoogleToken = await _repository.GetGoogleTokenByUserId(user.Id);
 
                 if (userGoogleToken.GoogleRefreshToken != null)
                 {

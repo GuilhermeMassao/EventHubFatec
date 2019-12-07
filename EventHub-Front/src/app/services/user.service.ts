@@ -21,10 +21,13 @@ export class UserService {
     }, { validator: this.comparePasswords })
   });
 
-  //Form edição das informações do Usuario
-  formUsuario = this.fb.group({
-    UserName: ['', Validators.required],
-    Email: ['', Validators.email],
+  //Form edição da senha do Usuario
+  formPassword = this.fb.group({
+    OldPassword: ['', Validators.required],
+    NewPasswords: this.fb.group({
+      NewPassword: ['', [Validators.required, Validators.minLength(4)]],
+      NewPasswordConfirm: ['', Validators.required],
+    }, { validator: this.compareNewPassword })
   });
   
 
@@ -32,6 +35,16 @@ export class UserService {
     let confirmPswrdCtrl = fb.get('ConfirmPassword');
     if (confirmPswrdCtrl.errors == null || 'passwordMismatch' in confirmPswrdCtrl.errors) {
       if (fb.get('Password').value != confirmPswrdCtrl.value)
+        confirmPswrdCtrl.setErrors({ passwordMismatch: true });
+      else
+        confirmPswrdCtrl.setErrors(null);
+    }
+  }
+
+  compareNewPassword(fb: FormGroup) {
+    let confirmPswrdCtrl = fb.get('NewPasswordConfirm');
+    if (confirmPswrdCtrl.errors == null || 'passwordMismatch' in confirmPswrdCtrl.errors) {
+      if (fb.get('NewPassword').value != confirmPswrdCtrl.value)
         confirmPswrdCtrl.setErrors({ passwordMismatch: true });
       else
         confirmPswrdCtrl.setErrors(null);
@@ -97,20 +110,13 @@ updateUserInformation(nome:string,email:string,id:BigInteger){
   };
   return this.http.put(this.BaseURI + '/api/user/' + id,body);
 }
-updateUserPasword(id:BigInteger,oldPass:string,newPass:string,confNewPass:string){
-  debugger;
-  this.getUserInformation(id).subscribe(
-  (res:any)=>{
-    console.log(res);
-    if(res.userPassword == oldPass && newPass == confNewPass){
-      var input = {
-        UserName: "string",
-        Email: "string",
-        UserPassword: newPass,
-      };
-      return this.http.put(this.BaseURI + '/api/user/password/' + id,input);
-    }
-  });
+
+updateUserPasword(id: string){
+  var body = {
+    OldPassword: this.formPassword.value.OldPassword,
+    NewPassword: this.formPassword.value.NewPasswords.NewPasswordConfirm
+  };
+  return this.http.put(this.BaseURI + '/api/user/password/' + id, body);
 }
 
   saveGoogleAccessToken(refreshToken: any, id: string) {

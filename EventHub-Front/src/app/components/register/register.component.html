@@ -24,14 +24,14 @@
             <label class="text-danger" *ngIf="service.formModel.get('Passwords.Password').touched && service.formModel.get('Passwords.Password').errors?.required"><i class="fa fa-meh-o" aria-hidden="true"></i>Esse campo é
                 obrigatório.</label>
             <label class="text-danger" *ngIf="service.formModel.get('Passwords.Password').touched && service.formModel.get('Passwords.Password').errors?.minlength"><i class="fa fa-meh-o" aria-hidden="true"></i> Tamanho mínimo
-            da senha é de 4 digíto!</label>
+            da senha é de 4 digítos!</label>
           </div>
           <div class="form-group required">
             <input type="password" class="form-control" formControlName="ConfirmPassword" placeholder="Confirme a senha">
             <label class="text-danger" *ngIf="service.formModel.get('Passwords.ConfirmPassword').touched && service.formModel.get('Passwords.ConfirmPassword').errors?.required"><i class="fa fa-meh-o" aria-hidden="true"></i> Esse campo é
                 obrigatório.</label>
-            <label class="text-danger" *ngIf="service.formModel.get('Passwords.ConfirmPassword').touched && service.formModel.get('Passwords.ConfirmPassword').errors?.passwordMismatch"><i class="fa fa-meh-o" aria-hidden="true"></i> Confirmar
-            que as Senhas não estão iguais!</label>
+            <label class="text-danger" *ngIf="service.formModel.get('Passwords.ConfirmPassword').touched && service.formModel.get('Passwords.ConfirmPassword').errors?.passwordMismatch">
+              <i class="fa fa-meh-o" aria-hidden="true"></i> As senhas não estão iguais!</label>
           </div>
         </div>
         <div class="form-row">

@@ -212,6 +212,7 @@
     <Compile Include="Services\UserApplication\Validations\GoogleRefreshTokenInputValidation.cs" />
     <Compile Include="Services\UserApplication\Validations\UserInputValidation.cs" />
     <Compile Include="Services\UserApplication\Validations\UserLoginInputValidation.cs" />
+    <Compile Include="Services\UserApplication\Validations\UserPasswordInputValidation.cs" />
     <Compile Include="Services\UserApplication\Validations\UserTwitterTokensInputValidation.cs" />
     <Compile Include="Utils\PayloadValidator.cs" />
   </ItemGroup>

@@ -1,29 +1,16 @@
-import { Component, OnInit, ApplicationRef, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
-import { Subject } from 'rxjs';
-import { NgForm, NgModel } from '@angular/forms';
-import { $ } from 'protractor';
-import { AfterViewInit,ElementRef } from '@angular/core';
-import { userInfo } from 'os';
-
-
-
-
-
-
+import { NgModel } from '@angular/forms';
 
 @Component({
   selector: 'app-user-info',
   templateUrl: './user-info.component.html',
   styleUrls: ['./user-info.component.css'],
 })
-export class UserInfoComponent implements OnInit,AfterViewInit {
-  @ViewChild('searchFor',null) someInput: ElementRef;
-  ngAfterViewInit(): void {
-    this.someInput.nativeElement.value = "update input value";
-  }
+export class UserInfoComponent implements OnInit {
+
   public hasTwitterLogin: boolean;
   public hasGoogleLogin: boolean;
   public userId: BigInteger;
@@ -63,20 +50,33 @@ export class UserInfoComponent implements OnInit,AfterViewInit {
       }
     );
   }
+
   redirectChangePassword(){
-    this.router.navigateByUrl('/eventhub/user/editPassword');
+    this.router.navigateByUrl('/eventhub/user/editar-senha');
   }
 
   saveUserInformation(){
       this.service.updateUserInformation(this.usuario,this.email,this.userId).subscribe(
-        res =>{
-          alert('deu certo');
+        res => {
+          this.toastr.success('Dados alterados com sucesso.','Sucesso!').onHidden.subscribe(() => {
+              window.location.reload();
+          });
+        },
+        err => {
+          if (err.status == 400) {
+            this.toastr.error('Tente novamente mais tarde.','Ops! Erro ao tentar alterar seus dados!');
+            this.router.navigateByUrl('eventhub/user/profile');
+          }
+          else {
+            console.log(err);
+            this.toastr.error('Tente novamente mais tarde.','Ops! Erro ao tentar alterar seus dados!');
+            this.router.navigateByUrl('eventhub/user/profile');
+          } 
         }
       )
   }
 
   setField() {
-    ///your code
      let user = this.service.getUserInformation(this.userId).subscribe(
        (res:any) => {
          console.log(res); 

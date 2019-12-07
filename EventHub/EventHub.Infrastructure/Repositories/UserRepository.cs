@@ -267,22 +267,19 @@ namespace EventHub.Infraestructure.Repository
                     return true;
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return false;
             }
         }
 
-        public async Task<bool> UpdatePassword(int id, User entity)
+        public async Task<bool> UpdatePassword(int id, UserPasswordInput entity)
         {
-            var oldUser = GetById(id);
-
             var parameters = new DynamicParameters();
 
             parameters.Add("@Id", id, DbType.String);
-            parameters.Add("@UserPassword", entity.UserPassword, DbType.String);
+            parameters.Add("@UserPassword", entity.NewPassword, DbType.String);
             
-
             try
             {
                 using (_connection = new SqlConnection(_dataBaseConnection.ConnectionString()))
@@ -297,7 +294,7 @@ namespace EventHub.Infraestructure.Repository
                     return true;
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return false;
             }

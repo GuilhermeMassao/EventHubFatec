@@ -75,9 +75,15 @@ namespace EventHub.WebApi.Controllers
         [ProducesResponseType(typeof(bool), 202)]
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
-        public async Task<IActionResult> UpdatePassword([FromRoute] int id, [FromBody] UserInput input)
+        public async Task<IActionResult> UpdatePassword([FromRoute] int id, [FromBody] UserPasswordInput input)
         {
-            return Accepted(true);
+            var sucess = await userApplication.UpdatePassword(id, input);
+            if (sucess)
+            {
+                return Accepted(sucess);
+            }
+
+            return BadRequest();
         }
 
         [HttpDelete]
@@ -123,23 +129,6 @@ namespace EventHub.WebApi.Controllers
         public virtual async Task<IActionResult> UpdateTwitterToken([FromRoute] int id, [FromBody] UserTwitterTokensInput input)
         {
             var result = await userApplication.UpdateTwitterToken(id, input);
-
-            if (result)
-            {
-                return Ok();
-            }
-            return BadRequest();
-        }
-
-        [HttpPut]
-        [Route("/User/Cadastro/{id}")]
-        [ProducesResponseType(200)]
-        [ProducesResponseType(400)]
-        [ProducesResponseType(500)]
-        [ProducesResponseType(503)]
-        public virtual async Task<IActionResult> UpdateUser([FromRoute] int id, [FromBody] UserInput input)
-        {
-            var result = await userApplication.Update(id, input);
 
             if (result)
             {

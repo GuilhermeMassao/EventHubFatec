@@ -19,9 +19,9 @@ const routes: Routes = [
     children: [
       { path: 'home', component: HomeComponent, canActivate:[AuthGuard]},
       { path: 'user/profile', component: UserInfoComponent, canActivate:[AuthGuard] },
-      { path: 'user/editPassword', component: ChangePasswordComponent, canActivate:[AuthGuard] },
-      { path: 'criar-evento', component: CreateEventComponent},
-      { path: 'evento', component: EventInfoComponent}
+      { path: 'user/editar-senha', component: ChangePasswordComponent, canActivate:[AuthGuard] },
+      { path: 'criar-evento', component: CreateEventComponent, canActivate:[AuthGuard]},
+      { path: 'evento', component: EventInfoComponent, canActivate:[AuthGuard]}
     ]
   }
 ];

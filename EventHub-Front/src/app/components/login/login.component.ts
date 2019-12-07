@@ -16,8 +16,6 @@ export class LoginComponent implements OnInit {
     UserPassword: ''
   }
 
-  alert: boolean;
-
   constructor(private service: UserService, private router: Router, private toastr: ToastrService) { }
 
   ngOnInit() {
@@ -28,7 +26,6 @@ export class LoginComponent implements OnInit {
   onSubmit(form: NgForm) {
     this.service.login(form.value).subscribe(
       (res: any) => {
-        console.log(res);
         localStorage.setItem('user', JSON.stringify({id: res.id, userName: res.userName, email: res.email, twitterLogin: res.hasTwitterLogin, googleLogin: res.hasGoogleLogin}));
         this.router.navigateByUrl('eventhub/home');
       },
@@ -43,5 +40,4 @@ export class LoginComponent implements OnInit {
       }
     );
   }
-
 }
