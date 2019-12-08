@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using EventHub.Business.Business;
@@ -51,5 +52,10 @@ namespace EventHub.Application.Services.EventApplication
         {
             return await eventBusiness.GetPublicPlaces();
         }
+
+        public async Task<IEnumerable<CompleteEventDto>> GetAllActiveEvents()
+        {
+            return await eventBusiness.GetAllActiveEvents();
+    }
     }
 }

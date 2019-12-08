@@ -28,6 +28,7 @@
     "datatables.net-dt": "^1.10.20",
     "font-awesome": "^4.7.0",
     "jquery": "^3.4.1",
+    "jw-angular-pagination": "^1.1.0",
     "ngx-bootstrap": "^5.2.0",
     "ngx-mask": "^8.1.6",
     "ngx-toastr": "^11.2.1",

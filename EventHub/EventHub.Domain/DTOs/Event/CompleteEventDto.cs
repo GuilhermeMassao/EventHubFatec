@@ -5,6 +5,7 @@ namespace EventHub.Domain.DTOs.Event
 {
     public class CompleteEventDto
     {
+        public int EventId { get; set; }
         public int UserOwnerId { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }

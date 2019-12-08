@@ -163,5 +163,29 @@ namespace EventHub.Infrastructure.Repositories
                 return false;
             }
         }
+
+        public async Task<IEnumerable<CompleteEventDto>> GetAllActiveEvents()
+        {
+            var parameters = new DynamicParameters();
+
+            try
+            {
+                using (_connection = new SqlConnection(_dataBaseConnection.ConnectionString()))
+                {
+                    var eventDto = await _connection.QueryAsync<CompleteEventDto>
+                    (
+                        _storeProcedure.SelectAllActiveEvents,
+                        param: parameters,
+                        commandType: CommandType.StoredProcedure
+                    );
+
+                    return eventDto;
+                }
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
     }
 }

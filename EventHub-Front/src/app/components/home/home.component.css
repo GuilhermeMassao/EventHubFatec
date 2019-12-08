@@ -1,4 +1,4 @@
-@import url("https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css");
+/*@import url("https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css");
 @import url("https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css");
 
 .center{
@@ -11,4 +11,31 @@
   .no-data-available {
     text-align: center;
   }
+*/
+
+  .card{
+    color: #2a2a2c;
+    margin: 10px;
+}
+
+.card h1,h2,h3,h4{
+    color: #5f27cd;
+    margin: 5px;
+}
+.card h1,h2,h3,h4{
+    color: #5f27cd;
+    margin: 5px;
+}
+
+.card-title{
+text-align: center;
+}
+
+a {
+  color: #5f27cd;
+}
+
+jw-pagination {
+  color: #2a2a2c;
+}
 

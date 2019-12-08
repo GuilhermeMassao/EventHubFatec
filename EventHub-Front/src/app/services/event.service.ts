@@ -131,6 +131,10 @@ export class EventService {
     return this.http.get(this.BaseURI + '/api/event/' + id);
   }
 
+  public getAllActiveEvents() {
+    return this.http.get(this.BaseURI + '/api/event/active/');
+  }
+
   public getAllPublicPlaces() {
     return this.http.get(this.BaseURI + '/public-places');
   }

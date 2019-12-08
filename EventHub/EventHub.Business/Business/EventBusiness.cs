@@ -44,6 +44,7 @@ namespace EventHub.Business.Business
             _twitterSocialMarketingRepository = twitterSocialMarketingRepository;
             _googleCalendarSocialMarketingRepository = googleCalendarSocialMarketingRepository;
         }
+
         public async Task<IEnumerable<EventDto>> GetEventsButUser(int id)
         {
             return await _eventRepository.GetEventsButUser(id);
@@ -92,6 +93,11 @@ namespace EventHub.Business.Business
         public Task<CompleteEventDto> GetById(int id)
         {
             return _eventRepository.GetById(id);
+        }
+
+        public async Task<IEnumerable<CompleteEventDto>> GetAllActiveEvents()
+        {
+            return await _eventRepository.GetAllActiveEvents();
         }
 
         public async Task<bool> InactiveEvent(int id, DeleteEventInput input)
@@ -226,9 +232,18 @@ namespace EventHub.Business.Business
 
         private string CreateTweetMessage(Event newEvent, Adress adress, PublicPlace publicPlace, PostResponseData googleEvent)
         {
+            var descriptionMessage = "";
+            if(newEvent.EventDescription.Length >= 30)
+            {
+                descriptionMessage = newEvent.EventDescription.Substring(0, 30);
+            }
+            else
+            {
+                descriptionMessage = newEvent.EventDescription.Substring(0, newEvent.EventDescription.Length-1);
+            }
             var googleEventUrl = (googleEvent != null) ? googleEvent.ShortUrlGoogle : "";
             return $"Novo evento: {newEvent.EventName}\n" +
-                $"{newEvent.EventDescription.Substring(0, 30)}...\n" +
+                $"{descriptionMessage}...\n" +
                 $"Local: {publicPlace.PlaceName} {adress.PlaceName} - {adress.AdressNumber}, Bairro: {adress.Neighborhood}, CEP: {adress.CEP}, Cidade {adress.City} {adress.UF}\n" +
                 $"Limite de vagas: {newEvent.TicketsLimit}\n" +
                 $"{googleEventUrl}\n\n" +
@@ -237,8 +252,17 @@ namespace EventHub.Business.Business
 
         private string CreateEditTweetMessage(Event newEvent, Adress adress, PublicPlace publicPlace, string googleEventUrl)
         {
+            var descriptionMessage = "";
+            if (newEvent.EventDescription.Length >= 30)
+            {
+                descriptionMessage = newEvent.EventDescription.Substring(0, 30);
+            }
+            else
+            {
+                descriptionMessage = newEvent.EventDescription.Substring(0, newEvent.EventDescription.Length - 1);
+            }
             return $"Atualização das informações do evento: {newEvent.EventName}\n" +
-                $"{newEvent.EventDescription.Substring(0, 30)}...\n" +
+                $"{descriptionMessage}...\n" +
                 $"Local: {publicPlace.PlaceName} {adress.PlaceName} - {adress.AdressNumber}, Bairro: {adress.Neighborhood}, CEP: {adress.CEP}, Cidade {adress.City} {adress.UF}\n" +
                 $"Limite de vagas: {newEvent.TicketsLimit}\n" +
                 $"{googleEventUrl}\n\n" +

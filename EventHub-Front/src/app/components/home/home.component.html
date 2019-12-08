@@ -1,25 +1,22 @@
-
-
-<div class="center">
-  <div class="row">
-    <div class="col-md-12">
-        <table datatable [dtOptions]="dtOptions" class="table table-striped  table-info table-sm" style="width:100% ;">
-            <thead>
-                <tr>
-                  <th>Nome Evento</th>
-                  <th>Descricao Evento</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let event of datatableData" >
-                  <td (click) = "redirectEvent(event.id)">{{ event.eventName }}</td>
-                  <td (click) = "redirectEvent(event.id)">{{ event.eventDescription }}</td>
-                </tr>
-                <tr *ngIf="datatableData?.length == 0">
-                    <td colspan="3" class="no-data-available">nenhum registro encontrado!</td>
-                  </tr>
-              </tbody>
-        </table>
-    </div>
+<div style="margin-top: 100px;">
+  <h3 class="text-center" style="color: white;">EVENTOS ATIVOS</h3>
+  <h4 class="text-center" style="color: white;" *ngIf="!events"> Nenhum evento ativo no momento </h4>
+  <div class="center" *ngFor="let event of pageOfEvents">
+    <div class="card text-center">
+        <div class="card-header">
+          <h3 class="card-title"> {{event.eventName}}</h3>
+        </div>
+        <div class="card-body">
+          <p class="card-text"> <strong>Data Inicial:</strong> {{event.startDate}} e <strong>Data Final:</strong> {{event.endDate}}</p>
+          <p class="card-text"> {{event.eventDescription}}</p>
+          <p class="card-text"> Limite de pessoas: {{event.ticketsLimit}}</p>
+          <p class="card-text"> {{event.placeName}}, {{event.city}} - {{event.uf}}</p>
+          <br>
+          <a href="javascript:void(0);" (click)="redirectEvent(event.eventId)">Ir para a página do evento</a>
+        </div>
+      </div>
+  </div>
+  <div class="pt-3">
+    <jw-pagination [items]="events" (changePage)="onChangePage($event)"></jw-pagination>
   </div>
 </div>

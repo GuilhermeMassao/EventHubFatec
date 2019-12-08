@@ -13,13 +13,15 @@ import { FooterComponent } from './components/footer/footer.component';
 import { AlertModule } from 'ngx-bootstrap/alert';
 import { NgxMaskModule, IConfig } from 'ngx-mask';
 import { DataTablesModule } from 'angular-datatables';
+import { JwPaginationComponent } from 'jw-angular-pagination';
 
 @NgModule({
   declarations: [
     AppComponent,
     routingComponents,
     MenuComponent,
-    FooterComponent
+    FooterComponent,
+    JwPaginationComponent
   ],
   imports: [
     BrowserModule,

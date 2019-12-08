@@ -64,7 +64,7 @@ export class UserInfoComponent implements OnInit {
         },
         err => {
           if (err.status == 400) {
-            this.toastr.error('Tente novamente mais tarde.','Ops! Erro ao tentar alterar seus dados!');
+            this.toastr.error('Esse e-mail já está em uso.','Ops! Erro ao tentar alterar seus dados!');
             this.router.navigateByUrl('eventhub/user/profile');
           }
           else {
@@ -97,12 +97,12 @@ export class UserInfoComponent implements OnInit {
       },
       err => {
         if (err.status == 400) {
-          this.toastr.error('Erro ao tentar deslogar no Twitter!','Tente novamente mais tarde.');
+          this.toastr.error('Tente novamente mais tarde.','Erro ao tentar deslogar no Twitter!');
           this.router.navigateByUrl('eventhub/user/profile');
         }
         else {
           console.log(err);
-          this.toastr.error('Erro ao tentar deslogar no Twitter!','Tente novamente mais tarde.');
+          this.toastr.error('Tente novamente mais tarde.','Erro ao tentar deslogar no Twitter!');
           this.router.navigateByUrl('eventhub/user/profile');
         }
       }

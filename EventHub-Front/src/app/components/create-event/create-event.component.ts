@@ -31,7 +31,9 @@ export class CreateEventComponent implements OnInit {
         console.log(res);
         if(JSON.parse(localStorage.getItem('user')).googleLogin == true){
           this.toastr.toastrConfig.timeOut = 10000;
-          this.toastr.success('Por favor entre na sua conta do Google Agenda e deixe sua nova agenda pública para que as pessoas possam se inscrever no seu novo evento.','Evento criado com sucesso!');
+          this.toastr.success('Por favor entre na sua conta do Google Agenda e deixe sua nova agenda pública para que as pessoas possam se inscrever no seu novo evento.','Evento criado com sucesso!').onHidden.subscribe(() => {
+            this.router.navigateByUrl('/eventhub/evento?id=' + res.id);
+        });
         }
         this.router.navigateByUrl('/eventhub/evento?id=' + res.id);
       },
