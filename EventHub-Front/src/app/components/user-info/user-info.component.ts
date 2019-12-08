@@ -75,9 +75,38 @@ export class UserInfoComponent implements OnInit {
             console.log(err);
             this.toastr.error('Tente novamente mais tarde.','Ops! Erro ao tentar alterar seus dados!');
             this.router.navigateByUrl('eventhub/user/profile');
-          } 
+          }
         }
       )
+  }
+
+  inactiveUser() {
+    this.service.inactiveUser(this.userId).subscribe(
+      (res: any) => {
+        this.toastr.success('Conta removida com sucesso.','Sucesso!').onHidden.subscribe(() => {
+          localStorage.removeItem('user');
+          this.router.navigate(['/login']);
+      });
+      },
+      err => {
+        if(err.status == 200) {
+          this.toastr.success('Conta removida com sucesso.','Sucesso!').onHidden.subscribe(() => {
+            localStorage.removeItem('user');
+            this.router.navigate(['/login']);
+          });
+        }
+        if (err.status == 400) {
+          console.log(err);
+          this.toastr.error('Tente novamente mais tarde.','Ops! Algo deu errado!');
+          //window.location.reload();
+        }
+        if (err.status == 500) {
+          console.log(err);
+          this.toastr.error('Tente novamente mais tarde.','Ops! Algo deu errado!');
+          //window.location.reload();
+        }
+      }
+    );
   }
 
   setField() {
