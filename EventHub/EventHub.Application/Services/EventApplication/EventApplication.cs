@@ -21,6 +21,11 @@ namespace EventHub.Application.Services.EventApplication
             _inputToEntity = inputToEntity;
         }
 
+        public async Task<IEnumerable<EventDto>> GetAllButUser(int id)
+        {
+            return await eventBusiness.GetEventsButUser(id);
+        }
+
         public async Task<EventDto> CreateEvent(EventInput input)
         {
             return await eventBusiness.CreateEvent(_inputToEntity.Map<EventInput, Event>(input),

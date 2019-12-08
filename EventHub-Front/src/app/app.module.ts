@@ -12,6 +12,7 @@ import { MenuComponent } from './components/menu/menu.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { AlertModule } from 'ngx-bootstrap/alert';
 import { NgxMaskModule, IConfig } from 'ngx-mask';
+import { DataTablesModule } from 'angular-datatables';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { NgxMaskModule, IConfig } from 'ngx-mask';
     BrowserAnimationsModule,
     FontAwesomeModule,
     AlertModule.forRoot(),
-    NgxMaskModule.forRoot()
+    NgxMaskModule.forRoot(),
+    DataTablesModule
   ],
   providers: [],
   bootstrap: [AppComponent]

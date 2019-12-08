@@ -23,6 +23,7 @@ namespace EventHub.Infrastructure.Repositories.StoreProcedures
         public string InsertEvent => "InsertEvent";
         public string UpdateEvent => "UpdateEvent";
         public string SelectEventsById => "SelectEventsById";
+        public string GetAllEvents => "SelectAllEvents";
         #endregion
 
         #region Adress
@@ -44,6 +45,8 @@ namespace EventHub.Infrastructure.Repositories.StoreProcedures
         #region GoogleCalendarSocialMarketing
         public string InsertGoogleCalendarSocialMarketing => "InsertGoogleCalendarSocialMarketing";
         public string SelectGoogleCalendarSocialMarketingByEventId => "SelectGoogleCalendarSocialMarketingByEventId";
+
+        
         #endregion
     }
 }

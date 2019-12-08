@@ -31,5 +31,6 @@
 
         string InsertGoogleCalendarSocialMarketing { get; }
         string SelectGoogleCalendarSocialMarketingByEventId { get; }
+        string GetAllEvents { get; }
     }
 }

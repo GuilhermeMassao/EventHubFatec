@@ -127,6 +127,19 @@ export class EventService {
     return this.http.get(this.BaseURI + '/public-places');
   }
 
+  public  getAllEventsButUser(id:BigInteger, tableParameters:any){
+    debugger;
+    var body = {
+      UserId: id,
+      Draw: tableParameters.draw,
+      Length: tableParameters.length,
+      Order: tableParameters.order[0].dir,
+      Search: tableParameters.search.value,
+      Start: tableParameters.start
+    }
+    return this.http.post(this.BaseURI + '/api/events', body);
+  }
+
   private getFormNullableValue(formValue: any) {
     if(formValue == null) {
       return '';

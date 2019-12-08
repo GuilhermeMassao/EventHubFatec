@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using EventHub.Domain.DTOs.Event;
 using EventHub.Domain.DTOs.User;
@@ -43,21 +44,24 @@ namespace EventHub.Business.Business
             _twitterSocialMarketingRepository = twitterSocialMarketingRepository;
             _googleCalendarSocialMarketingRepository = googleCalendarSocialMarketingRepository;
         }
-
+        public async Task<IEnumerable<EventDto>> GetEventsButUser(int id)
+        {
+            return await _eventRepository.GetEventsButUser(id);
+        }
         public async Task<EventDto> CreateEvent(Event newEvent, Adress adress, bool twitterLogin, bool googleLogin)
         {
             var adressResultId = await _adressRepository.CreateAdress(adress);
 
-            if(adressResultId != null)
+            if (adressResultId != null)
             {
                 newEvent.AdressId = adressResultId.GetValueOrDefault();
 
                 var eventResultId = await _eventRepository.CreateEvent(newEvent);
 
-                if(eventResultId != null)
+                if (eventResultId != null)
                 {
                     ShareEvent(eventResultId.GetValueOrDefault(), newEvent, adress, googleLogin, twitterLogin);
-                    
+
                     return new EventDto(eventResultId.GetValueOrDefault(), newEvent.EventName);
 
                 } else
@@ -72,7 +76,7 @@ namespace EventHub.Business.Business
         {
             var adressEditResult = await _adressRepository.EditAdress(adress.Id, adress);
 
-            if(adressEditResult)
+            if (adressEditResult)
             {
                 var eventEditResult = await _eventRepository.UpdateEvent(id, eventInput);
 
@@ -114,7 +118,7 @@ namespace EventHub.Business.Business
                 google.EditEvent(googleEventInfo.HashCalendar, googleEventInfo.HashEvent, CreateGoogleCalendarPostContentData(accessToken, googleEventInfo.HashCalendar, user, eventInput, adress, publicPlace));
             }
 
-            if(twitterLogin)
+            if (twitterLogin)
             {
                 TwitterConnection twitter = new TwitterConnection();
                 var tweetResponse = twitter.PostTweet(new TwitterPostContentData(userTwitterTokens.TwitterAccessToken,
@@ -211,7 +215,7 @@ namespace EventHub.Business.Business
         private string CreateTweetMessage(Event newEvent, Adress adress, PublicPlace publicPlace, PostResponseData googleEvent)
         {
             var googleEventUrl = (googleEvent != null) ? googleEvent.ShortUrlGoogle : "";
-            return $"Novo evento: {newEvent.EventName}\n"+
+            return $"Novo evento: {newEvent.EventName}\n" +
                 $"{newEvent.EventDescription}\n" +
                 $"Local: {publicPlace.PlaceName} {adress.PlaceName} - {adress.AdressNumber}, Bairro: {adress.Neighborhood}, CEP: {adress.CEP}, Cidade {adress.City} {adress.UF}\n" +
                 $"Limite de vagas: {newEvent.TicketsLimit}\n" +
@@ -227,6 +231,27 @@ namespace EventHub.Business.Business
                 $"Limite de vagas: {newEvent.TicketsLimit}\n" +
                 $"{googleEventUrl}\n\n" +
                 "Tweet gerado automaticamente por EventHub.";
+        }
+
+        public List<EventDto> FilterEvents(EventFilterDto filter, IEnumerable<EventDto> events, out int filterQnty)
+        {
+            
+            if(filter.Order == "asc")
+            {
+                events.OrderBy(x => x.Id);
+            }
+            else
+            {
+                events.OrderByDescending(x => x.Id);
+            }
+            if(filter.Search!= null)
+            {
+                events = events.Where(x => x.EventDescription.Contains(filter.Search) || x.EventName.Contains(filter.Search) || x.EventShortDescription.Contains(filter.Search));
+            }
+            filterQnty = events.Count();
+            var pageNumber = filter.Start / filter.Length;
+            events = events.Skip(filter.Length *pageNumber).Take(filter.Length);
+            return events.ToList();
         }
     }
 }

@@ -120,5 +120,25 @@ namespace EventHub.Infrastructure.Repositories
                 return null;
             }
         }
+
+        public async Task<IEnumerable<EventDto>> GetEventsButUser(int id)
+        {
+            try
+            {
+                using (_connection = new SqlConnection(_dataBaseConnection.ConnectionString()))
+                {
+                    var _eventDto = await _connection.QueryAsync<EventDto>
+                    (
+                        _storeProcedure.GetAllEvents,
+                        commandType: CommandType.StoredProcedure
+                    );
+                    return _eventDto.Where(x=>x.UserOwnerId != id);
+                }
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
     }
 }

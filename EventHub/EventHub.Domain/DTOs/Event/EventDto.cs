@@ -13,7 +13,22 @@ namespace EventHub.Domain.DTOs.Event
             Id = id;
             EventName = eventName;
         }
+        public EventDto(int userOwnerId, int id, string eventName,DateTime startDate, DateTime endDate,string eventDescription, string eventShortDescription)
+        {
+            this.UserOwnerId = userOwnerId;
+            this.Id = id;
+            this.EventName = eventName;
+            this.StartDate = startDate;
+            this.EndDate = endDate;
+            this.EventDescription = eventDescription;
+            this.EventShortDescription = eventShortDescription;
+        }
+        public int UserOwnerId { get; set; }
         public int Id { get; set; }
         public string EventName { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
+        public string EventDescription { get; set; }
+        public string EventShortDescription { get; set; }
     }
 }
