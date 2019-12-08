@@ -43,20 +43,17 @@ namespace EventHub.Infrastructure.Repositories.StoreProcedures
         public string InsertTwitterSocialMarketing => "InsertTwitterSocialMarketing";
         #endregion
 
-<<<<<<< Updated upstream
         #region GoogleCalendarSocialMarketing
         public string InsertGoogleCalendarSocialMarketing => "InsertGoogleCalendarSocialMarketing";
         public string SelectGoogleCalendarSocialMarketingByEventId => "SelectGoogleCalendarSocialMarketingByEventId";
+        #endregion
 
-        
-=======
         #region Event Subscriptions
         public string InsertInscription => "InsertInscription";
         public string SelectAllCurrentEventsByUserSubscribed => "SelectAllCurrentEventsByUserSubscribed";
         public string SelectAllCurrentEventsByOwnerId => "SelectAllCurrentEventsByOwnerId";
         public string SelectEventSubscriptionById => "SelectEventSubscriptionById";
         public string DeleteInscriptionByUserId => "DeleteInscriptionByUserId";
->>>>>>> Stashed changes
         #endregion
     }
 }

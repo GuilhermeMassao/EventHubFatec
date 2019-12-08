@@ -203,12 +203,9 @@
   <ItemGroup>
     <Compile Include="DTOs\Event\CompleteEventDto.cs" />
     <Compile Include="DTOs\Event\EventDto.cs" />
-<<<<<<< Updated upstream
     <Compile Include="DTOs\Event\EventFilterDto.cs" />
     <Compile Include="DTOs\Event\EventFilterReturnDto.cs" />
-=======
     <Compile Include="DTOs\Event\Events.cs" />
->>>>>>> Stashed changes
     <Compile Include="DTOs\User\UserDto.cs" />
     <Compile Include="DTOs\User\UserTokensDTO.cs" />
     <Compile Include="Entities\Adress.cs" />
