@@ -83,6 +83,24 @@ namespace EventHub.WebApi.Controllers
             return BadRequest();
         }
 
+        [HttpPut]
+        [Route("/api/event/inactive/{id}")]
+        [ProducesResponseType(typeof(bool), 200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(500)]
+        [ProducesResponseType(503)]
+        public virtual async Task<IActionResult> InactiveEvent([FromRoute] int id, [FromBody] DeleteEventInput input)
+        {
+            var result = await eventApplication.InactiveEvent(id, input);
+
+            if (result)
+            {
+                return Ok(result);
+            }
+
+            return BadRequest();
+        }
+
         [HttpGet]
         [Route("/api/event/{id}")]
         [ProducesResponseType(typeof(CompleteEventDto), 200)]

@@ -99,6 +99,14 @@ export class EventService {
     return this.http.put(this.BaseURI + '/api/event/' + eventId, body);
   }
 
+  inactiveEvent(eventId: any, adressId: any) {
+    var body = {
+      AdressId: adressId
+    }
+
+    return this.http.put(this.BaseURI + '/api/event/inactive/' + eventId, body);
+  }
+
   buildEventEditForm(eventInfo: any, adressInfo: any) {
     this.editEventForm = this.fb.group({
       EventName: [eventInfo.eventName, Validators.required],

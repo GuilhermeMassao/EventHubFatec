@@ -94,6 +94,18 @@ namespace EventHub.Business.Business
             return _eventRepository.GetById(id);
         }
 
+        public async Task<bool> InactiveEvent(int id, DeleteEventInput input)
+        {
+            var inactiveAdressResult = await _adressRepository.InactivateAdress(input.AdressId);
+
+            if(inactiveAdressResult)
+            {
+                return await _eventRepository.InactiveEvent(id);
+            }
+
+            return false;
+        }
+
         public async Task<IEnumerable<PublicPlace>> GetPublicPlaces()
         {
             return await _publicPlaceRepository.GetAll();

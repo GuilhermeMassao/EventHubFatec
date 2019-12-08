@@ -26,12 +26,13 @@ button{
     border-radius: 25px;
     font-size: 18px;
     color: #5f27cd;
+
 }
 
 button:hover{
     background-color: transparent;
     padding: 3;
-    border: solid px white;
+    border: solid 3px white;
     cursor: pointer;
     font-family: inherit;
     font-size: 20px;
@@ -107,8 +108,9 @@ input:focus{
     position: fixed;
     bottom: -260px;
     left: -230px;
-    z-index: -1;
+    z-index: 1;
     width: 1920px;
+    padding-top: 30px;
   }
 
   .submenu{
@@ -116,7 +118,7 @@ input:focus{
       font-size: 18px;
       border: solid 2px white;
       border-radius: 25px;
-      margin: 12px;
+      margin: 10px;
       padding: 10px;
       padding-left: 20px;
       padding-right: 20px;

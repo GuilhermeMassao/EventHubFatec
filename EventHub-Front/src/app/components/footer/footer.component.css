@@ -1,8 +1,12 @@
+
 footer{
+    bottom: 0;
+    width: 100%;
+    position: fixed;
     background-color: #5f27cd;
     color: white;
-
+    text-align: center;
 }
 #end{
-    background-color: #19004D;
+    background-color: #330066;
 }

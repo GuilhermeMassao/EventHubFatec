@@ -140,5 +140,30 @@ namespace EventHub.Infrastructure.Repositories
                 return null;
             }
         }
+        
+        public async Task<bool> InactiveEvent(int id)
+        {
+            try
+            {
+                var parameters = new DynamicParameters();
+
+                parameters.Add("@Id", id, DbType.Int32);
+
+                using (_connection = new SqlConnection(_dataBaseConnection.ConnectionString()))
+                {
+                    await _connection.ExecuteAsync(
+                        _storeProcedure.CancelEvent,
+                        param: parameters,
+                        commandType: CommandType.StoredProcedure
+                    );
+
+                    return true;
+                }
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
     }
 }
