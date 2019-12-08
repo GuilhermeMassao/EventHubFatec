@@ -228,7 +228,7 @@ namespace EventHub.Business.Business
         {
             var googleEventUrl = (googleEvent != null) ? googleEvent.ShortUrlGoogle : "";
             return $"Novo evento: {newEvent.EventName}\n" +
-                $"{newEvent.EventDescription}\n" +
+                $"{newEvent.EventDescription.Substring(0, 30)}...\n" +
                 $"Local: {publicPlace.PlaceName} {adress.PlaceName} - {adress.AdressNumber}, Bairro: {adress.Neighborhood}, CEP: {adress.CEP}, Cidade {adress.City} {adress.UF}\n" +
                 $"Limite de vagas: {newEvent.TicketsLimit}\n" +
                 $"{googleEventUrl}\n\n" +
@@ -238,7 +238,7 @@ namespace EventHub.Business.Business
         private string CreateEditTweetMessage(Event newEvent, Adress adress, PublicPlace publicPlace, string googleEventUrl)
         {
             return $"Atualização das informações do evento: {newEvent.EventName}\n" +
-                $"{newEvent.EventDescription}\n" +
+                $"{newEvent.EventDescription.Substring(0, 30)}...\n" +
                 $"Local: {publicPlace.PlaceName} {adress.PlaceName} - {adress.AdressNumber}, Bairro: {adress.Neighborhood}, CEP: {adress.CEP}, Cidade {adress.City} {adress.UF}\n" +
                 $"Limite de vagas: {newEvent.TicketsLimit}\n" +
                 $"{googleEventUrl}\n\n" +

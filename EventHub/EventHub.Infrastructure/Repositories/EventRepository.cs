@@ -1,7 +1,6 @@
 ﻿using Dapper;
 using EventHub.Domain.DTOs.Event;
 using EventHub.Domain.Entities;
-using EventHub.Domain.Input;
 using EventHub.Infrastructure.Helpers;
 using EventHub.Infrastructure.Helpers.Interfaces;
 using EventHub.Infrastructure.Interfaces.Repository;
@@ -12,7 +11,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace EventHub.Infrastructure.Repositories
@@ -162,7 +160,7 @@ namespace EventHub.Infrastructure.Repositories
             }
             catch (Exception e)
             {
-                return null;
+                return false;
             }
         }
     }

@@ -79,7 +79,6 @@ export class UserInfoComponent implements OnInit {
   setField() {
      let user = this.service.getUserInformation(this.userId).subscribe(
        (res:any) => {
-         console.log(res); 
          this.usuario = res.userName;
          this.email = res.email;
          this.senha = res.senha;
