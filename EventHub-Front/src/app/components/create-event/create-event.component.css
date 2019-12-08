@@ -2,3 +2,78 @@
     margin-bottom: 20px;
     border-bottom: 1px solid white;
 }
+form{
+    align-items: center;
+    margin: 7%;
+}
+
+button{
+    margin: 10px;
+}
+
+input{
+    background-color: transparent;
+    color: white;
+}
+
+select{
+    background-color: transparent;
+    color: white;
+}
+
+textarea{
+    background-color: transparent;
+    color: white;
+}
+
+input:enabled{
+    background-color: transparent;
+    color: white;
+}
+
+textarea:enabled{
+    background-color: transparent;
+    color: white;
+}
+
+button{
+    background-color: white;
+    padding: 3;
+    border: solid 3px white;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 20px;
+    width: 100%;
+    border-width: 3px;
+    border-radius: 25px;
+    font-size: 18px;
+    color: #5f27cd;
+
+}
+
+button:hover{
+    background-color: transparent;
+    padding: 3;
+    border: solid 3px white;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 20px;
+    width: 100%;
+    border-width: 3px;
+    border-radius: 25px;
+    font-size: 18px;
+    color: white;
+}
+button:disabled{
+    background-color: white;
+    padding: 3;
+    border: solid 3px white;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 20px;
+    width: 100%;
+    border-width: 3px;
+    border-radius: 25px;
+    font-size: 18px;
+    color: #5f27cd;
+}
