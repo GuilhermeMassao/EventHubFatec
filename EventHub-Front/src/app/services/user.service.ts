@@ -119,6 +119,10 @@ updateUserPasword(id: string){
   return this.http.put(this.BaseURI + '/api/user/password/' + id, body);
 }
 
+inactiveUser(id) {
+  return this.http.delete(this.BaseURI + '/api/user/' + id);
+}
+
   saveGoogleAccessToken(refreshToken: any, id: string) {
     var body = {
       RefreshToken: refreshToken
