@@ -44,6 +44,9 @@ export class EventEditComponent implements OnInit {
     );
 
     this.fillForm();
+    if(this.eventId != JSON.parse(localStorage.getItem('user')).id) {
+      this.router.navigateByUrl("/eventhub/home");
+    }
   }
 
   fillForm() {
