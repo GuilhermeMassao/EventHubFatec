@@ -11,6 +11,7 @@ namespace EventHub.Infrastructure.Interfaces.Repository
         Task<bool> UpdateEvent(int id, Event entity);
         Task<bool> InactiveEvent(int id);
         Task<CompleteEventDto> GetById(int id);
+        Task<IEnumerable<CompleteEventDto>> GetByUserId(int id);
         Task<IEnumerable<CompleteEventDto>> GetAllActiveEvents();
         Task<IEnumerable<EventDto>> GetEventsButUser(int id);
     }

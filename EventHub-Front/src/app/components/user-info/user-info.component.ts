@@ -3,6 +3,7 @@ import { UserService } from 'src/app/services/user.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { NgModel } from '@angular/forms';
+import { EventService } from 'src/app/services/event.service';
 
 @Component({
   selector: 'app-user-info',
@@ -10,6 +11,8 @@ import { NgModel } from '@angular/forms';
   styleUrls: ['./user-info.component.css'],
 })
 export class UserInfoComponent implements OnInit {
+
+  public userEvents: Array<any>;
 
   public hasTwitterLogin: boolean;
   public hasGoogleLogin: boolean;
@@ -20,7 +23,7 @@ export class UserInfoComponent implements OnInit {
   public senha: string;
   mySubscription: any;
 
-  constructor(private service: UserService, private router: Router, private toastr: ToastrService, private activatedRoute: ActivatedRoute) { }
+  constructor(private service: UserService, private eventService: EventService, private router: Router, private toastr: ToastrService, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
     this.hasTwitterLogin = JSON.parse(localStorage.getItem('user')).twitterLogin;
@@ -30,6 +33,7 @@ export class UserInfoComponent implements OnInit {
     this.verifyGoogleCallback();
     this.updateLayout()
     this.setField();
+    this.getUserEvents();
   }
   
   twitterLogin() {
@@ -242,6 +246,27 @@ export class UserInfoComponent implements OnInit {
         this.router.navigated = false;
       }
     });
+  }
+
+  getUserEvents() {
+    this.eventService.getEventsByUserId(JSON.parse(localStorage.getItem('user')).id).subscribe(
+      (res: any) => {
+        console.log(res);
+        this.userEvents = res;
+      },
+      err => {
+        if(err.status == 400) {
+          console.log("Error 400");
+        }
+        else {
+          console.log("err");
+        }
+      }
+    );
+  }
+
+  redirectEvent(id){
+    this.router.navigateByUrl("/eventhub/evento?id=" + id);
   }
 
   ngOnDestroy() {

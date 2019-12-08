@@ -23,6 +23,7 @@ namespace EventHub.Infrastructure.Repositories.StoreProcedures
         public string InsertEvent => "InsertEvent";
         public string UpdateEvent => "UpdateEvent";
         public string SelectEventsById => "SelectEventsById";
+        public string SelectEventsByUserId => "SelectEventsByUserId";
         public string SelectAllActiveEvents => "SelectAllActiveEvents";
         public string GetAllEvents => "SelectAllEvents";
         public string CancelEvent => "CancelEvent";

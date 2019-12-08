@@ -118,6 +118,31 @@ namespace EventHub.Infrastructure.Repositories
                 return null;
             }
         }
+        public async Task<IEnumerable<CompleteEventDto>> GetByUserId(int id)
+        {
+            var parameters = new DynamicParameters();
+
+            parameters.Add("@Id", id, DbType.Int32);
+
+            try
+            {
+                using (_connection = new SqlConnection(_dataBaseConnection.ConnectionString()))
+                {
+                    var eventDto = await _connection.QueryAsync<CompleteEventDto>
+                    (
+                        _storeProcedure.SelectEventsByUserId,
+                        param: parameters,
+                        commandType: CommandType.StoredProcedure
+                    );
+
+                    return eventDto;
+                }
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
 
         public async Task<IEnumerable<EventDto>> GetEventsButUser(int id)
         {
