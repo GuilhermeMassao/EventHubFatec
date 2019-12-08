@@ -30,8 +30,16 @@
 
         string InsertTwitterSocialMarketing { get; }
 
+<<<<<<< Updated upstream
         string InsertGoogleCalendarSocialMarketing { get; }
         string SelectGoogleCalendarSocialMarketingByEventId { get; }
         string GetAllEvents { get; }
+=======
+        string InsertInscription { get; }
+        string SelectAllCurrentEventsByUserSubscribed { get; }
+        string SelectAllCurrentEventsByOwnerId { get; }
+        string SelectEventSubscriptionById { get; }
+        string DeleteInscriptionByUserId { get; }
+>>>>>>> Stashed changes
     }
 }

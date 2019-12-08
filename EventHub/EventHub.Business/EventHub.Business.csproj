@@ -169,6 +169,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Business\EventBusiness.cs" />
+    <Compile Include="Business\EventSubscriptionsBusiness.cs" />
     <Compile Include="Business\SocialBusiness.cs" />
     <Compile Include="Business\UserBusiness.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

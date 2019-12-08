@@ -13,6 +13,7 @@ using EventHub.Infrastructure.Interfaces.Repository;
 using EventHub.Application.Services.SocialApplication;
 using EventHub.Application.Services.EventApplication;
 using EventHub.Infrastructure.Repositories;
+using EventHub.Application.Services.EventSubscriptions;
 
 namespace EventHub.WebApi
 {
@@ -49,6 +50,7 @@ namespace EventHub.WebApi
             services.AddScoped<UserApplication>();
             services.AddScoped<SocialApplication>();
             services.AddScoped<EventApplication>();
+            services.AddScoped<EventSubscriptionsApplication>();
             services.AddSingleton(mapperConfig.CreateMapper());
 
             /* Domain */
@@ -56,6 +58,7 @@ namespace EventHub.WebApi
             /* Insfrastructure */
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IEventRepository, EventRepository>();
+            services.AddScoped<IEventSubscriptionsRepository, EventSubscriptionsRepository>();
             services.AddScoped<IAdressRepository, AdressRepository>();
             services.AddScoped<IPublicPlaceRepository, PublicPlaceRepository>();
             services.AddScoped<ITwitterSocialMarketingRepository, TwitterSocialMarketingRepository>();
@@ -65,6 +68,7 @@ namespace EventHub.WebApi
             services.AddScoped<UserBusiness>();
             services.AddScoped<SocialBusiness>();
             services.AddScoped<EventBusiness>();
+            services.AddScoped<EventSubscriptionsBusiness>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

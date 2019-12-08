@@ -204,7 +204,11 @@
     <Compile Include="Helpers\Interfaces\IConnectionDatabase.cs" />
     <Compile Include="Interfaces\Repository\IAdressRepository.cs" />
     <Compile Include="Interfaces\Repository\IEventRepository.cs" />
+<<<<<<< Updated upstream
     <Compile Include="Interfaces\Repository\IGoogleCalendarSocialMarketingRepository.cs" />
+=======
+    <Compile Include="Interfaces\Repository\IEventSubscriptionsRepository.cs" />
+>>>>>>> Stashed changes
     <Compile Include="Interfaces\Repository\IPublicPlaceRepository.cs" />
     <Compile Include="Interfaces\Repository\ITwitterSocialMarketingRepository.cs" />
     <Compile Include="Interfaces\Repository\IUserRepository.cs" />
@@ -213,7 +217,11 @@
     <Compile Include="Interfaces\StroreProcedures\IStoreProcedure.cs" />
     <Compile Include="Repositories\AdressRepository.cs" />
     <Compile Include="Repositories\EventRepository.cs" />
+<<<<<<< Updated upstream
     <Compile Include="Repositories\GoogleCalendarSocialMarketingRepository.cs" />
+=======
+    <Compile Include="Repositories\EventSubscriptionsRepository.cs" />
+>>>>>>> Stashed changes
     <Compile Include="Repositories\PublicPlaceRepository.cs" />
     <Compile Include="Repositories\StoreProcedures\StoreProcedure.cs" />
     <Compile Include="Repositories\TwitterSocialMarketingRepository.cs" />
