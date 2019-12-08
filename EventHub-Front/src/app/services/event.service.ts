@@ -178,13 +178,27 @@ export class EventService {
   }
   
   private validateDates(fb: FormGroup) {
-    let startDatefield = fb.get('EventStartDate')
-    if (startDatefield.errors == null || 'invalidDate' in startDatefield.errors) {
-      if (fb.get('EventStartDate').value > fb.get('EventEndDate').value) {
-        startDatefield.setErrors({ invalidDate: true });
-      }
-      else {
-        startDatefield.setErrors(null);
+    let startDate = fb.get("EventStartDate");
+    let startTime = fb.get("EventStartTime");
+    let endDate = fb.get("EventEndDate");
+    let endTime = fb.get("EventEndTime");
+
+    if(startDate != null && startTime != null && endDate != null && endTime != null) {
+      if (startDate.errors == null || 'invalidDate' in startDate.errors) {
+        if(startDate.value == endDate.value) {
+          if(+startTime.value > +endTime.value) {
+            startDate.setErrors({ invalidDate: true });
+          } else {
+            startDate.setErrors(null);
+          }
+        } else {
+          if (fb.get('EventStartDate').value > fb.get('EventEndDate').value) {
+            startDate.setErrors({ invalidDate: true });
+          }
+          else {
+            startDate.setErrors(null);
+          }
+        }
       }
     }
   }
@@ -220,6 +234,9 @@ export class EventService {
   }
 
   formatDate(date, time) {
+    if(time.length == 2) {
+      return (date + "T0"+ time.substring(0,1) + ":0" + time.substring(1,2) + ":00.000Z");
+    }
     return (date + "T"+ time.substring(0,2) + ":" + time.substring(2,4) + ":00.000Z");
   }
 

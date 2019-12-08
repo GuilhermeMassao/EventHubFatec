@@ -32,9 +32,9 @@
                 <div class="col">
                     <div class="form-group required">
                         <label>Horário de início</label>
-                        <input class="form-control" type="text" mask="Hh:m0" formControlName="EventStartTime" [validation]="true" placeholder="hh:mm">
+                        <input class="form-control" type="text" mask="Hh:mm" formControlName="EventStartTime" [validation]="false" placeholder="hh:mm">
                         <label class="text-danger" *ngIf="eventService.eventForm.get('EventDates.EventStartTime').touched && eventService.eventForm.get('EventDates.EventStartTime').errors?.required">
-                            <i class="fa fa-meh-o" aria-hidden="true"></i>Esse campo é obrigatório.
+                            <i class="fa fa-meh-o" aria-hidden="true"></i> Esse campo é obrigatório.
                         </label>
                     </div>
                 </div>
@@ -45,19 +45,19 @@
                         <label>Data de termino</label>
                         <input class="form-control" type="date" formControlName="EventEndDate">
                         <label class="text-danger" *ngIf="eventService.eventForm.get('EventDates.EventEndDate').touched && eventService.eventForm.get('EventDates.EventEndDate').errors?.required">
-                            <i class="fa fa-meh-o" aria-hidden="true"></i>Esse campo é obrigatório.
+                            <i class="fa fa-meh-o" aria-hidden="true"></i> Esse campo é obrigatório.
                         </label>
                         <label class="text-danger" *ngIf="eventService.eventForm.get('EventDates.EventEndDate').touched && eventService.eventForm.get('EventDates.EventEndDate').errors?.pastEndDate">
-                            <i class="fa fa-meh-o" aria-hidden="true"></i>A data não pode ser anterior a de hoje.
+                            <i class="fa fa-meh-o" aria-hidden="true"></i> A data não pode ser anterior a de hoje.
                         </label>
                     </div>
                 </div>
                 <div class="col">
                     <div class="form-group required">
                         <label>Horário de termino</label>
-                        <input class="form-control" type="text" mask="Hh:m0" formControlName="EventEndTime" [validation]="true" placeholder="hh:mm">
+                        <input class="form-control" type="text" mask="Hh:mm" formControlName="EventEndTime" [validation]="false" placeholder="hh:mm">
                         <label class="text-danger" *ngIf="eventService.eventForm.get('EventDates.EventEndTime').touched && eventService.eventForm.get('EventDates.EventEndTime').errors?.required">
-                            <i class="fa fa-meh-o" aria-hidden="true"></i>Esse campo é obrigatório.
+                            <i class="fa fa-meh-o" aria-hidden="true"></i> Esse campo é obrigatório.
                         </label>
                     </div>
                 </div>
