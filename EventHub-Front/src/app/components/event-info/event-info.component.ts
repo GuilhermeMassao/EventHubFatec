@@ -12,7 +12,6 @@ import { FormGroup } from '@angular/forms';
 export class EventInfoComponent implements OnInit {
 
   eventId: any;
-  canEdit: any;
 
   eventInfo: any;
   adressInfo: any;
@@ -25,8 +24,7 @@ export class EventInfoComponent implements OnInit {
         this.eventId = params.id;
         this.eventService.getEventById(params.id).subscribe(
           (res: any) => {
-            this.fillInfoEvent(res);   
-            this.canEdit = JSON.parse(localStorage.getItem('user')).id == res.eventId;
+            this.fillInfoEvent(res);          
           },
           err => {
             if(err.status == 400) {
