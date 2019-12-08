@@ -19,7 +19,7 @@ BEGIN
     -- Armazena todas as incrições de eventos do usuário --
     -------------------------------------------------------
     CREATE TABLE #UserSubscriptions(
-        UserId INT
+        EventId INT
     )
 
     INSERT INTO #UserSubscriptions(

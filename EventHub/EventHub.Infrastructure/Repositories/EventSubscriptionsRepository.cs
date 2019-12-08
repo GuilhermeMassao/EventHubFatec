@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace EventHub.Infrastructure.Repositories
@@ -70,12 +71,12 @@ namespace EventHub.Infrastructure.Repositories
                         commandType: CommandType.StoredProcedure
                     );
 
-                    if (events == null)
+                    if (events.Any())
                     {
-                        return default(IEnumerable<Events>);
+                        return events;
                     }
 
-                    return events;
+                    return default(IEnumerable<Events>);
                 }
             }
             catch (Exception)
@@ -93,12 +94,19 @@ namespace EventHub.Infrastructure.Repositories
             {
                 using (_connection = new SqlConnection(_dataBaseConnection.ConnectionString()))
                 {
-                    return await _connection.QueryAsync<Events>
+                    var events = await _connection.QueryAsync<Events>
                     (
                         _storeProcedure.SelectAllCurrentEventsByOwnerId,
                         param: parameter,
                         commandType: CommandType.StoredProcedure
                     );
+
+                    if (events.Any())
+                    {
+                        return events;
+                    }
+
+                    return default(IEnumerable<Events>);
                 }
             }
             catch (Exception)
