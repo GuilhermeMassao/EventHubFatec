@@ -12,6 +12,8 @@ AS
 SET NOCOUNT ON
 
 BEGIN
+	DECLARE @IdSubscription INT;
+
     INSERT INTO [dbo].[EventSubscriptions](
         UserId,
         EventId
@@ -20,4 +22,7 @@ BEGIN
         @UserId,
         @EventId
     )
+
+	SELECT @IdSubscription = SCOPE_IDENTITY();
+	SELECT @IdSubscription AS IdSubscription
 END

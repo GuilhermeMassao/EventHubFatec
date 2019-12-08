@@ -41,8 +41,13 @@ namespace EventHub.WebApi.Controllers
         [ProducesResponseType(503)]
         public virtual async Task<IActionResult> GetEventsByUserSubscribed([FromRoute] int id)
         {
-            await _application.GetEventsByUserSubscribed(id);
-            return Ok();
+            var result = await _application.GetEventsByUserSubscribed(id);
+            if(result != null)
+            {
+                return Ok(result);
+            }
+
+            return NoContent();
         }
 
         [HttpGet]
@@ -54,8 +59,13 @@ namespace EventHub.WebApi.Controllers
         [ProducesResponseType(503)]
         public virtual async Task<IActionResult> GetCurrentEventsByOwnerId([FromRoute] int id)
         {
-            await _application.GetCurrentEventsByOwnerId(id);
-            return Ok();
+            var result = await _application.GetCurrentEventsByOwnerId(id);
+            if(result != null)
+            {
+                return Ok(result);
+            }
+
+            return NoContent();
         }
 
         [HttpDelete]
