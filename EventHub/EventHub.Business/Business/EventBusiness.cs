@@ -90,9 +90,14 @@ namespace EventHub.Business.Business
             return false;
         }
 
-        public Task<CompleteEventDto> GetById(int id)
+        public async Task<CompleteEventDto> GetById(int id)
         {
-            return _eventRepository.GetById(id);
+            return await _eventRepository.GetById(id);
+        }
+
+        public async Task<IEnumerable<CompleteEventDto>> GetByUserId(int id)
+        {
+            return await _eventRepository.GetByUserId(id);
         }
 
         public async Task<IEnumerable<CompleteEventDto>> GetAllActiveEvents()

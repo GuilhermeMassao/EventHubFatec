@@ -37,5 +37,17 @@
         <button *ngIf="!hasGoogleLogin" class="btn btn-info" type="button" (click)="googleLogin()">
             <i class="fab fa-google"></i> Vincular conta com o Google
         </button>
+    </div>  
+</div>
+
+<h1 style="margin-top: 50px; margin-bottom: 20px; border-bottom: 1px solid white;">Meus eventos</h1>
+<div class="center" style="max-width: 500px; width: 50%; margin: 0 auto;"> <!-- *ngFor="let event of events"-->
+    <div class="card text-center" *ngFor="let event of userEvents" style="margin-bottom: 10px;">
+        <div class="card-header">
+            <h3 class="card-title" style="color: black;"> {{event.eventName}}</h3>
+        </div>
+        <div class="card-body">
+            <a href="javascript:void(0);" (click)="redirectEvent(event.eventId)">Ir para a página do evento</a>
+        </div>
     </div>
 </div>

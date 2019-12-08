@@ -48,6 +48,11 @@ namespace EventHub.Application.Services.EventApplication
             return await eventBusiness.GetById(id);
         }
 
+        public async Task<IEnumerable<CompleteEventDto>> GetByUserId(int id)
+        {
+            return await eventBusiness.GetByUserId(id);
+        }
+
         public async Task<IEnumerable<PublicPlace>> GetPublicPlaces()
         {
             return await eventBusiness.GetPublicPlaces();
@@ -56,6 +61,6 @@ namespace EventHub.Application.Services.EventApplication
         public async Task<IEnumerable<CompleteEventDto>> GetAllActiveEvents()
         {
             return await eventBusiness.GetAllActiveEvents();
-    }
+        }
     }
 }

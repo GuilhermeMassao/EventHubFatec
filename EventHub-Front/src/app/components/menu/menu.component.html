@@ -10,21 +10,29 @@
           <a class="nav-link" href="eventhub/home">Home <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item active">
-          <a class="nav-link" href="#">Meus Eventos <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item active">
-          <a class="nav-link" href="eventhub/user/profile">Perfil <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item active">
           <a class="nav-link" href="#">Eventos inscritos<span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item active">
           <a class="nav-link" href="eventhub/criar-evento">Criar evento <span class="sr-only">(current)</span></a>
         </li>
+        
       </ul>
+      
       <form class="form-inline my-2 my-lg-0">
-        <p class="my-2 my-sm-0" style="font-weight: bolder; font-size: larger;">{{userName}}</p>
-        <button class="btn btn-primary my-2 my-sm-0" type="button" (click)="onLogout()" style="background: transparent; border: transparent;">Sair</button>
+          <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+          <li class="nav-item dropdown">
+              <a class="my-2 my-sm-0 nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" style="font-weight: bolder; font-size: larger;" aria-expanded="false">
+                  {{userName}}
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <li class="dropdown-item">
+                    <a class="dropdown-item" href="eventhub/user/profile">Perfil <span class="sr-only">(current)</span></a>
+                  </li>
+                <div class="dropdown-divider"></div>
+                <button class="dropdown-item btn btn-primary my-2 my-sm-0" type="button" (click)="onLogout()" style="background: transparent; border: transparent;">Sair</button>
+              </div>
+            </li>
+          </ul>
       </form>
     </div>
   </nav>

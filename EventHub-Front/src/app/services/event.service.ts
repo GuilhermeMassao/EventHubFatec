@@ -131,6 +131,10 @@ export class EventService {
     return this.http.get(this.BaseURI + '/api/event/' + id);
   }
 
+  public getEventsByUserId(id) {
+    return this.http.get(this.BaseURI + '/api/event/user/' + id);
+  }
+
   public getAllActiveEvents() {
     return this.http.get(this.BaseURI + '/api/event/active/');
   }
@@ -188,26 +192,3 @@ export class EventService {
   }
 
 }
-
-/*
-{
-  "UserOwnerId": 1,
-  "EventName": "Event Name",
-  "StartDate": "2019-12-04T14:00",
-  "EndDate": "2019-12-04T14:00",
-  "EventDescription": "Event Description",
-  "EventShortDescription": "Event Short Description",
-  "TicketsLimit": 1;
-  "Adress": {
-    "PublicPlace": {
-      "PlaceName": "Place Name"
-    },
-    "City": "City",
-    "UF": "SP",
-    "CEP": "214214",
-    "Neighborhood": "Neighborhood",
-    "AdressComplement": "Adress Complement",
-    "AdressNumber": 12345
-  }
-}
-*/

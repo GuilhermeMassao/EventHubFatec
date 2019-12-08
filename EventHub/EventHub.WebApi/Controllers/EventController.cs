@@ -118,6 +118,24 @@ namespace EventHub.WebApi.Controllers
         }
 
         [HttpGet]
+        [Route("/api/event/user/{id}")]
+        [ProducesResponseType(typeof(CompleteEventDto), 200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(500)]
+        [ProducesResponseType(503)]
+        public virtual async Task<IActionResult> GetByUserId([FromRoute] int id)
+        {
+            var result = await eventApplication.GetByUserId(id);
+
+            if (result != null)
+            {
+                return Ok(result);
+            }
+
+            return BadRequest();
+        }
+
+        [HttpGet]
         [Route("/api/event/active")]
         [ProducesResponseType(typeof(CompleteEventDto), 200)]
         [ProducesResponseType(400)]
