@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using EventHub.Domain.DTOs.Event;
+using EventHub.Domain.DTOs.User;
 using EventHub.Domain.Entities;
 using EventHub.Domain.Input;
 using EventHub.Infrastructure.Helpers;
@@ -135,6 +136,36 @@ namespace EventHub.Infrastructure.Repositories
             catch (Exception)
             {
                 return default(EventSubscribers);
+            }
+        }
+
+        public async Task<IEnumerable<UserDTO>> GetAllEventsSubscriptionsByEventId(int id)
+        {
+            var paramenter = new DynamicParameters();
+            paramenter.Add("@EventId", id, DbType.Int32);
+
+            try
+            {
+                using (_connection = new SqlConnection(_dataBaseConnection.ConnectionString()))
+                {
+                    var subscribers = await _connection.QueryAsync<UserDTO>
+                    (
+                        _storeProcedure.SelectAllEventSubscriptionsByEventId,
+                        param: paramenter,
+                        commandType: CommandType.StoredProcedure
+                    );
+
+                    if (subscribers.Any())
+                    {
+                        return subscribers;
+                    }
+
+                    return default(IEnumerable<UserDTO>);
+                }
+            }
+            catch (Exception)
+            {
+                return default(IEnumerable<UserDTO>);
             }
         }
 

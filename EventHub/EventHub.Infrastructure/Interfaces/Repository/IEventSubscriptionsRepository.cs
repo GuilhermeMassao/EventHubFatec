@@ -1,4 +1,5 @@
 ﻿using EventHub.Domain.DTOs.Event;
+using EventHub.Domain.DTOs.User;
 using EventHub.Domain.Entities;
 using EventHub.Domain.Input;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ namespace EventHub.Infrastructure.Interfaces.Repository
         Task<IEnumerable<Events>> GetEventsByUserId(int id);
         Task<IEnumerable<Events>> GetEventsByOwnerId(int id);
         Task<EventSubscribers> GetById(int id);
+        Task<IEnumerable<UserDTO>> GetAllEventsSubscriptionsByEventId(int id);
         Task<bool> Delete(int id);
     }
 }

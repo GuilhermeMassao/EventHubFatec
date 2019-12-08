@@ -39,6 +39,20 @@ namespace EventHub.Business.Business
                 return null;
             }
 
+            var eventInfo = await _eventRepository.GetById(input.EventId);
+            var subscribers = await _subscriptionsRepository.GetAllEventsSubscriptionsByEventId(input.EventId);
+      
+            int numberSubscribers = 0;
+            if (subscribers != null)
+            {
+                numberSubscribers = subscribers.Count();
+            }
+
+            if (eventInfo.TicketsLimit >= numberSubscribers)
+            {
+                return null;
+            }
+
             var eventsSubscribed = await _subscriptionsRepository.GetEventsByUserId(input.UserId);
             if (eventsSubscribed.Where(x => x.Id == input.EventId).Select(s => s).Any())
             {

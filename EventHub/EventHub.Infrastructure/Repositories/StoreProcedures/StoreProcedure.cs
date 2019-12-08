@@ -54,6 +54,7 @@ namespace EventHub.Infrastructure.Repositories.StoreProcedures
         public string SelectAllCurrentEventsByUserSubscribed => "SelectAllCurrentEventsByUserSubscribed";
         public string SelectAllCurrentEventsByOwnerId => "SelectAllCurrentEventsByOwnerId";
         public string SelectEventSubscriptionById => "SelectEventSubscriptionById";
+        public string SelectAllEventSubscriptionsByEventId => "SelectAllEventSubscriptionsByEventId";
         public string DeleteInscriptionByUserId => "DeleteInscriptionByUserId";
         #endregion
     }

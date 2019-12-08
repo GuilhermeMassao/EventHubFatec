@@ -35,7 +35,6 @@ namespace EventHub.Application.Services.EventSubscriptions
                 };
 
                 return entity;
-                //return _inputToEntity.Map<EventSubscriberInput, EventSubscribers>(input);
             }
 
             return default(EventSubscribers);
