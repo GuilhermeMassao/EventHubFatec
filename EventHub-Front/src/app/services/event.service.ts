@@ -142,6 +142,10 @@ export class EventService {
     return this.http.get(this.BaseURI + '/api/event/active/');
   }
 
+  public getUserSubscribedEvents(id) {
+    return this.http.get(this.BaseURI + '/api/subscriptions/subscribed/' + id);
+  }
+
   public getAllPublicPlaces() {
     return this.http.get(this.BaseURI + '/public-places');
   }

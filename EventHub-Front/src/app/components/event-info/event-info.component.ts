@@ -58,6 +58,7 @@ export class EventInfoComponent implements OnInit {
       }
     });
   }
+
   fillInfoEvent(data: any) {
     this.eventInfo = {
       eventId: data.eventId,
@@ -119,7 +120,7 @@ export class EventInfoComponent implements OnInit {
       (result) => {
         if (result.id) {
           this.subcribed = true;
-          this.toastr.success('Inscrição realizada com sucesso!');
+          this.toastr.success('Incrição do evento realizada com sucesso.','Sucesso!');
         }
       },
       (error) => {

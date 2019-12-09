@@ -1,16 +1,14 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { EventService } from 'src/app/services/event.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { EventService } from 'src/app/services/event.service';
-import { HttpClient } from '@angular/common/http';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  selector: 'app-subscribe-events',
+  templateUrl: './subscribe-events.component.html',
+  styleUrls: ['./subscribe-events.component.css']
 })
-
-export class HomeComponent  implements  OnInit {
+export class SubscribeEventsComponent implements OnInit {
 
   public userId: BigInteger;
   public events: any;
@@ -18,10 +16,9 @@ export class HomeComponent  implements  OnInit {
 
   constructor(private eventService: EventService, private router: Router, private toastr: ToastrService) { }
 
-
   ngOnInit() {
     this.userId = JSON.parse(localStorage.getItem('user')).id;
-    this.eventService.getAllActiveEvents().subscribe(
+    this.eventService.getUserSubscribedEvents(this.userId).subscribe(
       (res: any) => {
         console.log(res);
         this.events = res;
@@ -37,14 +34,6 @@ export class HomeComponent  implements  OnInit {
         }
       }
     );
-  }
-    
-  redirectEvent(id){
-    this.router.navigateByUrl("/eventhub/evento?id=" + id);
-  }
-
-  onChangePage(pageOfEvents: Array<any>) {
-    this.pageOfEvents = pageOfEvents;
   }
 
 }

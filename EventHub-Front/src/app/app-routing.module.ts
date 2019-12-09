@@ -10,6 +10,7 @@ import {ChangePasswordComponent} from './components/change-password/change-passw
 import { CreateEventComponent } from './components/create-event/create-event.component';
 import { EventInfoComponent } from './components/event-info/event-info.component';
 import { EventEditComponent } from './components/event-edit/event-edit.component';
+import { SubscribeEventsComponent } from './components/subscribe-events/subscribe-events.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/eventhub/home', pathMatch:'full'},
@@ -23,7 +24,8 @@ const routes: Routes = [
       { path: 'user/editar-senha', component: ChangePasswordComponent, canActivate:[AuthGuard] },
       { path: 'criar-evento', component: CreateEventComponent, canActivate:[AuthGuard]},
       { path: 'evento', component: EventInfoComponent, canActivate:[AuthGuard]},
-      { path: 'editar-evento', component: EventEditComponent, canActivate:[AuthGuard]}
+      { path: 'editar-evento', component: EventEditComponent, canActivate:[AuthGuard]},
+      { path: 'eventos-inscritos', component: SubscribeEventsComponent, canActivate:[AuthGuard]}
     ]
   }
 ];
@@ -42,4 +44,5 @@ export const routingComponents = [RegisterComponent,
                                   CreateEventComponent,
                                   ChangePasswordComponent,
                                   EventInfoComponent,
-                                  EventEditComponent]
+                                  EventEditComponent,
+                                  SubscribeEventsComponent]
