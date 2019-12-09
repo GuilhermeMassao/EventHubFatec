@@ -11,12 +11,12 @@ import { FormGroup } from '@angular/forms';
 })
 export class EventInfoComponent implements OnInit {
 
-  private eventId: any;
+  private eventId: number;
   private eventInfo: any;
   private adressInfo: any;
   private ownerEvent: boolean;
   private userId: number;
-  private userIsSubscribed: boolean = false;
+  private subcribed: boolean;
 
   constructor(
     private eventService: EventService,
@@ -35,6 +35,7 @@ export class EventInfoComponent implements OnInit {
           (res: any) => {
             this.fillInfoEvent(res);
             this.ownerEvent = this.eventInfo.userOwnerId === this.userId;
+            this.userAlreadyRegistered(params.id);
           },
           err => {
             if(err.status == 400) {
@@ -89,8 +90,8 @@ export class EventInfoComponent implements OnInit {
   toDeleteEvent() {
     this.eventService.inactiveEvent(this.eventId, this.adressInfo.adressId).subscribe(
       (res: any) => {
-        this.fillInfoEvent(res);     
-        this.router.navigateByUrl("/eventhub/home");    
+        this.fillInfoEvent(res);
+        this.router.navigateByUrl("/eventhub/home");
       },
       err => {
         if(err.status == 400) {
@@ -106,10 +107,10 @@ export class EventInfoComponent implements OnInit {
 
   ngOnInit() {
     this.fillEvent();
-    this.getUserIsSubscribed();
+    //this.getUserIsSubscribed();
   }
 
-  getUserIsSubscribed() {
+  /*getUserIsSubscribed() {
     this.eventService.getUserSubscribedEvents(this.userId)
     .subscribe(
       (result : any) => {
@@ -126,7 +127,7 @@ export class EventInfoComponent implements OnInit {
         console.log(error);
       }
     );
-  }
+  }*/
 
   private subscriberOnEvent(): void {
     const subscription = {
@@ -136,7 +137,10 @@ export class EventInfoComponent implements OnInit {
     this.eventService.subscriberOnEvent(subscription)
     .subscribe(
       (result) => {
-        this.toastr.success('Incrição do evento feita com sucesso.','Sucesso!');
+        if (result.id) {
+          this.subcribed = true;
+          this.toastr.success('Incrição do evento realizada com sucesso.','Sucesso!');
+        }
       },
       (error) => {
         this.toastr.error('Tente novamente mais tarde.', 'Erro ao se increver no evento!');
@@ -144,15 +148,35 @@ export class EventInfoComponent implements OnInit {
     );
   }
 
-  private userAlreadyRegistered(): boolean {
-    let alreadyRegistered: boolean;
+  private userAlreadyRegistered(eventId: number): void {
     this.eventService.getAllEventsByUser(this.userId)
     .subscribe(
       (result) => {
+        if (result.filter(id => id === eventId)) {
+          this.subcribed = true;
+          return;
+        }
 
+        this.subcribed = false;
       }
     );
-    return true;
   }
-  
+
+  private removeSubscription(): void {
+    const userId = this.userId;
+    const eventId = this.eventId;
+
+    this.eventService.removeSubscription(userId, eventId)
+      .subscribe((result) => {
+        if (result) {
+          this.toastr.success('Inscrição cancelada com sucesso!');
+          this.subcribed = false;
+        }
+      },
+      (error) => {
+        this.toastr.error('Tente novamente mais tarde.', 'Erro ao se cancelar a inscrição');
+      }
+      );
+  }
+
 }

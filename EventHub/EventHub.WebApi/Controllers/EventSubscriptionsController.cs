@@ -69,14 +69,19 @@ namespace EventHub.WebApi.Controllers
         }
 
         [HttpDelete]
-        [Route("{id}")]
+        [Route("/api/subscriptions/{userId}&{eventId}")]
         [ProducesResponseType(typeof(bool), 200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
         [ProducesResponseType(503)]
-        public async Task<IActionResult> Delete([FromRoute] int id)
+        public async Task<IActionResult> Delete([FromRoute] int userId, int eventId)
         {
-            var sucess = await _application.Delete(id);
+            var input = new EventSubscriberInput
+            {
+                EventId = eventId,
+                UserId = userId
+            };
+            var sucess = await _application.Delete(input);
             if (sucess)
             {
                 return Ok("Inscrição cacelada com sucesso!");

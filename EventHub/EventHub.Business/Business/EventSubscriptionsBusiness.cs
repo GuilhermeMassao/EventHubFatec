@@ -80,14 +80,19 @@ namespace EventHub.Business.Business
             return await _subscriptionsRepository.GetEventsByOwnerId(id);
         }
 
-        public async Task<bool> Delete(int id)
+        public async Task<bool> Delete(EventSubscriberInput input)
         {
-            if(_subscriptionsRepository.GetById(id) != null)
+            if(_subscriptionsRepository.GetById(input.UserId) == null)
             {
-                return await _subscriptionsRepository.Delete(id);
+                return false;
             }
 
-            return false;
+            if (_eventRepository.GetById(input.EventId) == null)
+            {
+                return false;
+            }
+
+            return await _subscriptionsRepository.Delete(input);
         }
     }
 }
