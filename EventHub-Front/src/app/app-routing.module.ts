@@ -11,6 +11,7 @@ import { CreateEventComponent } from './components/create-event/create-event.com
 import { EventInfoComponent } from './components/event-info/event-info.component';
 import { EventEditComponent } from './components/event-edit/event-edit.component';
 import { SubscribeEventsComponent } from './components/subscribe-events/subscribe-events.component';
+import { OwnerEventComponent } from './components/owner-event/owner-event.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/eventhub/home', pathMatch:'full'},
@@ -25,7 +26,8 @@ const routes: Routes = [
       { path: 'criar-evento', component: CreateEventComponent, canActivate:[AuthGuard]},
       { path: 'evento', component: EventInfoComponent, canActivate:[AuthGuard]},
       { path: 'editar-evento', component: EventEditComponent, canActivate:[AuthGuard]},
-      { path: 'eventos-inscritos', component: SubscribeEventsComponent, canActivate:[AuthGuard]}
+      { path: 'eventos-inscritos', component: SubscribeEventsComponent, canActivate:[AuthGuard]},
+      { path: 'eventos-criados', component: OwnerEventComponent, canActivate:[AuthGuard]}
     ]
   }
 ];

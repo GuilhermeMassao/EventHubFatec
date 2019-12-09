@@ -54,4 +54,7 @@ BEGIN
         EV.ActiveEvent = 1
 	AND EV.EndDate > GETDATE()
 	AND US	.Id = @UserId
+
+	ORDER BY
+		EV.StartDate DESC
 END

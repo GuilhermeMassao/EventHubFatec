@@ -14,6 +14,7 @@ import { AlertModule } from 'ngx-bootstrap/alert';
 import { NgxMaskModule, IConfig } from 'ngx-mask';
 import { DataTablesModule } from 'angular-datatables';
 import { JwPaginationComponent } from 'jw-angular-pagination';
+import { OwnerEventComponent } from './components/owner-event/owner-event.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { JwPaginationComponent } from 'jw-angular-pagination';
     routingComponents,
     MenuComponent,
     FooterComponent,
-    JwPaginationComponent
+    JwPaginationComponent,
+    OwnerEventComponent
   ],
   imports: [
     BrowserModule,

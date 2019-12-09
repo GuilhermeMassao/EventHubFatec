@@ -95,7 +95,7 @@ namespace EventHub.Business.Business
             return await _subscriptionsRepository.GetEventsByUserId(id);
         }
 
-        public async Task<IEnumerable<Events>> GetCurrentEventsByOwnerId(int id)
+        public async Task<IEnumerable<CompleteEventDto>> GetCurrentEventsByOwnerId(int id)
         {
             return await _subscriptionsRepository.GetEventsByOwnerId(id);
         }

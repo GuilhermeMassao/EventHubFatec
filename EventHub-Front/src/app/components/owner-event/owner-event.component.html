@@ -1,0 +1,19 @@
+<div style="margin-top: 100px;">
+    <h3 class="text-center" style="color: white;">EVENTOS CRIADOS</h3>
+    <h4 class="text-center" style="color: white;" *ngIf="!events"> Você ainda não criou nenhum evento. </h4>
+    <div class="center" *ngFor="let event of events">
+      <div class="card text-center">
+          <div class="card-header">
+            <h3 class="card-title"> {{event.eventName}}</h3>
+          </div>
+          <div class="card-body">
+            <p class="card-text"> <strong>Data Inicial:</strong> {{event.startDate}} e <strong>Data Final:</strong> {{event.endDate}}</p>
+            <p class="card-text"> {{event.eventDescription}}</p>
+            <p class="card-text"> Limite de pessoas: {{event.ticketsLimit}}</p>
+            <p class="card-text"> {{event.placeName}}, {{event.city}} - {{event.uf}}</p>
+            <br>
+            <a href="javascript:void(0);" (click)="redirectEvent(event.eventId)">Ir para a página do evento</a>
+          </div>
+        </div>
+    </div>
+  </div>

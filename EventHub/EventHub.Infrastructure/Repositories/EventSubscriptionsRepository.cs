@@ -86,7 +86,7 @@ namespace EventHub.Infrastructure.Repositories
             }
         }
 
-        public async Task<IEnumerable<Events>> GetEventsByOwnerId(int id)
+        public async Task<IEnumerable<CompleteEventDto>> GetEventsByOwnerId(int id)
         {
             var parameter = new DynamicParameters();
             parameter.Add("@UserOwnerId", id, DbType.Int32);
@@ -95,7 +95,7 @@ namespace EventHub.Infrastructure.Repositories
             {
                 using (_connection = new SqlConnection(_dataBaseConnection.ConnectionString()))
                 {
-                    var events = await _connection.QueryAsync<Events>
+                    var events = await _connection.QueryAsync<CompleteEventDto>
                     (
                         _storeProcedure.SelectAllCurrentEventsByOwnerId,
                         param: parameter,
@@ -107,12 +107,12 @@ namespace EventHub.Infrastructure.Repositories
                         return events;
                     }
 
-                    return default(IEnumerable<Events>);
+                    return default(IEnumerable<CompleteEventDto>);
                 }
             }
             catch (Exception)
             {
-                return default(IEnumerable<Events>);
+                return default(IEnumerable<CompleteEventDto>);
             }
         }
 

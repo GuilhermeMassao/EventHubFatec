@@ -150,7 +150,7 @@ export class EventService {
     return this.http.get(this.BaseURI + '/public-places');
   }
 
-  public  getAllEventsButUser(id:BigInteger, tableParameters:any){
+  public getAllEventsButUser(id:BigInteger, tableParameters:any){
     debugger;
     var body = {
       UserId: id,
