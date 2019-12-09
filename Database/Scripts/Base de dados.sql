@@ -1,5 +1,5 @@
 
---select * from PublicPlace
+select * from PublicPlace
 
 insert into [dbo].[User] values(
 'Guilherme Massao',
@@ -26,7 +26,7 @@ null,null,null,
 )
 go
 insert into [dbo].[User] values(
-'fabio Furquim',
+'Fabio Furquim',
 'fabio@gmail.com',
 '1234',
 null,null,null,
@@ -46,10 +46,10 @@ select  * from [dbo].[User]
 
 go
 insert into Adress(PublicPlaceId, PlaceName,City,UF,CEP,Neighborhood,AdressComplement,AdressNumber,ActiveAdress) values(
-2,
-'jundiai',
-'9 de Julho ',
-'sp',
+1,
+'9 de Julho',
+'Jundiai',
+'SP',
 '1320856',
 'Centro',
 'ao lado do shopping',
@@ -62,7 +62,7 @@ insert into Adress(PublicPlaceId, PlaceName,City,UF,CEP,Neighborhood,AdressCompl
 2,
 'Bras Cardoso',
 'Sao Paulo',
-'sp',
+'SP',
 '1320856',
 'Bairro vila nova',
 'Farmacia central',
@@ -84,11 +84,12 @@ insert into Adress(PublicPlaceId, PlaceName,City,UF,CEP,Neighborhood,AdressCompl
 go
 insert into Adress(PublicPlaceId, PlaceName,City,UF,CEP,Neighborhood,AdressComplement,AdressNumber,ActiveAdress) values(
 2,
-'Nova York',
-'NY',
+'do Rosário',
+'Jundiaí',
+'SP',
 '1320856',
-'Lighten Neighborhood',
-'central Park',
+'Centro',
+'',
 '3333',
 1
 )
@@ -100,7 +101,8 @@ declare  @inicio date
 declare @ownerId int
 declare @adressId int
 select @ownerId = Id from [dbo].[user] u where u.UserName = 'Guilherme Massao'
-select @adressId = Id from [dbo].[Adress] a where a.City = 'jundiai'
+select @adressId = Id from [dbo].[Adress] a where a.City = 'Jundiai';
+select @adressId;
 set @inicio = DATEADD(MONTH, 1, GETDATE())
 insert into Event(UserOwnerId,AdressId,StartDate,EndDate,EventName,EventShortDescription,EventDescription,TicketsLimit,ActiveEvent) values(
 @ownerId,
@@ -120,7 +122,7 @@ declare  @inicio date
 declare @ownerId int
 declare @adressId int
 select @ownerId = Id from [dbo].[user] u where u.UserName = 'Guilherme Massao'
-select @adressId = Id from [dbo].[Adress] a where a.City = 'jundiai'
+select @adressId = Id from [dbo].[Adress] a where a.City = 'Jundiai'
 set @inicio = DATEADD(MONTH, 2, GETDATE())
 insert into Event(UserOwnerId,AdressId,StartDate,EndDate,EventName,EventShortDescription,EventDescription,TicketsLimit,ActiveEvent) values(
 @ownerId,
@@ -215,7 +217,7 @@ go
 declare  @inicio date
 declare @ownerId int
 declare @adressId int
-select @ownerId = Id from [dbo].[user] u where u.UserName = 'fabio Furquim'
+select @ownerId = Id from [dbo].[user] u where u.UserName = 'Fabio Furquim'
 select @adressId = Id from [dbo].[Adress] a where a.City = 'Ilha Solteira'
 set @inicio = DATEADD(MONTH, 2, GETDATE())
 insert into Event(UserOwnerId,AdressId,StartDate,EndDate,EventName,EventShortDescription,EventDescription,TicketsLimit,ActiveEvent) values(
@@ -235,16 +237,16 @@ declare  @inicio date
 declare @ownerId int
 declare @adressId int
 select @ownerId = Id from [dbo].[user] u where u.UserName = 'Matheu Salles'
-select @adressId = Id from [dbo].[Adress] a where a.City = 'Nova York'
+select @adressId = Id from [dbo].[Adress] a where a.PlaceName = 'do Rosário'
 set @inicio = DATEADD(MONTH, 2, GETDATE())
 insert into Event(UserOwnerId,AdressId,StartDate,EndDate,EventName,EventShortDescription,EventDescription,TicketsLimit,ActiveEvent) values(
 @ownerId,
 @adressId,
 @inicio,
 DATEADD(DAY,4,@inicio),
-'Visita ao museu de nova york.',
-'Visita ao museu de nova york.',
-'Convite às pessoas proxima para presença em visita ao museu de nova york.',
+'Aula experimental de Yoga',
+'Aula experimental de Yoga.',
+'Aula experimental de Yoga, no centro de Jundiaí para público de todas as idades.',
 30,
 1
 )
@@ -254,7 +256,7 @@ declare  @inicio date
 declare @ownerId int
 declare @adressId int
 select @ownerId = Id from [dbo].[user] u where u.UserName = 'Matheu Salles'
-select @adressId = Id from [dbo].[Adress] a where a.City = 'Nova York'
+select @adressId = Id from [dbo].[Adress] a where a.City = 'Ilha Solteira'
 set @inicio = DATEADD(MONTH, 2, GETDATE())
 insert into Event(UserOwnerId,AdressId,StartDate,EndDate,EventName,EventShortDescription,EventDescription,TicketsLimit,ActiveEvent) values(
 @ownerId,
