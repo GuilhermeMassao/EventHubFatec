@@ -130,7 +130,7 @@ export class EventInfoComponent implements OnInit {
 
       }
     );
+    return true;
   }
-
-  return true;
+  
 }
