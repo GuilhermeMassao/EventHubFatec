@@ -12,51 +12,46 @@ SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED
 SET NOCOUNT ON
 
 BEGIN
-    IF OBJECT_ID('TEMPDB..#UserSubscriptions') IS NOT NULL
-        DROP TABLE #UserSubscriptions
-        
-    -------------------------------------------------------
-    -- Armazena todas as incrições de eventos do usuário --
-    -------------------------------------------------------
-    CREATE TABLE #UserSubscriptions(
-        EventId INT
-    )
-
-    INSERT INTO #UserSubscriptions(
-        EventId
-    )
     SELECT
-        EventId
-    FROM
-        [dbo].[EventSubscriptions]
-    WHERE
-        UserId = @UserId
-
-    -----------------------------------------------------------
-    -- Retorna dos dados dos enventos inscritos pelo usuário --
-    -----------------------------------------------------------
-    SELECT
-        EV.Id,
+        EV.Id AS EventId,
+		EV.UserOwnerId,
+        EV.EventName,
         EV.StartDate,
         EV.EndDate,
-        EV.EventName,
         EV.EventShortDescription,
-        EV.TicketsLimit
+        EV.EventDescription,
+        EV.TicketsLimit,
+        US.UserName AS EventOwnerName,
+        US.Email AS EventOwnerEmail,
+		AD.PublicPlaceId,
+        AD.Id AS AdressId,
+		AD.PlaceName,
+        AD.City,
+        AD.UF,
+        AD.CEP,
+        AD.Neighborhood,
+        AD.AdressComplement,
+        AD.AdressNumber
     FROM
-        [dbo].[Event] EV
+		[dbo].[EventSubscriptions] ES
 
     INNER JOIN
-        #UserSubscriptions US
+        [dbo].[User] US
     ON
-        EV.Id = US.EventId
+        ES.UserId = US.Id
+
+	INNER JOIN
+		[dbo].[Event] EV
+	ON
+		EV.Id = ES.EventId
+
+    INNER JOIN
+        [dbo].[Adress] AD
+    ON
+        EV.AdressId = AD.Id
 
     WHERE
-        EV.EndDate > GETDATE()
-    AND ActiveEvent = 1
-        
-    ORDER BY
-        EV.StartDate DESC
-
-    IF OBJECT_ID('TEMPDB..#UserSubscriptions') IS NOT NULL
-        DROP TABLE #UserSubscriptions
+        EV.ActiveEvent = 1
+	AND EV.EndDate > GETDATE()
+	AND US	.Id = @UserId
 END
