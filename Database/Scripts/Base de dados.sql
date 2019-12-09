@@ -3,7 +3,7 @@
 
 insert into [dbo].[User] values(
 'Guilherme Massao',
-'Guilhermemassao@gmail.com',
+'guilhermemassao@gmail.com',
 '1234',
 null,null,null,
 1
@@ -11,7 +11,7 @@ null,null,null,
 go
 insert into [dbo].[User] values(
 'Rodrigo Soares',
-'Rodrigo@gmail.com',
+'rodrigo@gmail.com',
 '1234',
 null,null,null,
 1
@@ -19,7 +19,7 @@ null,null,null,
 go
 insert into [dbo].[User] values(
 'Gleber Michel',
-'Gleber@gmail.com',
+'gleber@gmail.com',
 '1234',
 null,null,null,
 1
@@ -27,7 +27,7 @@ null,null,null,
 go
 insert into [dbo].[User] values(
 'fabio Furquim',
-'Fabio@gmail.com',
+'fabio@gmail.com',
 '1234',
 null,null,null,
 1
@@ -35,7 +35,7 @@ null,null,null,
 go
 insert into [dbo].[User] values(
 'Matheu Salles',
-'Salles@gmail.com',
+'salles@gmail.com',
 '1234',
 null,null,null,
 1
@@ -45,9 +45,10 @@ select  * from [dbo].[User]
 
 
 go
-insert into Adress(PublicPlaceId,City,UF,CEP,Neighborhood,AdressComplement,AdressNumber,ActiveAdress) values(
+insert into Adress(PublicPlaceId, PlaceName,City,UF,CEP,Neighborhood,AdressComplement,AdressNumber,ActiveAdress) values(
 2,
 'jundiai',
+'9 de Julho ',
 'sp',
 '1320856',
 'Centro',
@@ -57,8 +58,9 @@ insert into Adress(PublicPlaceId,City,UF,CEP,Neighborhood,AdressComplement,Adres
 )
 select * from Adress
 go
-insert into Adress(PublicPlaceId,City,UF,CEP,Neighborhood,AdressComplement,AdressNumber,ActiveAdress) values(
+insert into Adress(PublicPlaceId, PlaceName,City,UF,CEP,Neighborhood,AdressComplement,AdressNumber,ActiveAdress) values(
 2,
+'Bras Cardoso',
 'Sao Paulo',
 'sp',
 '1320856',
@@ -68,8 +70,9 @@ insert into Adress(PublicPlaceId,City,UF,CEP,Neighborhood,AdressComplement,Adres
 1
 )
 go
-insert into Adress(PublicPlaceId,City,UF,CEP,Neighborhood,AdressComplement,AdressNumber,ActiveAdress) values(
+insert into Adress(PublicPlaceId, PlaceName,City,UF,CEP,Neighborhood,AdressComplement,AdressNumber,ActiveAdress) values(
 2,
+'Travessal Sul',
 'Ilha Solteira',
 'sp',
 '1320856',
@@ -79,7 +82,7 @@ insert into Adress(PublicPlaceId,City,UF,CEP,Neighborhood,AdressComplement,Adres
 1
 )
 go
-insert into Adress(PublicPlaceId,City,UF,CEP,Neighborhood,AdressComplement,AdressNumber,ActiveAdress) values(
+insert into Adress(PublicPlaceId, PlaceName,City,UF,CEP,Neighborhood,AdressComplement,AdressNumber,ActiveAdress) values(
 2,
 'Nova York',
 'NY',

@@ -44,9 +44,6 @@ export class EventEditComponent implements OnInit {
     );
 
     this.fillForm();
-    if(this.eventId != JSON.parse(localStorage.getItem('user')).id) {
-      this.router.navigateByUrl("/eventhub/home");
-    }
   }
 
   fillForm() {
@@ -55,6 +52,9 @@ export class EventEditComponent implements OnInit {
         this.eventId = params.id;
         this.eventService.getEventById(params.id).subscribe(
           (res: any) => {
+            if(res.userOwnerId != JSON.parse(localStorage.getItem('user')).id) {
+              this.router.navigateByUrl("/eventhub/home");
+            }
             this.fillFormVariables(res);
             this.eventService.buildEventEditForm(this.eventInfo, this.adressInfo);
           },

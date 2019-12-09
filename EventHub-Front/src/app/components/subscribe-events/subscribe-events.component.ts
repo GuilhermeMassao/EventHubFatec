@@ -36,4 +36,8 @@ export class SubscribeEventsComponent implements OnInit {
     );
   }
 
+  redirectEvent(id){
+    this.router.navigateByUrl("/eventhub/evento?id=" + id);
+  }
+
 }
