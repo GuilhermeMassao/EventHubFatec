@@ -132,12 +132,16 @@ export class EventInfoComponent implements OnInit {
     this.eventService.getAllEventsByUser(this.userId)
     .subscribe(
       (result) => {
-        if (result.filter(id => id === eventId)) {
-          this.subcribed = true;
-          return;
-        }
-
         this.subcribed = false;
+        result.filter(event => {
+          if(event.eventId == eventId) {
+            this.subcribed = true;
+            console.log(this.subcribed);
+            return;
+          } else {
+            this.subcribed = false;
+          }
+        });
       }
     );
   }
