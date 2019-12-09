@@ -72,6 +72,7 @@ export class EventInfoComponent implements OnInit {
     this.adressInfo = {
       adressId: data.adressId,
       publicPlaceId: data.publicPlaceId,
+      publicPlaceName: data.publicPlaceName,
       placeName: data.placeName,
       city: data.city,
       uf: data.uf,

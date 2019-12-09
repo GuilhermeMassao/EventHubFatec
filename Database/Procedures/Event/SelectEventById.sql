@@ -24,6 +24,7 @@ BEGIN
         US.UserName AS EventOwnerName,
         US.Email AS EventOwnerEmail,
 		AD.PublicPlaceId,
+		PP.PlaceName AS PublicPlaceName,
         AD.Id AS AdressId,
 		AD.PlaceName,
         AD.City,
@@ -44,6 +45,10 @@ BEGIN
         [dbo].[Adress] AD
     ON
         EV.AdressId = AD.Id
+	
+	INNER JOIN
+		[dbo].[PublicPlace] PP
+	ON AD.PublicPlaceId = PP.Id
 
     WHERE
         EV.Id = @Id

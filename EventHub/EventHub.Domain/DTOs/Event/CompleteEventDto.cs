@@ -15,6 +15,7 @@ namespace EventHub.Domain.DTOs.Event
         public int TicketsLimit { get; set; }
         public int AdressId { get; set; }
         public int PublicPlaceId { get; set; }
+        public string PublicPlaceName { get; set; }
         public string PlaceName { get; set; }
         public string City { get; set; }
         public string UF { get; set; }
