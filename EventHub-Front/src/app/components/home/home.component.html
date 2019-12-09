@@ -7,7 +7,7 @@
           <h3 class="card-title"> {{event.eventName}}</h3>
         </div>
         <div class="card-body">
-          <p class="card-text"> <strong>Data Inicial:</strong> {{event.startDate}} e <strong>Data Final:</strong> {{event.endDate}}</p>
+          <p class="card-text"> <strong>Data Inicial:</strong> {{event.startDate | date: 'dd/MM/yyyy HH:mm'}} e <strong>Data Final:</strong> {{event.endDate | date: 'dd/MM/yyyy HH:mm'}}</p>
           <p class="card-text"> {{event.eventDescription}}</p>
           <p class="card-text"> Limite de pessoas: {{event.ticketsLimit}}</p>
           <p class="card-text"> {{event.placeName}}, {{event.city}} - {{event.uf}}</p>
