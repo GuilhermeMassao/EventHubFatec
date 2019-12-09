@@ -10,9 +10,9 @@
                 <p class="card-text"> <strong>Data Inicial:</strong> {{event.startDate}} e <strong>Data Final:</strong> {{event.endDate}}</p>
                 <p class="card-text"> {{event.eventDescription}}</p>
                 <p class="card-text"> Limite de pessoas: {{event.ticketsLimit}}</p>
-                <p class="card-text"> {{event.placeName}}, {{event.city}} - {{event.uf}}</p>
-                <br>
-                <a href="javascript:void(0);" (click)="redirectEvent(event.eventId)">Ir para a página do evento</a>
+                <!--<p class="card-text"> {{event.placeName}}, {{event.city}} - {{event.uf}}</p>-->
+                 <br>
+                <a href="javascript:void(0);" (click)="redirectEvent(event.id)">Ir para a página do evento</a>
               </div>
             </div>
         </div>

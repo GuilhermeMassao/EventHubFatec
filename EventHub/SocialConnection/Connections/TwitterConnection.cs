@@ -106,9 +106,10 @@ namespace SocialConnection.Connections
             {
                 return new PostResponseData(response.Id, response.Url);
             }
-            
-            throw new CouldNotConnectException(
-                $"Error while connecting to Twitter Api when posting a new Tweet. Twitter EndPoint:{GetPostTweetEndPoint(contentRequestData)}.", HttpStatusCode.BadRequest);
+
+            return null;
+            /*throw new CouldNotConnectException(
+                $"Error while connecting to Twitter Api when posting a new Tweet. Twitter EndPoint:{GetPostTweetEndPoint(contentRequestData)}.", HttpStatusCode.BadRequest);*/
         }
 
         /*private string Header(TwitterPostContentData contentRequestData)
