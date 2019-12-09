@@ -278,7 +278,7 @@ export class UserInfoComponent implements OnInit {
   }
 
   getUserEvents() {
-    this.eventService.getEventsByUserId(JSON.parse(localStorage.getItem('user')).id).subscribe(
+    this.eventService.getAllEventsByOwner(JSON.parse(localStorage.getItem('user')).id).subscribe(
       (res: any) => {
         console.log(res);
         this.userEvents = res;
