@@ -8,7 +8,7 @@
         <button class="nav-link" href="#" title="Excluir" (click)="toDeleteEvent()"><i class="fas fa-trash"></i></button>
       </li>
       <li *ngIf="!ownerEvent" class="nav-item">
-        <button class="nav-link" title="Increver-se" (click)="subscriberOnEvent()">
+        <button class="nav-link" *ngIf="userIsSubscribed" title="Increver-se" (click)="subscriberOnEvent()">
           Inscreva-se
         </button>
       </li>

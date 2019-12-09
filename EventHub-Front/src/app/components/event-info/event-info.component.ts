@@ -16,6 +16,7 @@ export class EventInfoComponent implements OnInit {
   private adressInfo: any;
   private ownerEvent: boolean;
   private userId: number;
+  private userIsSubscribed: boolean = false;
 
   constructor(
     private eventService: EventService,
@@ -56,6 +57,7 @@ export class EventInfoComponent implements OnInit {
       }
     });
   }
+
   fillInfoEvent(data: any) {
     this.eventInfo = {
       eventId: data.eventId,
@@ -104,7 +106,26 @@ export class EventInfoComponent implements OnInit {
 
   ngOnInit() {
     this.fillEvent();
+    this.getUserIsSubscribed();
+  }
 
+  getUserIsSubscribed() {
+    this.eventService.getUserSubscribedEvents(this.userId)
+    .subscribe(
+      (result : any) => {
+        if(result != null) {
+          result.forEach(event => {
+            console.log(event);
+            if(event.Id == this.eventId) {
+              this.userIsSubscribed = true;
+            }
+          });
+        }
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
   private subscriberOnEvent(): void {
@@ -115,6 +136,7 @@ export class EventInfoComponent implements OnInit {
     this.eventService.subscriberOnEvent(subscription)
     .subscribe(
       (result) => {
+        this.toastr.success('Incrição do evento feita com sucesso.','Sucesso!');
       },
       (error) => {
         this.toastr.error('Tente novamente mais tarde.', 'Erro ao se increver no evento!');

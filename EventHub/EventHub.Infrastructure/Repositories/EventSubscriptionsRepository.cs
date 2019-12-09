@@ -50,7 +50,7 @@ namespace EventHub.Infrastructure.Repositories
                     return createdId;
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return null;
             }
