@@ -257,4 +257,8 @@ export class EventService {
     return this.http.get(this.BaseURI + '/api/subscriptions/owner/' + id);
   }
 
+  public removeSubscription(userId: number, eventId: number): Observable<any> {
+    return this.http.delete(this.BaseURI + '/api/subscriptions/' + userId + '&' + eventId);
+  }
+
 }

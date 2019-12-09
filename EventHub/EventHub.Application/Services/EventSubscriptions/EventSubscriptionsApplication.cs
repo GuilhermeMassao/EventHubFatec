@@ -50,9 +50,9 @@ namespace EventHub.Application.Services.EventSubscriptions
             return await _business.GetCurrentEventsByOwnerId(id);
         }
 
-        public async Task<bool> Delete(int id)
+        public async Task<bool> Delete(EventSubscriberInput input)
         {
-            return await _business.Delete(id);
+            return await _business.Delete(input);
         }
     }
 }

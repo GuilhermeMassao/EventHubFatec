@@ -14,6 +14,6 @@ namespace EventHub.Infrastructure.Interfaces.Repository
         Task<IEnumerable<Events>> GetEventsByOwnerId(int id);
         Task<EventSubscribers> GetById(int id);
         Task<IEnumerable<UserDTO>> GetAllEventsSubscriptionsByEventId(int id);
-        Task<bool> Delete(int id);
+        Task<bool> Delete(EventSubscriberInput input);
     }
 }

@@ -169,10 +169,11 @@ namespace EventHub.Infrastructure.Repositories
             }
         }
 
-        public async Task<bool> Delete(int id)
+        public async Task<bool> Delete(EventSubscriberInput input)
         {
             var parameter = new DynamicParameters();
-            parameter.Add("@UserId", id, DbType.Int32);
+            parameter.Add("@UserId", input.UserId, DbType.Int32);
+            parameter.Add("@EventId", input.EventId, DbType.Int32);
 
             try
             {

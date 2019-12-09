@@ -7,13 +7,20 @@
       <li *ngIf="ownerEvent" class="nav-item">
         <button class="nav-link" href="#" title="Excluir" (click)="toDeleteEvent()"><i class="fas fa-trash"></i></button>
       </li>
-      <li *ngIf="!ownerEvent" class="nav-item">
-        <button class="nav-link" title="Increver-se" (click)="subscriberOnEvent()">
+      <li *ngIf="!ownerEvent && !subcribed" class="nav-item">
+        <button class="nav-link" (click)="subscriberOnEvent()">
           Inscreva-se
         </button>
       </li>
+      <li *ngIf="!ownerEvent && subcribed" class="nav-item">
+        <button class="nav-link" (click)="removeSubscription()">
+          Cancelar Inscrição
+        </button>
+      </li>
       <li class="nav-item">
-        <h3 class="card-title"> <i class="fab fa-rocketchat"></i> {{eventInfo.eventName}}</h3>
+        <h3 class="card-title"> 
+          <span class="fab fa-rocketchat"> </span> {{eventInfo.eventName}}
+        </h3>
       </li>
     </ul>
   </div>
@@ -27,7 +34,7 @@
     <p class="card-text"> <strong >Rua:</strong> {{adressInfo.placeName}}</p>
     <p class="card-text"> <strong>Número:</strong> {{adressInfo.adressNumber}}</p>
     <p class="card-text"> <strong>Bairro:</strong> {{adressInfo.neighborhood}}</p>
-    <p class="card-text"> <strong>Complemento:</strong> {{adressInfo.adressComplement}}</p>
+    <p *ngIf="adressInfo.adressComplement" class="card-text"> <strong>Complemento:</strong> {{adressInfo.adressComplement}}</p>
     <p class="card-text"> <strong>Cidade:</strong> {{adressInfo.city}}</p>
     <p class="card-text"> <strong>Estado:</strong> {{adressInfo.uf}}</p>
     <p class="card-text"> <strong>CEP:</strong> {{adressInfo.cep}}</p>
