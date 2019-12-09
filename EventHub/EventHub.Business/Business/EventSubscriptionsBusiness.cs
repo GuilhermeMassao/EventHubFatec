@@ -3,6 +3,8 @@ using EventHub.Domain.Input;
 using EventHub.Infraestructure.Repository;
 using EventHub.Infrastructure.Interfaces.Repository;
 using EventHub.Infrastructure.Repositories;
+using SocialConnection.Connections;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,20 +13,26 @@ namespace EventHub.Business.Business
 {
     public class EventSubscriptionsBusiness
     {
+        private readonly string GOOGLE_APP_ID = "1096581191116-5ee78kmkthcahuhjr6bifpaooq34icct.apps.googleusercontent.com";
+        private readonly string GOOGLE_APP_SECRET = "9ojQerHg5M3zdXkZ_fVBFXpr";
+
         private readonly IEventSubscriptionsRepository _subscriptionsRepository;
         private readonly IUserRepository _userRepository;
         private readonly IEventRepository _eventRepository;
+        private readonly IGoogleCalendarSocialMarketingRepository _googleCalendarSocialMarketingRepository;
 
         public EventSubscriptionsBusiness
         (
             IEventSubscriptionsRepository subscriptionsRepository,
             IUserRepository userRepository,
-            IEventRepository eventRepository
+            IEventRepository eventRepository,
+            IGoogleCalendarSocialMarketingRepository googleCalendarSocialMarketingRepository
         )
         {
             _subscriptionsRepository = subscriptionsRepository;
             _userRepository = userRepository;
             _eventRepository = eventRepository;
+            _googleCalendarSocialMarketingRepository = googleCalendarSocialMarketingRepository;
         }
 
         public async Task<int?> CreateEventSubscriptions(EventSubscriberInput input)
@@ -64,6 +72,18 @@ namespace EventHub.Business.Business
             var createdId = await _subscriptionsRepository.CreateEventSubscriptions(input);
             if (createdId != null)
             {
+                var userGoogleRefreshToken = await _userRepository.GetGoogleTokenByUserId(input.UserId);
+                if (userGoogleRefreshToken != null) {
+                    var eventGoogleInfo = await _googleCalendarSocialMarketingRepository.GetByEventId(input.EventId);
+                    if (eventGoogleInfo != null) {
+                        GoogleConnection google = new GoogleConnection();
+                        var accessToken = google.RefreshAccessToken(GOOGLE_APP_ID, GOOGLE_APP_SECRET, userGoogleRefreshToken.GoogleRefreshToken);
+                        try
+                        {
+                            google.SubscribeAgenda(accessToken.AccessToken, eventGoogleInfo.HashCalendar);
+                        } catch (Exception) { }
+                    }
+                }
                 return createdId.GetValueOrDefault();
             }
 

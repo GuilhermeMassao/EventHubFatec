@@ -107,27 +107,7 @@ export class EventInfoComponent implements OnInit {
 
   ngOnInit() {
     this.fillEvent();
-    //this.getUserIsSubscribed();
   }
-
-  /*getUserIsSubscribed() {
-    this.eventService.getUserSubscribedEvents(this.userId)
-    .subscribe(
-      (result : any) => {
-        if(result != null) {
-          result.forEach(event => {
-            console.log(event);
-            if(event.Id == this.eventId) {
-              this.userIsSubscribed = true;
-            }
-          });
-        }
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
-  }*/
 
   private subscriberOnEvent(): void {
     const subscription = {
