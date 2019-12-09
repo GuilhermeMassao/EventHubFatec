@@ -12,26 +12,54 @@
         <div class="form-group">
         <textarea class="form-control" formControlName="EventDescription" placeholder="Descrição detalhada do evento" rows="3" maxlength="1000"></textarea>
         </div>
-        <div formGroupName="EventDates" class="row">
-            <div class="col">
-                <div class="form-group required">
-                    <label>Data de início</label>
-                    <input class="form-control" type="datetime-local" min="2019-01-01T00:00" max="2030-01-01T00:00" formControlName="EventStartDate">
-                    <label class="text-danger" *ngIf="eventService.eventForm.get('EventDates.EventStartDate').touched && eventService.eventForm.get('EventDates.EventStartDate').errors?.required">
-                        <i class="fa fa-meh-o" aria-hidden="true"></i>Esse campo é obrigatório.
-                    </label>
-                    <label class="text-danger" *ngIf="eventService.eventForm.get('EventDates.EventStartDate').touched && eventService.eventForm.get('EventDates.EventStartDate').errors?.invalidDate">
-                        <i class="fa fa-meh-o" aria-hidden="true"></i>Data de início não pode ser maior que a data final.
-                    </label>
+        <div formGroupName="EventDates">
+            <div class="row">
+                <div class="col">
+                    <div class="form-group required">
+                        <label>Data de início</label>
+                        <input class="form-control" type="date" formControlName="EventStartDate">
+                        <label class="text-danger" *ngIf="eventService.eventForm.get('EventDates.EventStartDate').touched && eventService.eventForm.get('EventDates.EventStartDate').errors?.required">
+                            <i class="fa fa-meh-o" aria-hidden="true"></i>Esse campo é obrigatório.
+                        </label>
+                        <label class="text-danger" *ngIf="eventService.eventForm.get('EventDates.EventStartDate').touched && eventService.eventForm.get('EventDates.EventStartDate').errors?.invalidDate">
+                            <i class="fa fa-meh-o" aria-hidden="true"></i>Data de início não pode ser maior que a data final.
+                        </label>
+                        <label class="text-danger" *ngIf="eventService.eventForm.get('EventDates.EventStartDate').touched && eventService.eventForm.get('EventDates.EventStartDate').errors?.pastDate">
+                            <i class="fa fa-meh-o" aria-hidden="true"></i>A data não pode ser anterior a de hoje.
+                        </label>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group required">
+                        <label>Horário de início</label>
+                        <input class="form-control" type="text" mask="Hh:mm" formControlName="EventStartTime" [validation]="false" placeholder="hh:mm">
+                        <label class="text-danger" *ngIf="eventService.eventForm.get('EventDates.EventStartTime').touched && eventService.eventForm.get('EventDates.EventStartTime').errors?.required">
+                            <i class="fa fa-meh-o" aria-hidden="true"></i> Esse campo é obrigatório.
+                        </label>
+                    </div>
                 </div>
             </div>
-            <div class="col">
-                <div class="form-group required">
-                    <label>Data de termino</label>
-                    <input class="form-control" type="datetime-local" min="2019-01-01T00:00" max="2030-01-01T00:00" formControlName="EventEndDate">
-                    <label class="text-danger" *ngIf="eventService.eventForm.get('EventDates.EventEndDate').touched && eventService.eventForm.get('EventDates.EventEndDate').errors?.required">
-                        <i class="fa fa-meh-o" aria-hidden="true"></i>Esse campo é obrigatório.
-                    </label>
+            <div class="row">
+                <div class="col">
+                    <div class="form-group required">
+                        <label>Data de termino</label>
+                        <input class="form-control" type="date" formControlName="EventEndDate">
+                        <label class="text-danger" *ngIf="eventService.eventForm.get('EventDates.EventEndDate').touched && eventService.eventForm.get('EventDates.EventEndDate').errors?.required">
+                            <i class="fa fa-meh-o" aria-hidden="true"></i> Esse campo é obrigatório.
+                        </label>
+                        <label class="text-danger" *ngIf="eventService.eventForm.get('EventDates.EventEndDate').touched && eventService.eventForm.get('EventDates.EventEndDate').errors?.pastEndDate">
+                            <i class="fa fa-meh-o" aria-hidden="true"></i> A data não pode ser anterior a de hoje.
+                        </label>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group required">
+                        <label>Horário de termino</label>
+                        <input class="form-control" type="text" mask="Hh:mm" formControlName="EventEndTime" [validation]="false" placeholder="hh:mm">
+                        <label class="text-danger" *ngIf="eventService.eventForm.get('EventDates.EventEndTime').touched && eventService.eventForm.get('EventDates.EventEndTime').errors?.required">
+                            <i class="fa fa-meh-o" aria-hidden="true"></i> Esse campo é obrigatório.
+                        </label>
+                    </div>
                 </div>
             </div>
         </div>

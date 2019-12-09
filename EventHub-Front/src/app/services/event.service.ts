@@ -17,8 +17,10 @@ export class EventService {
     EventDescription: [''],
     EventDates: this.fb.group({
       EventStartDate: ['', Validators.required],
+      EventStartTime: ['', Validators.required],
       EventEndDate: ['', Validators.required],
-    }, { validator: this.validateDates }),
+      EventEndTime: ['', Validators.required]
+    }, { validator: [this.validateDates, this.validPastDate] }),
     EventTicket: ['', Validators.required],
     EventAdressPublicPlace: ['', Validators.required],
     EventAdressPlaceName: ['', Validators.required],
@@ -52,8 +54,8 @@ export class EventService {
     var body = {
       UserOwnerId: userId,
       EventName: this.eventForm.value.EventName,
-      StartDate: this.eventForm.value.EventDates.EventStartDate,
-      EndDate: this.eventForm.value.EventDates.EventEndDate,
+      StartDate: this.formatDate(this.eventForm.value.EventDates.EventStartDate, this.eventForm.value.EventDates.EventStartTime),
+      EndDate: this.formatDate(this.eventForm.value.EventDates.EventEndDate,this.eventForm.value.EventDates.EventEndTime),
       EventDescription: this.getFormNullableValue(this.eventForm.value.EventDescription),
       EventShortDescription: this.createShortDescription(this.eventForm.value.EventDescription),
       TicketsLimit: +this.eventForm.value.EventTicket,
@@ -175,17 +177,68 @@ export class EventService {
     
     return formValue;
   }
-
+  
   private validateDates(fb: FormGroup) {
-    let startDatefield = fb.get('EventStartDate')
-    if (startDatefield.errors == null || 'invalidDate' in startDatefield.errors) {
-      if (fb.get('EventStartDate').value > fb.get('EventEndDate').value) {
-        startDatefield.setErrors({ invalidDate: true });
-      }
-      else {
-        startDatefield.setErrors(null);
+    let startDate = fb.get("EventStartDate");
+    let startTime = fb.get("EventStartTime");
+    let endDate = fb.get("EventEndDate");
+    let endTime = fb.get("EventEndTime");
+
+    if(startDate != null && startTime != null && endDate != null && endTime != null) {
+      if (startDate.errors == null || 'invalidDate' in startDate.errors) {
+        if(startDate.value == endDate.value) {
+          if(+startTime.value > +endTime.value) {
+            startDate.setErrors({ invalidDate: true });
+          } else {
+            startDate.setErrors(null);
+          }
+        } else {
+          if (fb.get('EventStartDate').value > fb.get('EventEndDate').value) {
+            startDate.setErrors({ invalidDate: true });
+          }
+          else {
+            startDate.setErrors(null);
+          }
+        }
       }
     }
+  }
+
+  private validPastDate(fb: FormGroup) {
+    let startDate = fb.get("EventStartDate");
+    let endDate = fb.get("EventEndDate");
+    if(startDate != null) {
+      if (startDate.errors == null || 'pastDate' in startDate.errors) {
+        var startFieldDate = new Date(startDate.value);
+        startFieldDate.setDate(startFieldDate.getDate() + 1);
+        if (new Date(startFieldDate) < new Date()) {
+          startDate.setErrors({ pastDate: true });
+        }
+        else {
+          startDate.setErrors(null);
+        }
+      }
+    }
+
+    if(endDate != null) {
+      if (endDate.errors == null || 'pastDate' in endDate.errors) {
+        var endFieldDate = new Date(endDate.value);
+        endFieldDate.setDate(endFieldDate.getDate() + 1);
+        if (new Date(endFieldDate) < new Date()) {
+          endDate.setErrors({ pastEndDate: true });
+        }
+        else {
+          endDate.setErrors(null);
+        }
+      }
+    }
+  }
+
+  formatDate(date, time) {
+    if(time.length == 2) {
+      return (date + "T0"+ time.substring(0,1) + ":0" + time.substring(1,2) + ":00.000Z");
+    }
+    return (date + "T"+ time.substring(0,2) + ":" + time.substring(2,4) + ":00.000Z");
   }
 
   private formatUF(uf: string) {
