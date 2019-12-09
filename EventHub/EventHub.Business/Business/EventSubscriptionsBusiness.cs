@@ -63,7 +63,7 @@ namespace EventHub.Business.Business
 
             var eventsSubscribed = await _subscriptionsRepository.GetEventsByUserId(input.UserId);
             if (eventsSubscribed != null && 
-                eventsSubscribed.Where(x => x.Id == input.EventId).Select(s => s).Any()
+                eventsSubscribed.Where(x => x.EventId == input.EventId).Select(s => s).Any()
             )
             {
                 return null;
@@ -90,7 +90,7 @@ namespace EventHub.Business.Business
             return null;
         }
 
-        public async Task<IEnumerable<Events>> GetEventsByUserSubscribed(int id)
+        public async Task<IEnumerable<CompleteEventDto>> GetEventsByUserSubscribed(int id)
         {
             return await _subscriptionsRepository.GetEventsByUserId(id);
         }

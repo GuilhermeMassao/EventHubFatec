@@ -23,9 +23,7 @@ export class EventInfoComponent implements OnInit {
     private router: Router,
     private toastr: ToastrService,
     private activatedRoute: ActivatedRoute
-  ) {
-    this.userId = JSON.parse(localStorage.getItem('user')).id;
-   }
+  ) {}
 
   fillEvent() {
     this.activatedRoute.queryParams.subscribe(params => {
@@ -107,6 +105,7 @@ export class EventInfoComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.userId = JSON.parse(localStorage.getItem('user')).id;
     this.fillEvent();
   }
 

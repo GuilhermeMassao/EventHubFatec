@@ -40,7 +40,7 @@ namespace EventHub.Application.Services.EventSubscriptions
             return default(EventSubscribers);
         }
 
-        public async Task<IEnumerable<Events>> GetEventsByUserSubscribed(int id)
+        public async Task<IEnumerable<CompleteEventDto>> GetEventsByUserSubscribed(int id)
         {
             return await _business.GetEventsByUserSubscribed(id);
         }
