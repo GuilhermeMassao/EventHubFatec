@@ -48,13 +48,15 @@ namespace EventHub.Business.Business
                 numberSubscribers = subscribers.Count();
             }
 
-            if (eventInfo.TicketsLimit >= numberSubscribers)
+            if (numberSubscribers >= eventInfo.TicketsLimit)
             {
                 return null;
             }
 
             var eventsSubscribed = await _subscriptionsRepository.GetEventsByUserId(input.UserId);
-            if (eventsSubscribed.Where(x => x.Id == input.EventId).Select(s => s).Any())
+            if (eventsSubscribed != null && 
+                eventsSubscribed.Where(x => x.Id == input.EventId).Select(s => s).Any()
+            )
             {
                 return null;
             }

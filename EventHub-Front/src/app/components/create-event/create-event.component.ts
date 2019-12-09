@@ -18,7 +18,7 @@ export class CreateEventComponent implements OnInit {
     this.eventService.eventForm.reset();
     this.eventService.getAllPublicPlaces().subscribe(
       (res: any) => {
-        this.publicPlaces = res
+        this.publicPlaces = res;
       }
     );
   }

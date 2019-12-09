@@ -1,15 +1,20 @@
 <div class="card text-center">
   <div class="card-header">
     <ul class="nav nav-pills card-header-pills">
-      <li class="nav-item">
+      <li *ngIf="ownerEvent" class="nav-item">
         <button class="nav-link" href="#" title="Editar" (click)="toEditEvent()"><i class="fas fa-pen-alt"></i></button>
       </li>
+      <li *ngIf="ownerEvent" class="nav-item">
+        <button class="nav-link" href="#" title="Excluir" (click)="toDeleteEvent()"><i class="fas fa-trash"></i></button>
+      </li>
+      <li *ngIf="!ownerEvent" class="nav-item">
+        <button class="nav-link" title="Increver-se" (click)="subscriberOnEvent()">
+          Inscreva-se
+        </button>
+      </li>
       <li class="nav-item">
-          <button class="nav-link" href="#" title="Excluir" (click)="toDeleteEvent()"><i class="fas fa-trash"></i></button>
-        </li>
-        <li class="nav-item">
-          <h3 class="card-title"> <i class="fab fa-rocketchat"></i> {{eventInfo.eventName}}</h3>
-        </li>
+        <h3 class="card-title"> <i class="fab fa-rocketchat"></i> {{eventInfo.eventName}}</h3>
+      </li>
     </ul>
   </div>
   <div class="card-body">

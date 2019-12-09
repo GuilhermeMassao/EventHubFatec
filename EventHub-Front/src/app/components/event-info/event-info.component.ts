@@ -11,20 +11,29 @@ import { FormGroup } from '@angular/forms';
 })
 export class EventInfoComponent implements OnInit {
 
-  eventId: any;
+  private eventId: any;
+  private eventInfo: any;
+  private adressInfo: any;
+  private ownerEvent: boolean;
+  private userId: number;
 
-  eventInfo: any;
-  adressInfo: any;
-
-  constructor(private eventService: EventService, private router: Router, private toastr: ToastrService,  private activatedRoute: ActivatedRoute) { }
+  constructor(
+    private eventService: EventService,
+    private router: Router,
+    private toastr: ToastrService,
+    private activatedRoute: ActivatedRoute
+  ) {
+    this.userId = JSON.parse(localStorage.getItem('user')).id;
+   }
 
   fillEvent() {
     this.activatedRoute.queryParams.subscribe(params => {
-      if(params.id != null) {
+      if (params.id != null) {
         this.eventId = params.id;
         this.eventService.getEventById(params.id).subscribe(
           (res: any) => {
-            this.fillInfoEvent(res);          
+            this.fillInfoEvent(res);
+            this.ownerEvent = this.eventInfo.userOwnerId === this.userId;
           },
           err => {
             if(err.status == 400) {
@@ -49,11 +58,13 @@ export class EventInfoComponent implements OnInit {
   }
   fillInfoEvent(data: any) {
     this.eventInfo = {
+      eventId: data.eventId,
       eventName: data.eventName,
       eventDescription: data.eventDescription,
       startDate: new Date(data.startDate).toUTCString(),
       endDate: new Date(data.endDate).toUTCString(),
-      ticketsLimit: data.ticketsLimit
+      ticketsLimit: data.ticketsLimit,
+      userOwnerId: data.userOwnerId
     };
 
     this.adressInfo = {
@@ -93,6 +104,33 @@ export class EventInfoComponent implements OnInit {
 
   ngOnInit() {
     this.fillEvent();
+
   }
 
+  private subscriberOnEvent(): void {
+    const subscription = {
+      userId: this.userId,
+      eventId: this.eventInfo.eventId
+    };
+    this.eventService.subscriberOnEvent(subscription)
+    .subscribe(
+      (result) => {
+      },
+      (error) => {
+        this.toastr.error('Tente novamente mais tarde.', 'Erro ao se increver no evento!');
+      }
+    );
+  }
+
+  private userAlreadyRegistered(): boolean {
+    let alreadyRegistered: boolean;
+    this.eventService.getAllEventsByUser(this.userId)
+    .subscribe(
+      (result) => {
+
+      }
+    );
+  }
+
+  return true;
 }

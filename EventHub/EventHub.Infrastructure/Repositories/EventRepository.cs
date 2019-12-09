@@ -113,7 +113,7 @@ namespace EventHub.Infrastructure.Repositories
                     return eventDto;
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return null;
             }

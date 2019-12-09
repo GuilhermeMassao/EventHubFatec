@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
 import { HttpClient, HttpParams } from "@angular/common/http";
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,7 @@ export class EventService {
 
   constructor(private fb: FormBuilder, private http: HttpClient) { }
   readonly BaseURI = 'http://localhost:61096';
-  readonly BaseFrontURI = "http://localhost:4200";
+  readonly BaseFrontURI = 'http://localhost:4200';
 
   eventForm = this.fb.group({
     EventName: ['', Validators.required],
@@ -189,6 +190,18 @@ export class EventService {
 
   private formatUF(uf: string) {
     return uf.toUpperCase();
+  }
+
+  public subscriberOnEvent(subscription: any): Observable<any> {
+    return this.http.post(this.BaseURI + '/api/subscriptions', subscription);
+  }
+
+  public getAllEventsByUser(id: number): Observable<any> {
+    return this.http.get(this.BaseURI + '/api/subscriptions/subscribed/' + id);
+  }
+
+  public getAllEventsByOwner(id: number): Observable<any> {
+    return this.http.get(this.BaseURI + '/api/subscriptions/owner/' + id);
   }
 
 }
