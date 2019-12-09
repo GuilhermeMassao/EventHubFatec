@@ -10,6 +10,7 @@ using EventHub.Infrastructure.Interfaces.Repository;
 using SocialConnection.Connections;
 using SocialConnection.Data.Request;
 using SocialConnection.Data.Response;
+using SocialConnection.Exceptions;
 using SocialConnection.Models;
 
 namespace EventHub.Business.Business
@@ -249,10 +250,9 @@ namespace EventHub.Business.Business
             var googleEventUrl = (googleEvent != null) ? googleEvent.ShortUrlGoogle : "";
             return $"Novo evento: {newEvent.EventName}\n" +
                 $"{descriptionMessage}...\n" +
-                $"Local: {publicPlace.PlaceName} {adress.PlaceName} - {adress.AdressNumber}, Bairro: {adress.Neighborhood}, CEP: {adress.CEP}, Cidade {adress.City} {adress.UF}\n" +
+                $"Local: {publicPlace.PlaceName} {adress.PlaceName} - {adress.AdressNumber}, {adress.Neighborhood}, {adress.CEP}, {adress.City} - {adress.UF}\n" +
                 $"Limite de vagas: {newEvent.TicketsLimit}\n" +
-                $"{googleEventUrl}\n\n" +
-                "Tweet gerado automaticamente por EventHub.";
+                $"{googleEventUrl}\n\n";
         }
 
         private string CreateEditTweetMessage(Event newEvent, Adress adress, PublicPlace publicPlace, string googleEventUrl)
@@ -268,10 +268,9 @@ namespace EventHub.Business.Business
             }
             return $"Atualização das informações do evento: {newEvent.EventName}\n" +
                 $"{descriptionMessage}...\n" +
-                $"Local: {publicPlace.PlaceName} {adress.PlaceName} - {adress.AdressNumber}, Bairro: {adress.Neighborhood}, CEP: {adress.CEP}, Cidade {adress.City} {adress.UF}\n" +
+                $"Local: {publicPlace.PlaceName} {adress.PlaceName} - {adress.AdressNumber}, {adress.Neighborhood}, {adress.CEP}, {adress.City} - {adress.UF}\n" +
                 $"Limite de vagas: {newEvent.TicketsLimit}\n" +
-                $"{googleEventUrl}\n\n" +
-                "Tweet gerado automaticamente por EventHub.";
+                $"{googleEventUrl}\n\n";
         }
 
         public List<EventDto> FilterEvents(EventFilterDto filter, IEnumerable<EventDto> events, out int filterQnty)

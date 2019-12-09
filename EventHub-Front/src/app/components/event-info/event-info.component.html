@@ -31,7 +31,7 @@
     <p class="card-text"> <strong>Limite de pessoas:</strong> {{eventInfo.ticketsLimit}}</p>
     <br>
     <h4><i class="fas fa-map-marked-alt"></i> Informações Endereço</h4>
-    <p class="card-text"> <strong >{{adressInfo.publicPlaceName}}:</strong> {{adressInfo.placeName}}</p>
+    <p class="card-text"> <strong >Endereço:</strong> {{adressInfo.publicPlaceName}} {{adressInfo.placeName}}</p>
     <p class="card-text"> <strong>Número:</strong> {{adressInfo.adressNumber}}</p>
     <p class="card-text"> <strong>Bairro:</strong> {{adressInfo.neighborhood}}</p>
     <p *ngIf="adressInfo.adressComplement" class="card-text"> <strong>Complemento:</strong> {{adressInfo.adressComplement}}</p>
